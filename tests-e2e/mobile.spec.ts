@@ -1,13 +1,8 @@
-import { test, expect, devices } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
-const APP = test.extend({});
-export {};
-
-/* Mobile responsiveness — verify no horizontal overflow at 390px,
- * the mobile nav works, and no tiny fonts. Uses Playwright's real
- * mobile context (isMobile + touch), which the remote browser can't do. */
-
-test.use({ ...devices["iPhone 13"] }); // 390x844
+/* Mobile responsiveness — runs in the "mobile" project (iPhone 13, 390x844,
+ * isMobile + touch). Verify no horizontal overflow, working hamburger menu,
+ * and no tiny/overlapping text on the deployed site. */
 
 const PAGES = ["/", "/blog", "/blog/partner-platinum-daikin", "/admin/login"];
 

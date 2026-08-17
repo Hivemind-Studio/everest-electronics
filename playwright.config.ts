@@ -15,8 +15,23 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "desktop-chromium",
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+      name: "desktop",
+      testMatch: /site\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1440, height: 900 },
+      },
+    },
+    {
+      name: "mobile",
+      testMatch: /mobile\.spec\.ts/,
+      use: {
+        browserName: "chromium", // only chromium is installed
+        viewport: { width: 390, height: 844 },
+        isMobile: true,
+        hasTouch: true,
+        userAgent: devices["iPhone 13"].userAgent,
+      },
     },
   ],
 });
