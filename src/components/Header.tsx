@@ -19,15 +19,22 @@ export function Header({ brandName }: { brandName: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const onHome = pathname === "/";
+
   // Track scroll to make the nav transparent at the very top, solid after.
+  // Only meaningful on the homepage (dark hero); other pages stay solid.
   useEffect(() => {
+    if (!onHome) {
+      setScrolled(true);
+      return;
+    }
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [onHome]);
 
-  const solid = scrolled || open;
+  const solid = !onHome || scrolled || open;
 
   return (
     <header
