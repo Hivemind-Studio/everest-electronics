@@ -1,0 +1,49 @@
+import Link from "next/link";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { getSettings, getBranches } from "@/lib/data";
+
+export const dynamic = "force-dynamic";
+
+export const metadata = {
+  title: "Syarat & Ketentuan | Everest Electronics",
+  description: "Syarat dan Ketentuan penggunaan situs Everest Electronics.",
+  alternates: { canonical: "/terms" },
+};
+
+export default async function TermsPage() {
+  const [settings, branches] = await Promise.all([getSettings(), getBranches()]);
+  return (
+    <div className="flex min-h-screen flex-col bg-paper">
+      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
+      <main className="flex-1">
+        <section className="pt-32 pb-20">
+          <div className="container-everest max-w-3xl">
+            <h1 className="section-heading">Syarat &amp; Ketentuan</h1>
+            <div className="mt-8 space-y-5 text-base leading-relaxed text-ink-soft">
+              <p>
+                Dengan mengakses situs {settings.brandName}, Anda menyetujui syarat dan
+                ketentuan berikut ini.
+              </p>
+              <p>
+                Seluruh konten, gambar, dan informasi pada situs ini adalah milik{" "}
+                {settings.brandName} dan dilindungi hak cipta. Informasi layanan dapat
+                berubah sewaktu-waktu tanpa pemberitahuan sebelumnya.
+              </p>
+              <p>
+                Untuk pertanyaan lebih lanjut, silakan hubungi kami melalui WhatsApp di{" "}
+                {settings.whatsappDisplay} atau email {settings.emailMarketing}.
+              </p>
+              <p>
+                <Link href="/" className="link-arrow text-sm">← Kembali ke Beranda</Link>
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer settings={settings} branches={branches} />
+      <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
+    </div>
+  );
+}

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { getSettings, getPublishedPostsPage } from "@/lib/data";
+import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +12,22 @@ export const metadata = {
   title: "Berita & Blog | Everest Electronics",
   description:
     "Informasi edukatif seputar teknologi pendingin ruangan terbaru, tips perawatan mandiri, dan update proyek Everest.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    url: "https://everest-electronic.zeabur.app/blog",
+    title: "Berita & Blog | Everest Electronics",
+    description:
+      "Informasi edukatif seputar teknologi pendingin ruangan terbaru, tips perawatan mandiri, dan update proyek Everest.",
+    images: [
+      {
+        url: "https://everest-electronic.zeabur.app/images/og-cover.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Everest Electronics — Blog",
+      },
+    ],
+  },
 };
 
 const PAGE_SIZE = 5;
@@ -25,12 +41,15 @@ export default async function BlogIndexPage({
   const raw = Number(sp.page);
   const page = Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1;
 
-  const [settings, { items: posts, totalPages, total }] = await Promise.all([
+  const [settings, { items: posts, totalPages, total }, branches] = await Promise.all([
     getSettings(),
     getPublishedPostsPage(page, PAGE_SIZE),
+    getBranches(),
   ]);
 
-  const current = Math.min(page, totalPages);
+  // Clamp to a valid page BEFORE querying so out-of-range ?page=N never
+  // launches a skip beyond the last page (empty-state bug).
+  const current = Math.max(1, Math.min(page, totalPages));
 
   // Build pagination page numbers (1 … window … last)
   const pages: number[] = [];
@@ -46,7 +65,7 @@ export default async function BlogIndexPage({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header brandName={settings.brandName} />
+      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
       <main className="flex-1">
         <section className="bg-paper pt-32 pb-20">
           <div className="container-everest">
@@ -146,7 +165,7 @@ export default async function BlogIndexPage({
           </div>
         </section>
       </main>
-      <Footer settings={settings} branches={[]} />
+      <Footer settings={settings} branches={branches} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
     </div>
   );

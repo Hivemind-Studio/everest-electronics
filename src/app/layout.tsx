@@ -13,11 +13,36 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+// Canonical production origin (matches the deployed Zeabur subdomain).
+const SITE_URL = "https://everest-electronic.zeabur.app";
+const OG_IMAGE = `${SITE_URL}/images/og-cover.jpg`;
+
 export const metadata: Metadata = {
-  title: "Everest Electronics | Electronics & Climate Systems",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Everest Electronics | Electronics & Climate Systems",
+    template: "%s | Everest Electronics",
+  },
   description:
     "Rekan utama dalam penjualan dan layanan purna jual sistem pendingin udara terlengkap dan terpercaya di seluruh Indonesia sejak 1998.",
-  metadataBase: new URL("https://everest-electronics.zeabur.app"),
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: SITE_URL,
+    siteName: "Everest Electronics",
+    title: "Everest Electronics | Electronics & Climate Systems",
+    description:
+      "Penjualan dan layanan purna jual sistem pendingin udara terlengkap dan terpercaya di seluruh Indonesia sejak 1998.",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Everest Electronics" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Everest Electronics | Electronics & Climate Systems",
+    description:
+      "Penjualan dan layanan purna jual sistem pendingin udara terlengkap dan terpercaya di seluruh Indonesia sejak 1998.",
+    images: [OG_IMAGE],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

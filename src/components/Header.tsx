@@ -14,7 +14,13 @@ const LINKS = [
   { href: "/#blog", label: "Blogs" },
 ];
 
-export function Header({ brandName }: { brandName: string }) {
+export function Header({
+  brandName,
+  projectsUrl,
+}: {
+  brandName: string;
+  projectsUrl?: string;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -68,22 +74,33 @@ export function Header({ brandName }: { brandName: string }) {
               {l.label}
             </Link>
           ))}
-          <a
-            href="https://cdn.denovamind.com"
-            target="_blank"
-            rel="noopener"
-            className={
-              "inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold transition-colors " +
-              (solid
-                ? "bg-[#1c1c1c] text-[#fafafa] hover:bg-[#1e4394]"
-                : "bg-[#fafafa]/15 text-[#fafafa] hover:bg-[#fafafa] hover:text-[#1c1c1c]")
-            }
-          >
-            Project
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
+          {projectsUrl ? (
+            <a
+              href={projectsUrl}
+              target="_blank"
+              rel="noopener"
+              className={
+                "inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold transition-colors " +
+                (solid
+                  ? "bg-[#1c1c1c] text-[#fafafa] hover:bg-[#1e4394]"
+                  : "bg-[#fafafa]/15 text-[#fafafa] hover:bg-[#fafafa] hover:text-[#1c1c1c]")
+              }
+            >
+              Project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          ) : (
+            <a
+              href="#"
+              onClick={(e) => e.preventDefault()}
+              className="hidden"
+              aria-hidden="true"
+            >
+              Project
+            </a>
+          )}
         </nav>
 
         {/* Mobile menu button */}

@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { getSettings, getPostBySlug } from "@/lib/data";
+import { getSettings, getPostBySlug, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 
 export const dynamic = "force-dynamic";
+
+const SITE_URL = "https://everest-electronic.zeabur.app";
 
 export async function generateMetadata({
   params,
@@ -17,9 +19,29 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return { title: "Artikel Tidak Ditemukan | Everest Electronics" };
+  const title = `${post.title} | Everest Electronics`;
+  const description = post.excerpt;
+  const ogImage = post.imageUrl
+    ? buildAssetUrl(post.imageUrl)
+    : `${SITE_URL}/images/og-cover.jpg`;
   return {
-    title: `${post.title} | Everest Electronics`,
-    description: post.excerpt,
+    title,
+    description,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: "article",
+      url: `${SITE_URL}/blog/${post.slug}`,
+      title,
+      description,
+      images: [{ url: ogImage, alt: post.title }],
+      publishedTime: post.createdAt.toISOString(),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -29,14 +51,18 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [settings, post] = await Promise.all([getSettings(), getPostBySlug(slug)]);
+  const [settings, post, branches] = await Promise.all([
+    getSettings(),
+    getPostBySlug(slug),
+    getBranches(),
+  ]);
   if (!post) notFound();
 
   const paragraphs = post.content.split(/\n+/).filter(Boolean);
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header brandName={settings.brandName} />
+      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
       <main className="flex-1">
         <article className="bg-paper pt-32 pb-20">
           <div className="container-everest max-w-3xl">
@@ -75,7 +101,7 @@ export default async function BlogPostPage({
           </div>
         </article>
       </main>
-      <Footer settings={settings} branches={[]} />
+      <Footer settings={settings} branches={branches} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
     </div>
   );

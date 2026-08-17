@@ -2,10 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
+import { requireAuth } from "@/lib/auth";
+import { deleteFile } from "@/lib/storage";
 
 export async function updateSettings(formData: FormData) {
+  await requireAuth();
   const g = (k: string) => String(formData.get(k) || "").trim();
   const opt = (k: string) => g(k) || null;
+  const prev = await prisma.globalSettings.findUnique({ where: { id: 1 } });
+  const newHero = opt("heroImageUrl");
+  const newPromo = opt("promoImageUrl");
   await prisma.globalSettings.upsert({
     where: { id: 1 },
     update: {
@@ -26,6 +32,7 @@ export async function updateSettings(formData: FormData) {
       copyright: g("copyright"),
       heroImageUrl: opt("heroImageUrl"),
       promoImageUrl: opt("promoImageUrl"),
+      projectsUrl: g("projectsUrl"),
     },
     create: {
       id: 1,
@@ -46,8 +53,16 @@ export async function updateSettings(formData: FormData) {
       copyright: g("copyright"),
       heroImageUrl: opt("heroImageUrl"),
       promoImageUrl: opt("promoImageUrl"),
+      projectsUrl: g("projectsUrl"),
     },
   });
+  // best-effort cleanup of replaced banner keys
+  if (prev?.heroImageUrl && prev.heroImageUrl !== newHero) {
+    try { await deleteFile(prev.heroImageUrl); } catch {}
+  }
+  if (prev?.promoImageUrl && prev.promoImageUrl !== newPromo) {
+    try { await deleteFile(prev.promoImageUrl); } catch {}
+  }
   revalidatePath("/");
   revalidatePath("/admin/settings");
 }

@@ -46,3 +46,7 @@ verify-tmp.ts
 *.tsbuildinfo
 next-env.d.ts
 src/generated
+
+# credentials
+.zeabur-token
+*.token

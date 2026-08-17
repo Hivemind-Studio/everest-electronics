@@ -22,6 +22,7 @@ export default async function AdminSettingsPage() {
     { key: "heroTitle", label: "Hero Subtitle", full: true },
     { key: "heroTagline", label: "Hero Tagline", full: true },
     { key: "copyright", label: "Copyright", full: true },
+    { key: "projectsUrl", label: "URL Proyek/Portfolio (tombol Project)", full: true },
   ];
 
   return (

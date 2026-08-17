@@ -27,6 +27,7 @@ model GlobalSettings {
   copyright            String  @default("Copyright © 2026 Everest Electronics. All rights reserved.")
   heroImageUrl         String? // key of the hero background image uploaded via CDN
   promoImageUrl        String? // key of the featured promo banner image
+  projectsUrl          String  @default("") // external portfolio/projects URL (nav Project CTA)
   updatedAt            DateTime @updatedAt
 }
 

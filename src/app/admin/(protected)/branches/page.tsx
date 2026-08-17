@@ -30,6 +30,10 @@ export default async function AdminBranchesPage() {
           <label htmlFor="new-address" className="mb-1 block text-sm font-semibold text-ink">Alamat</label>
           <input id="new-address" name="address" placeholder="Alamat" className="w-full rounded-lg border border-line px-3 py-2 text-sm outline-none focus:border-navy" />
         </div>
+        <div>
+          <label htmlFor="new-mapurl" className="mb-1 block text-sm font-semibold text-ink">URL Peta (opsional)</label>
+          <input id="new-mapurl" name="mapUrl" placeholder="https://maps.google.com/..." className="w-full rounded-lg border border-line px-3 py-2 text-sm outline-none focus:border-navy" />
+        </div>
         <div className="lg:col-span-2">
           <ImageUploader name="imageUrl" label="Gambar Cabang (opsional)" />
         </div>

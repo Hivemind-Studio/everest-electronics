@@ -26,7 +26,7 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
     links: [
       { label: "Tentang Kami", href: "/#tentang" },
       { label: "Daftar Penghargaan", href: "/#penghargaan" },
-      { label: "Mitra Terpercaya", href: "/#blog" },
+      { label: "Mitra Terpercaya", href: "/#penghargaan" },
       { label: "Hubungi Kontak", href: "/#lokasi" },
     ],
   },
@@ -111,8 +111,8 @@ export function Footer({
         <div className="container-everest flex flex-col gap-3 py-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
           <p>{settings.copyright}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-gold">Terms of Service</a>
-            <a href="#" className="hover:text-gold">Privacy Policy</a>
+            <Link href="/terms" className="hover:text-gold">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-gold">Privacy Policy</Link>
           </div>
         </div>
       </div>

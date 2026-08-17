@@ -27,6 +27,10 @@ const CLIENT_BRANDS = [
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default async function HomePage() {
   const [settings, services, awards, posts, branches] = await Promise.all([
     getSettings(),
@@ -50,7 +54,30 @@ export default async function HomePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header brandName={settings.brandName} />
+      {/* LocalBusiness / HVAC structured data for rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: settings.brandName,
+            telephone: settings.phoneDisplay,
+            founded: settings.estYear,
+            url: "https://everest-electronic.zeabur.app",
+            areaServed: "Indonesia",
+            contactPoint: [
+              {
+                "@type": "ContactPoint",
+                telephone: `+${settings.whatsappNumber}`,
+                contactType: "sales",
+                availableLanguage: ["id", "en"],
+              },
+            ],
+          }),
+        }}
+      />
+      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
 
       <main className="flex-1">
         {/* ============ 1. HERO (background image + HTML title) ============ */}
@@ -75,14 +102,13 @@ export default async function HomePage() {
 
           <div className="container-everest relative z-10 py-32 text-center">
             <h1 className="font-display text-[clamp(3.5rem,10vw,6rem)] font-bold leading-[0.95] tracking-[0.06em] text-[#fafafa]">
-              EVEREST
+              {settings.heroEyebrow}
             </h1>
             <p className="mx-auto mt-4 font-display text-[clamp(1.5rem,4vw,2.25rem)] font-normal tracking-[0.22em] text-[#c5a880]">
-              Electronics &amp; Climate Systems
+              {settings.heroTitle}
             </p>
             <p className="mx-auto mt-6 max-w-[640px] text-lg leading-relaxed text-[#d4d4d4]">
-              Pioneering premium air conditioning and professional electronic
-              integration across Indonesia with master craftsmanship.
+              {settings.heroTagline}
             </p>
           </div>
 
