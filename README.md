@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Everest Electronics
 
-## Getting Started
+Website perusahaan **Everest Electronics** — rekan utama dalam penjualan dan layanan purna jual sistem pendingin udara di Indonesia sejak 1998.
 
-First, run the development server:
+Next.js 16 (App Router) + TypeScript + Tailwind v4, dengan CMS admin (Prisma + PostgreSQL) dan konversi utama lewat WhatsApp. Dibangun dari desain Figma (`Web` page: desktop + mobile single-scroll).
+
+## Stack
+
+- **Next.js 16** + React 19 + TypeScript + Tailwind v4
+- **Prisma 7** + PostgreSQL (DB dedicated `everest_electronics`)
+- **Cloudflare R2 CDN** (`cdn.denovamind.com`, prefix `everest-electronics/`)
+- Admin CMS password-protected
+- WhatsApp CTA (floating button + tiap layanan/promo/konsultasi)
+
+## Halaman
+
+| Route | Keterangan |
+|-------|-----------|
+| `/` | Landing page 8 seksi (Hero, Visi Misi, Services, Awards, Clients, Blog, Find Us, Footer) |
+| `/blog` | Index artikel |
+| `/blog/[slug]` | Detail artikel |
+| `/admin` | Dashboard admin (auth) |
+| `/admin/blog`, `/admin/services`, `/admin/awards`, `/admin/branches`, `/admin/settings` | CRUD CMS |
+
+## Environment variables
+
+| Var | Keterangan |
+|-----|-----------|
+| `DATABASE_URL` | Connection string Postgres (`everest_electronics`) |
+| `AUTH_SECRET` | Secret untuk sesi admin (≥32 chars) |
+| `ADMIN_PASSWORD` | Password login admin |
+| `SITE_URL` | URL produksi |
+| `STORAGE_DRIVER` | `r2` |
+| `CDN_ENDPOINT`, `CDN_ACCESS_KEY`, `CDN_SECRET_KEY`, `CDN_BUCKET`, `CDN_REGION`, `CDN_KEY_PREFIX` | Kredensial R2 |
+| `NEXT_PUBLIC_CDN_URL`, `NEXT_PUBLIC_CDN_KEY_PREFIX` | URL CDN publik + prefix |
+
+## Development
 
 ```bash
+npm install
+npx prisma generate
+npx prisma db push        # inisialisasi schema (sekali)
+npm run seed              # seed konten + upload asset ke CDN (sekali)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tests
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm test
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
+Push ke `main` → auto-deploy via Zeabur (proyek Denova-Apps). Build standalone via Dockerfile.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+git push origin main
+```

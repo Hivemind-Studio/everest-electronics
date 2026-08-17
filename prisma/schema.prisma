@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Central contact/branding settings (singleton row)
+model GlobalSettings {
+  id                   Int     @id @default(1)
+  brandName            String  @default("Everest Electronics")
+  whatsappNumber       String  @default("6287732018235") // country code format
+  whatsappDisplay      String  @default("+62 877-3201-8235")
+  phoneDisplay         String  @default("021-7329480 / 7344130")
+  emailMarketing       String  @default("marketingciledug@everestelectronic.com")
+  emailProject         String  @default("projecteverest@everestelectronic.com")
+  instagramUrl         String  @default("https://instagram.com")
+  facebookUrl          String  @default("https://facebook.com")
+  youtubeUrl           String  @default("https://youtube.com")
+  linkedinUrl          String  @default("https://linkedin.com")
+  estYear              String  @default("1998")
+  heroEyebrow          String  @default("EVEREST")
+  heroTitle            String  @default("Electronics & Climate Systems")
+  heroTagline          String  @default("Pioneering premium air conditioning and professional electronic integration across Indonesia with master craftsmanship.")
+  copyright            String  @default("Copyright © 2026 Everest Electronics. All rights reserved.")
+  updatedAt            DateTime @updatedAt
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  title     String
+  tagline   String
+  imageUrl  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Award {
+  id        String   @id @default(cuid())
+  title     String
+  detail    String
+  year      String
+  imageUrl  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  titleEn     String?
+  excerpt     String
+  excerptEn   String?
+  content     String   @default("")
+  imageUrl    String?
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, createdAt])
+}
+
+model Branch {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  label     String   // e.g. "TELEPON" or "WHATSAPP SERVICES"
+  phone     String
+  mapUrl    String?
+  isMain    Boolean  @default(false)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
