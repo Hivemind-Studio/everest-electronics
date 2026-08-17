@@ -48,7 +48,7 @@ export default async function BlogIndexPage({
     <div className="flex min-h-screen flex-col">
       <Header brandName={settings.brandName} />
       <main className="flex-1">
-        <section className="bg-paper py-20">
+        <section className="bg-paper pt-32 pb-20">
           <div className="container-everest">
             <p className="eyebrow">Insights &amp; Updates</p>
             <h1 className="section-heading mt-3">Berita &amp; Blog</h1>

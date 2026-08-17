@@ -117,7 +117,7 @@ export default async function HomePage() {
             </div>
 
             {/* Misi Column */}
-            <div className="lg:pt-12">
+            <div className="lg:pt-[72px]">
               <h2 className="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold text-ink">
                 Our Mission
               </h2>

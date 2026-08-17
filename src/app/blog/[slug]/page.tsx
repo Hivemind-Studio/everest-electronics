@@ -38,7 +38,7 @@ export default async function BlogPostPage({
     <div className="flex min-h-screen flex-col">
       <Header brandName={settings.brandName} />
       <main className="flex-1">
-        <article className="bg-paper py-20">
+        <article className="bg-paper pt-32 pb-20">
           <div className="container-everest max-w-3xl">
             <Link href="/blog" className="link-arrow text-sm">
               ← Kembali ke Blog

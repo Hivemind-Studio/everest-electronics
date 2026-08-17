@@ -39,7 +39,7 @@ export function Header({ brandName }: { brandName: string }) {
   return (
     <header
       className={
-        "sticky top-0 z-50 transition-colors duration-300 " +
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300 " +
         (solid ? "border-b border-black/5 bg-[#fafaf9] shadow-sm" : "bg-transparent")
       }
     >
