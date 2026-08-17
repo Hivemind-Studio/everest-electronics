@@ -10,9 +10,10 @@ export async function updateBranch(formData: FormData) {
   const label = String(formData.get("label") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
   const mapUrl = String(formData.get("mapUrl") || "").trim();
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
   await prisma.branch.update({
     where: { id },
-    data: { name, address, label, phone, mapUrl: mapUrl || null },
+    data: { name, address, label, phone, mapUrl: mapUrl || null, imageUrl },
   });
   revalidatePath("/");
   revalidatePath("/admin/branches");
@@ -23,8 +24,9 @@ export async function createBranch(formData: FormData) {
   const address = String(formData.get("address") || "").trim();
   const label = String(formData.get("label") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
   await prisma.branch.create({
-    data: { name, address, label, phone, sortOrder: 0 },
+    data: { name, address, label, phone, imageUrl, sortOrder: 0 },
   });
   revalidatePath("/");
   revalidatePath("/admin/branches");

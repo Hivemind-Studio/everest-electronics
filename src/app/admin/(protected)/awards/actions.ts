@@ -8,7 +8,8 @@ export async function updateAward(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const detail = String(formData.get("detail") || "").trim();
   const year = String(formData.get("year") || "").trim();
-  await prisma.award.update({ where: { id }, data: { title, detail, year } });
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
+  await prisma.award.update({ where: { id }, data: { title, detail, year, imageUrl } });
   revalidatePath("/");
   revalidatePath("/admin/awards");
 }
@@ -17,7 +18,8 @@ export async function createAward(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const detail = String(formData.get("detail") || "").trim();
   const year = String(formData.get("year") || "").trim();
-  await prisma.award.create({ data: { title, detail, year, sortOrder: 0 } });
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
+  await prisma.award.create({ data: { title, detail, year, imageUrl, sortOrder: 0 } });
   revalidatePath("/");
   revalidatePath("/admin/awards");
 }

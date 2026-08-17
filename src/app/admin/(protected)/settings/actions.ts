@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 
 export async function updateSettings(formData: FormData) {
   const g = (k: string) => String(formData.get(k) || "").trim();
+  const opt = (k: string) => g(k) || null;
   await prisma.globalSettings.upsert({
     where: { id: 1 },
     update: {
@@ -23,6 +24,8 @@ export async function updateSettings(formData: FormData) {
       heroTitle: g("heroTitle"),
       heroTagline: g("heroTagline"),
       copyright: g("copyright"),
+      heroImageUrl: opt("heroImageUrl"),
+      promoImageUrl: opt("promoImageUrl"),
     },
     create: {
       id: 1,
@@ -41,6 +44,8 @@ export async function updateSettings(formData: FormData) {
       heroTitle: g("heroTitle"),
       heroTagline: g("heroTagline"),
       copyright: g("copyright"),
+      heroImageUrl: opt("heroImageUrl"),
+      promoImageUrl: opt("promoImageUrl"),
     },
   });
   revalidatePath("/");

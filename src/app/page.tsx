@@ -37,9 +37,14 @@ export default async function HomePage() {
   ]);
 
   // Clean hero background (photo only — title is real HTML, never baked in)
-  const heroImg = buildAssetUrl("2026-08/hero-bg-clean-a2f25c20.webp");
+  // Admin can override via Settings; falls back to the seeded CDN images.
+  const heroImg = buildAssetUrl(
+    settings.heroImageUrl || "2026-08/hero-bg-clean-a2f25c20.webp",
+  );
   const hvacImg = buildAssetUrl("2026-08/hvac-fa6b68c7.webp");
-  const promoImg = buildAssetUrl("2026-08/promo-banner-51f95376.webp");
+  const promoImg = buildAssetUrl(
+    settings.promoImageUrl || "2026-08/promo-banner-51f95376.webp",
+  );
 
   const wa = settings.whatsappNumber;
 

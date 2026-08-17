@@ -25,6 +25,8 @@ model GlobalSettings {
   heroTitle            String  @default("Electronics & Climate Systems")
   heroTagline          String  @default("Pioneering premium air conditioning and professional electronic integration across Indonesia with master craftsmanship.")
   copyright            String  @default("Copyright © 2026 Everest Electronics. All rights reserved.")
+  heroImageUrl         String? // key of the hero background image uploaded via CDN
+  promoImageUrl        String? // key of the featured promo banner image
   updatedAt            DateTime @updatedAt
 }
 
@@ -72,6 +74,7 @@ model Branch {
   label     String   // e.g. "TELEPON" or "WHATSAPP SERVICES"
   phone     String
   mapUrl    String?
+  imageUrl  String?
   isMain    Boolean  @default(false)
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())

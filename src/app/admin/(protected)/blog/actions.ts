@@ -10,10 +10,11 @@ export async function createPost(formData: FormData) {
   const excerpt = String(formData.get("excerpt") || "").trim();
   const content = String(formData.get("content") || "");
   const published = formData.get("published") === "on";
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
   const slug = slugify(title) || `post-${Date.now()}`;
 
   await prisma.blogPost.create({
-    data: { title, slug, excerpt, content, published },
+    data: { title, slug, excerpt, content, published, imageUrl },
   });
   revalidatePath("/blog");
   revalidatePath("/");
@@ -26,11 +27,12 @@ export async function updatePost(formData: FormData) {
   const excerpt = String(formData.get("excerpt") || "").trim();
   const content = String(formData.get("content") || "");
   const published = formData.get("published") === "on";
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
   const slug = slugify(title) || `post-${Date.now()}`;
 
   await prisma.blogPost.update({
     where: { id },
-    data: { title, slug, excerpt, content, published },
+    data: { title, slug, excerpt, content, published, imageUrl },
   });
   revalidatePath("/blog");
   revalidatePath(`/blog/${slug}`);

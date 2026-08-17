@@ -1,6 +1,7 @@
 "use client";
 
 import type { BlogPost } from "@/generated/prisma/client";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 export function PostForm({
   action,
@@ -25,6 +26,8 @@ export function PostForm({
             className="w-full rounded-lg border border-line bg-white px-4 py-3 outline-none focus:border-navy"
           />
         </Field>
+
+        <ImageUploader name="imageUrl" label="Gambar Artikel" defaultValue={post?.imageUrl} />
 
         <Field label="Ringkasan (excerpt)" htmlFor="excerpt">
           <textarea

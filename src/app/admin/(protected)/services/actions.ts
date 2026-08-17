@@ -7,7 +7,8 @@ export async function updateService(formData: FormData) {
   const id = String(formData.get("id") || "");
   const title = String(formData.get("title") || "").trim();
   const tagline = String(formData.get("tagline") || "").trim();
-  await prisma.service.update({ where: { id }, data: { title, tagline } });
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
+  await prisma.service.update({ where: { id }, data: { title, tagline, imageUrl } });
   revalidatePath("/");
   revalidatePath("/admin/services");
 }
@@ -15,8 +16,9 @@ export async function updateService(formData: FormData) {
 export async function createService(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const tagline = String(formData.get("tagline") || "").trim();
+  const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
   const sortOrder = Number(formData.get("sortOrder") || 0);
-  await prisma.service.create({ data: { title, tagline, sortOrder } });
+  await prisma.service.create({ data: { title, tagline, imageUrl, sortOrder } });
   revalidatePath("/");
   revalidatePath("/admin/services");
 }
