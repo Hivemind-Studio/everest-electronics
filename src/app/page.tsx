@@ -98,34 +98,43 @@ export default async function HomePage() {
 
         {/* ============ 2. ABOUT VISI MISI (bg #fafafa) ============ */}
         <section id="tentang" className="bg-[#fafafa] py-24">
-          <div className="container-everest grid gap-16 lg:grid-cols-2">
-            <div>
-              <p className="eyebrow">Tentang Kami</p>
-              <h2 className="section-heading mt-3">Our Vision</h2>
-              <p className="mt-8 max-w-lg font-display text-xl font-medium leading-snug text-ink-soft">
+          <div className="container-everest grid gap-16 lg:grid-cols-2 lg:gap-0">
+            {/* Visi Column */}
+            <div className="lg:pt-0">
+              <div>
+                <p className="eyebrow">Tentang Kami</p>
+                <h2 className="mt-3 font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold text-ink">
+                  Our Vision
+                </h2>
+              </div>
+              <p className="mt-8 max-w-lg font-display text-[clamp(1.25rem,2.5vw,1.75rem)] font-medium leading-snug text-[#2b2b2b]">
                 &ldquo;Visi kami adalah menjadi rekanan utama dalam penjualan dan layanan
                 purna jual sistem pendingin udara seluruh Indonesia.&rdquo;
               </p>
-              <div className="relative mt-10 aspect-[560/340] overflow-hidden rounded-lg">
+              <div className="relative mt-8 aspect-[560/340] overflow-hidden rounded-lg">
                 <Image src={hvacImg} alt="Sistem HVAC gedung" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
               </div>
             </div>
 
-            <div>
-              <p className="eyebrow">Visi &amp; Misi</p>
-              <h2 className="section-heading mt-3">Our Mission</h2>
-              <div className="mt-10 space-y-8">
+            {/* Misi Column */}
+            <div className="lg:pt-12">
+              <h2 className="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold text-ink">
+                Our Mission
+              </h2>
+              <div className="mt-8 space-y-8">
                 {[
                   ["01", "Kualitas Layanan yang Konsisten", "Menyediakan layanan dengan standard dan kualitas tinggi yang konsisten untuk memastikan kepuasan pelanggan yang bekelanjutan."],
                   ["02", "Inovasi dalam Layanan", "Mengadopsi teknologi terbaru dan metode inovatif dalam setiap aspek layanan untuk meningkatkan efektivitas dan efisiensi operasional."],
                   ["03", "Peningkatan Keterampilan & Pengetahuan", "Melakukan pelatihan dan pengembangan terus-menerus bagi tim kami untuk memastikan keahlian teknis terdepan di industri tata udara."],
                 ].map(([num, title, desc]) => (
-                  <div key={num} className="flex gap-6 border-b border-[#d9d9d9] pb-8">
-                    <span className="font-display text-xl font-bold text-[#1e4394]">{num}</span>
-                    <div>
-                      <h3 className="font-display text-xl font-bold text-ink">{title}</h3>
-                      <p className="mt-2 text-base leading-relaxed text-graphite">{desc}</p>
+                  <div key={num}>
+                    <div className="flex items-baseline gap-4">
+                      <span className="font-display text-xl font-bold text-[#1e4394]">{num}</span>
+                      <h3 className="font-display text-[1.35rem] font-bold text-ink">
+                        {title}
+                      </h3>
                     </div>
+                    <p className="mt-3 text-base leading-relaxed text-[#757575]">{desc}</p>
                   </div>
                 ))}
               </div>
@@ -173,35 +182,66 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 4. AWARDS (bg #fafafa) ============ */}
+        {/* ============ 4. AWARDS (bg #fafafa) — full-bleed image cards V/H/V ============ */}
         <section id="penghargaan" className="bg-[#fafafa] py-24">
           <div className="container-everest">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="eyebrow">Our Pride</p>
-                <h2 className="section-heading mt-3">Industry Awards</h2>
+                <h2 className="mt-3 font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold text-ink">
+                  Industry Awards
+                </h2>
               </div>
-              <p className="max-w-sm text-base text-graphite">
+              <p className="max-w-[400px] text-base leading-relaxed text-[#757575]">
                 Menyediakan layanan dengan standard dan kualitas tinggi yang konsisten
                 untuk memastikan kepuasan pelanggan yang bekelanjutan di seluruh Indonesia.
               </p>
             </div>
 
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {awards.map((a, i) => (
-                <div key={a.id} className={"group overflow-hidden rounded-lg " + (i === 1 ? "md:translate-y-8" : "")}>
-                  {a.imageUrl && (
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image src={buildAssetUrl(a.imageUrl)} alt={a.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width:768px) 100vw, 33vw" />
+            {/* Awards row — V / H / V alternating card sizes */}
+            <div className="mt-14 grid grid-cols-1 items-center gap-6 md:grid-cols-[264px_1fr_264px] lg:grid-cols-[264px_429px_264px] lg:justify-center">
+              {awards.map((a, i) => {
+                const isMiddle = i === 1;
+                const img = buildAssetUrl(a.imageUrl || "2026-08/award1-3103bb8b.webp");
+                return (
+                  <div
+                    key={a.id}
+                    className={
+                      "group relative overflow-hidden rounded-lg " +
+                      (isMiddle
+                        ? "aspect-[429/264] md:mx-0"
+                        : "aspect-[264/429] md:h-full")
+                    }
+                  >
+                    <Image
+                      src={img}
+                      alt={a.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes={
+                        isMiddle
+                          ? "(max-width:768px) 100vw, 429px"
+                          : "(max-width:768px) 100vw, 264px"
+                      }
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-display text-xl font-bold text-[#fafafa]">
+                          {a.title}
+                        </span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="2" className="shrink-0">
+                          <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <p className="mt-1 text-base leading-snug text-[#d4d4d4]">{a.detail}</p>
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="text-sm font-medium text-[#fafafa]">{a.year}</span>
+                      </div>
                     </div>
-                  )}
-                  <div className="bg-white p-8">
-                    <h3 className="font-display text-2xl font-bold text-ink">{a.title}</h3>
-                    <p className="mt-2 text-base text-graphite">{a.detail}</p>
-                    <span className="mt-4 block text-sm font-medium text-[#1e4394]">{a.year}</span>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
