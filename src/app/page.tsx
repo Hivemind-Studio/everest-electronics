@@ -64,6 +64,8 @@ export default async function HomePage() {
             <div className="absolute inset-0 bg-[#0f111a]/50" />
             {/* left-edge subtle gradient for legibility */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#0f111a]/70 via-transparent to-transparent" />
+            {/* top dark band so the transparent navbar's white text stays readable over light hero-top */}
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0f111a]/80 to-transparent" />
           </div>
 
           <div className="container-everest relative z-10 py-32 text-center">
