@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+// Nav links per the Figma design (85-538 desktop)
 const LINKS = [
-  { href: "/", label: "Beranda" },
   { href: "/#tentang", label: "Tentang Kami" },
-  { href: "/#layanan", label: "Layanan" },
-  { href: "/#penghargaan", label: "Penghargaan" },
-  { href: "/#blog", label: "Blog" },
-  { href: "/#lokasi", label: "Lokasi" },
+  { href: "/#layanan", label: "Retail" },
+  { href: "/#layanan", label: "Bisnis" },
+  { href: "/#lokasi", label: "Kontak" },
+  { href: "/#lokasi", label: "Temukan Kami" },
+  { href: "/#blog", label: "Blogs" },
 ];
 
 export function Header({ brandName }: { brandName: string }) {
@@ -18,14 +19,13 @@ export function Header({ brandName }: { brandName: string }) {
   const [open, setOpen] = useState(false);
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
     const section = href.split("#")[1];
-    return section ? pathname === "/" : pathname.startsWith(href);
+    return section ? pathname === "/" : pathname === href;
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line-soft bg-paper/90 backdrop-blur">
-      <div className="container-everest flex h-[72px] items-center justify-between">
+    <header className="sticky top-0 z-50 border-b border-black/5 bg-[#fafaf9]">
+      <div className="container-everest flex h-16 items-center justify-between">
         <Link href="/" className="font-display text-xl font-bold tracking-tight text-ink">
           {brandName}
         </Link>
@@ -34,17 +34,24 @@ export function Header({ brandName }: { brandName: string }) {
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Utama">
           {LINKS.map((l) => (
             <Link
-              key={l.href}
+              key={l.label}
               href={l.href}
-              aria-current={isActive(l.href) ? "page" : undefined}
-              className={
-                "text-sm font-medium transition-colors " +
-                (isActive(l.href) ? "text-navy" : "text-graphite hover:text-ink")
-              }
+              className="text-sm font-medium text-ink/80 transition-colors hover:text-ink"
             >
               {l.label}
             </Link>
           ))}
+          <a
+            href="https://cdn.denovamind.com"
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#1c1c1c] px-5 py-2 text-sm font-semibold text-[#fafafa] transition-colors hover:bg-[#1e4394]"
+          >
+            Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
         </nav>
 
         {/* Mobile menu button */}
@@ -68,17 +75,14 @@ export function Header({ brandName }: { brandName: string }) {
 
       {/* Mobile menu */}
       {open && (
-        <nav className="border-t border-line-soft bg-paper px-6 py-4 lg:hidden" aria-label="Utama mobile">
+        <nav className="border-t border-black/5 bg-[#fafaf9] px-6 py-4 lg:hidden" aria-label="Utama mobile">
           <ul className="flex flex-col gap-4">
             {LINKS.map((l) => (
-              <li key={l.href}>
+              <li key={l.label}>
                 <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className={
-                    "text-base font-medium " +
-                    (isActive(l.href) ? "text-navy" : "text-graphite")
-                  }
+                  className="text-base font-medium text-graphite"
                 >
                   {l.label}
                 </Link>

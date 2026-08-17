@@ -36,7 +36,8 @@ export default async function HomePage() {
     getBranches(),
   ]);
 
-  const heroImg = buildAssetUrl("2026-08/hero-90218d0e.webp");
+  // Clean hero background (photo only — title is real HTML, never baked in)
+  const heroImg = buildAssetUrl("2026-08/hero-bg-clean-a2f25c20.webp");
   const hvacImg = buildAssetUrl("2026-08/hvac-fa6b68c7.webp");
   const promoImg = buildAssetUrl("2026-08/promo-de24e8ab.webp");
 
@@ -47,49 +48,61 @@ export default async function HomePage() {
       <Header brandName={settings.brandName} />
 
       <main className="flex-1">
-        {/* ============ 1. HERO ============ */}
-        <section className="relative flex min-h-[88vh] items-center overflow-hidden bg-navy-deep">
-          <div className="absolute inset-0">
+        {/* ============ 1. HERO (background image + HTML title) ============ */}
+        <section className="relative flex min-h-screen items-center overflow-hidden bg-[#0f111a]">
+          {/* Hero image is a SEPARATE component/background */}
+          <div className="absolute inset-0" aria-hidden="true">
             <Image
               src={heroImg}
               alt=""
               fill
               priority
-              className="object-cover opacity-60"
+              className="object-cover opacity-100"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/60 to-transparent" />
+            {/* 50% dark navy overlay per design (#0f111a @ 0.5) */}
+            <div className="absolute inset-0 bg-[#0f111a]/50" />
+            {/* left-edge subtle gradient for legibility */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0f111a]/70 via-transparent to-transparent" />
           </div>
 
-          <div className="container-everest relative z-10 py-24">
-            <p className="font-display text-sm font-bold uppercase tracking-[0.4em] text-gold">
-              {settings.estYear} — Indonesia
-            </p>
-            <h1 className="mt-4 font-display text-[clamp(3rem,9vw,6rem)] font-bold leading-[0.95] tracking-tight text-white">
-              {settings.heroEyebrow}
-              <span className="block text-gold">{settings.heroTitle}</span>
+          <div className="container-everest relative z-10 py-32">
+            <h1 className="font-display text-[clamp(3.5rem,10vw,6rem)] font-bold leading-[0.95] tracking-[0.06em] text-[#fafafa]">
+              EVEREST
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
-              {settings.heroTagline}
+            <p
+              className="mt-4 font-display text-[clamp(1.5rem,4vw,2.25rem)] font-semibold tracking-[0.08em] text-[#c5a880]"
+            >
+              Electronics &amp; Climate Systems
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a href={waLink(wa, defaultWaMessage(settings.brandName))} target="_blank" rel="noopener" className="btn-navy px-7 py-3.5 text-sm">
-                Hubungi Kami
-              </a>
-              <a href="#layanan" className="btn-outline bg-white/5 px-7 py-3.5 text-sm text-white border-white/25 hover:border-white">
-                Jelajahi Layanan
-              </a>
-            </div>
+            <p className="mt-6 max-w-[640px] text-lg leading-relaxed text-[#d4d4d4]">
+              Pioneering premium air conditioning and professional electronic
+              integration across Indonesia with master craftsmanship.
+            </p>
+          </div>
+
+          {/* Hero footer info — bottom of hero, separate elements */}
+          <div className="container-everest absolute bottom-10 left-0 right-0 z-10 flex items-center justify-between">
+            <p className="text-sm tracking-wide text-[#b3b3b3]">EST. 1998 — INDONESIA</p>
+            <a
+              href="#layanan"
+              className="inline-flex items-center gap-2 text-sm tracking-[0.1em] font-medium text-[#c5a880]"
+            >
+              Explore Our System
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
           </div>
         </section>
 
-        {/* ============ 2. ABOUT VISI MISI ============ */}
-        <section id="tentang" className="bg-paper py-24">
+        {/* ============ 2. ABOUT VISI MISI (bg #fafafa) ============ */}
+        <section id="tentang" className="bg-[#fafafa] py-24">
           <div className="container-everest grid gap-16 lg:grid-cols-2">
             <div>
               <p className="eyebrow">Tentang Kami</p>
               <h2 className="section-heading mt-3">Our Vision</h2>
-              <p className="mt-8 max-w-lg font-display text-2xl font-medium leading-snug text-ink-soft">
+              <p className="mt-8 max-w-lg font-display text-xl font-medium leading-snug text-ink-soft">
                 &ldquo;Visi kami adalah menjadi rekanan utama dalam penjualan dan layanan
                 purna jual sistem pendingin udara seluruh Indonesia.&rdquo;
               </p>
@@ -107,8 +120,8 @@ export default async function HomePage() {
                   ["02", "Inovasi dalam Layanan", "Mengadopsi teknologi terbaru dan metode inovatif dalam setiap aspek layanan untuk meningkatkan efektivitas dan efisiensi operasional."],
                   ["03", "Peningkatan Keterampilan & Pengetahuan", "Melakukan pelatihan dan pengembangan terus-menerus bagi tim kami untuk memastikan keahlian teknis terdepan di industri tata udara."],
                 ].map(([num, title, desc]) => (
-                  <div key={num} className="flex gap-6 border-b border-line-soft pb-8">
-                    <span className="font-display text-2xl font-bold text-gold">{num}</span>
+                  <div key={num} className="flex gap-6 border-b border-[#d9d9d9] pb-8">
+                    <span className="font-display text-xl font-bold text-[#1e4394]">{num}</span>
                     <div>
                       <h3 className="font-display text-xl font-bold text-ink">{title}</h3>
                       <p className="mt-2 text-base leading-relaxed text-graphite">{desc}</p>
@@ -120,12 +133,12 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 3. SERVICES ============ */}
-        <section id="layanan" className="bg-white py-24">
+        {/* ============ 3. SERVICES (bg #1c1c1c dark) ============ */}
+        <section id="layanan" className="bg-[#1c1c1c] py-24">
           <div className="container-everest">
-            <p className="eyebrow">What We Do</p>
-            <h2 className="section-heading mt-3">Our Professional Services</h2>
-            <p className="mt-4 max-w-2xl text-lg text-graphite">
+            <p className="eyebrow text-[#c5a880]">What We Do</p>
+            <h2 className="section-heading mt-3 text-[#fafafa]">Our Professional Services</h2>
+            <p className="mt-4 max-w-2xl text-lg text-[#b3b3b3]">
               End-to-end climate solutions from corporate installation setups to
               periodic home ventilation maintenance.
             </p>
@@ -137,18 +150,18 @@ export default async function HomePage() {
                   href={waLink(wa, serviceWaMessage(settings.brandName, s.title))}
                   target="_blank"
                   rel="noopener"
-                  className="group flex flex-col justify-between rounded-lg border border-line-soft bg-paper p-8 transition-all hover:border-navy hover:shadow-lg"
+                  className="group flex flex-col justify-between rounded-lg border border-white/10 bg-white/5 p-8 transition-colors hover:border-[#c5a880]"
                 >
                   <div>
-                    <div className="mb-6 h-10 w-10 rounded-full bg-navy/10 flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e4394" strokeWidth="2">
+                    <div className="mb-6 h-10 w-10 rounded-full bg-[#c5a880]/20 flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c5a880" strokeWidth="2">
                         <path d="M3 9l9-6 9 6v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" />
                       </svg>
                     </div>
-                    <h3 className="font-display text-xl font-bold text-ink">{s.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-graphite">{s.tagline}</p>
+                    <h3 className="font-display text-2xl font-bold text-[#fafafa]">{s.title}</h3>
+                    <p className="mt-3 text-base leading-relaxed text-[#b3b3b3]">{s.tagline}</p>
                   </div>
-                  <span className="link-arrow mt-8 text-sm">
+                  <span className="link-arrow mt-8 text-sm text-[#c5a880]">
                     Learn More
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -160,15 +173,15 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 4. AWARDS ============ */}
-        <section id="penghargaan" className="bg-navy-deep py-24">
+        {/* ============ 4. AWARDS (bg #fafafa) ============ */}
+        <section id="penghargaan" className="bg-[#fafafa] py-24">
           <div className="container-everest">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="eyebrow text-gold">Our Pride</p>
-                <h2 className="section-heading mt-3 text-white">Industry Awards</h2>
+                <p className="eyebrow">Our Pride</p>
+                <h2 className="section-heading mt-3">Industry Awards</h2>
               </div>
-              <p className="max-w-sm text-base text-white/70">
+              <p className="max-w-sm text-base text-graphite">
                 Menyediakan layanan dengan standard dan kualitas tinggi yang konsisten
                 untuk memastikan kepuasan pelanggan yang bekelanjutan di seluruh Indonesia.
               </p>
@@ -176,28 +189,16 @@ export default async function HomePage() {
 
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {awards.map((a, i) => (
-                <div
-                  key={a.id}
-                  className={
-                    "group overflow-hidden rounded-lg " +
-                    (i === 1 ? "md:translate-y-8" : "")
-                  }
-                >
+                <div key={a.id} className={"group overflow-hidden rounded-lg " + (i === 1 ? "md:translate-y-8" : "")}>
                   {a.imageUrl && (
                     <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={buildAssetUrl(a.imageUrl)}
-                        alt={a.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width:768px) 100vw, 33vw"
-                      />
+                      <Image src={buildAssetUrl(a.imageUrl)} alt={a.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width:768px) 100vw, 33vw" />
                     </div>
                   )}
                   <div className="bg-white p-8">
-                    <span className="font-display text-sm font-bold text-gold">{a.year}</span>
-                    <h3 className="mt-2 font-display text-xl font-bold text-ink">{a.title}</h3>
-                    <p className="mt-2 text-sm text-graphite">{a.detail}</p>
+                    <h3 className="font-display text-2xl font-bold text-ink">{a.title}</h3>
+                    <p className="mt-2 text-base text-graphite">{a.detail}</p>
+                    <span className="mt-4 block text-sm font-medium text-[#1e4394]">{a.year}</span>
                   </div>
                 </div>
               ))}
@@ -205,11 +206,13 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 5. CLIENTS ============ */}
-        <section className="bg-paper py-24">
+        {/* ============ 5. CLIENTS (bg #fafafa) ============ */}
+        <section className="bg-[#fafafa] py-24">
           <div className="container-everest text-center">
             <p className="eyebrow">Dipercaya Oleh</p>
-            <h2 className="section-heading mt-3">500+ Mitra &amp; Official Distributors</h2>
+            <h2 className="mt-3 font-display text-[clamp(2rem,5vw,2.75rem)] font-bold text-ink">
+              500+ Mitra &amp; Official Distributors
+            </h2>
             <div className="mt-14 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
               {CLIENT_BRANDS.map((b) => (
                 <span key={b} className="font-display text-xl font-bold uppercase tracking-wide text-mist transition-colors hover:text-ink">
@@ -220,18 +223,17 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 6. BLOG ============ */}
-        <section id="blog" className="bg-white py-24">
+        {/* ============ 6. BLOG (bg #fafafa) ============ */}
+        <section id="blog" className="bg-[#fafafa] py-24">
           <div className="container-everest">
-            {/* Promo banner */}
-            <div className="relative mb-20 overflow-hidden rounded-lg bg-navy text-white">
-              <div className="absolute inset-0 opacity-30">
+            <div className="relative mb-20 overflow-hidden rounded-lg bg-[#1c1c1c] text-white">
+              <div className="absolute inset-0 opacity-40">
                 <Image src={promoImg} alt="" fill className="object-cover" sizes="100vw" />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1c1c1c] via-[#1c1c1c]/85 to-[#1c1c1c]/40" />
               <div className="relative z-10 flex flex-col gap-6 p-10 md:flex-row md:items-center md:justify-between md:p-14">
                 <div className="max-w-xl">
-                  <p className="eyebrow text-gold">Featured Promo</p>
+                  <p className="eyebrow text-[#c5a880]">Featured Promo</p>
                   <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">
                     Promo Clean &amp; Service Menyambut Ramadhan
                   </h3>
@@ -255,22 +257,14 @@ export default async function HomePage() {
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {posts.map((p) => (
-                <Link key={p.id} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-lg border border-line-soft bg-paper transition-all hover:border-navy hover:shadow-lg">
+                <Link key={p.id} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-lg border border-[#d9d9d9] bg-white transition-colors hover:border-[#1e4394]">
                   {p.imageUrl && (
                     <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image
-                        src={buildAssetUrl(p.imageUrl)}
-                        alt={p.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width:768px) 100vw, 25vw"
-                      />
+                      <Image src={buildAssetUrl(p.imageUrl)} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width:768px) 100vw, 25vw" />
                     </div>
                   )}
                   <div className="p-6">
-                    <h3 className="font-display text-base font-bold leading-snug text-ink group-hover:text-navy">
-                      {p.title}
-                    </h3>
+                    <h3 className="font-display text-lg font-bold leading-snug text-ink group-hover:text-[#1e4394]">{p.title}</h3>
                     <p className="mt-2 line-clamp-2 text-sm text-graphite">{p.excerpt}</p>
                     <span className="link-arrow mt-4 text-sm">
                       Read
@@ -291,20 +285,20 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 7. FIND US ============ */}
-        <section id="lokasi" className="bg-paper py-24">
+        {/* ============ 7. FIND US (bg #fafafa) ============ */}
+        <section id="lokasi" className="bg-[#fafafa] py-24">
           <div className="container-everest">
             <p className="eyebrow">Contact &amp; Locations</p>
             <h2 className="section-heading mt-3">Find Everest Near You</h2>
 
             <div className="mt-14 grid gap-8 md:grid-cols-2">
               {branches.map((b) => (
-                <div key={b.id} className="rounded-lg border border-line-soft bg-white p-10">
+                <div key={b.id} className="rounded-lg border border-[#d9d9d9] bg-white p-10">
                   <h3 className="font-display text-xl font-bold text-ink">{b.name}</h3>
                   <p className="mt-4 text-base leading-relaxed text-graphite">{b.address}</p>
-                  <div className="mt-8 border-t border-line-soft pt-6">
+                  <div className="mt-8 border-t border-[#d9d9d9] pt-6">
                     <p className="text-xs font-bold uppercase tracking-widest text-mist">{b.label}</p>
-                    <p className="mt-1 font-display text-lg font-semibold text-navy">{b.phone}</p>
+                    <p className="mt-1 font-display text-lg font-semibold text-[#1e4394]">{b.phone}</p>
                   </div>
                   {b.mapUrl && (
                     <a href={b.mapUrl} target="_blank" rel="noopener" className="link-arrow mt-6 text-sm">
@@ -319,8 +313,7 @@ export default async function HomePage() {
               ))}
             </div>
 
-            {/* Consultation banner */}
-            <div className="mt-14 flex flex-col items-start justify-between gap-8 rounded-lg bg-navy p-10 md:flex-row md:items-center md:p-14">
+            <div className="mt-14 flex flex-col items-start justify-between gap-8 rounded-lg bg-[#1c1c1c] p-10 md:flex-row md:items-center md:p-14">
               <div className="max-w-xl">
                 <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
                   Butuh Konsultasi AC Skala Bisnis / Rumah Tangga?
