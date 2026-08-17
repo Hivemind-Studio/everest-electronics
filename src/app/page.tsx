@@ -39,7 +39,7 @@ export default async function HomePage() {
   // Clean hero background (photo only — title is real HTML, never baked in)
   const heroImg = buildAssetUrl("2026-08/hero-bg-clean-a2f25c20.webp");
   const hvacImg = buildAssetUrl("2026-08/hvac-fa6b68c7.webp");
-  const promoImg = buildAssetUrl("2026-08/promo-de24e8ab.webp");
+  const promoImg = buildAssetUrl("2026-08/promo-banner-51f95376.webp");
 
   const wa = settings.whatsappNumber;
 
@@ -66,16 +66,14 @@ export default async function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#0f111a]/70 via-transparent to-transparent" />
           </div>
 
-          <div className="container-everest relative z-10 py-32">
+          <div className="container-everest relative z-10 py-32 text-center">
             <h1 className="font-display text-[clamp(3.5rem,10vw,6rem)] font-bold leading-[0.95] tracking-[0.06em] text-[#fafafa]">
               EVEREST
             </h1>
-            <p
-              className="mt-4 font-display text-[clamp(1.5rem,4vw,2.25rem)] font-semibold tracking-[0.08em] text-[#c5a880]"
-            >
+            <p className="mx-auto mt-4 font-display text-[clamp(1.5rem,4vw,2.25rem)] font-normal tracking-[0.22em] text-[#c5a880]">
               Electronics &amp; Climate Systems
             </p>
-            <p className="mt-6 max-w-[640px] text-lg leading-relaxed text-[#d4d4d4]">
+            <p className="mx-auto mt-6 max-w-[640px] text-lg leading-relaxed text-[#d4d4d4]">
               Pioneering premium air conditioning and professional electronic
               integration across Indonesia with master craftsmanship.
             </p>
@@ -198,8 +196,8 @@ export default async function HomePage() {
               </p>
             </div>
 
-            {/* Awards row — V / H / V alternating card sizes */}
-            <div className="mt-14 grid grid-cols-1 items-center gap-6 md:grid-cols-[264px_1fr_264px] lg:grid-cols-[264px_429px_264px] lg:justify-center">
+            {/* Awards row — V / H / V cards, top-aligned baseline */}
+            <div className="mt-14 grid grid-cols-1 items-start gap-6 md:grid-cols-[264px_1fr_264px] lg:grid-cols-[264px_429px_264px] lg:justify-center">
               {awards.map((a, i) => {
                 const isMiddle = i === 1;
                 const img = buildAssetUrl(a.imageUrl || "2026-08/award1-3103bb8b.webp");
@@ -208,9 +206,7 @@ export default async function HomePage() {
                     key={a.id}
                     className={
                       "group relative overflow-hidden rounded-lg " +
-                      (isMiddle
-                        ? "aspect-[429/264] md:mx-0"
-                        : "aspect-[264/429] md:h-full")
+                      (isMiddle ? "aspect-[429/264] md:mx-0" : "aspect-[264/429] md:h-full")
                     }
                   >
                     <Image
@@ -266,24 +262,39 @@ export default async function HomePage() {
         {/* ============ 6. BLOG (bg #fafafa) ============ */}
         <section id="blog" className="bg-[#fafafa] py-24">
           <div className="container-everest">
-            <div className="relative mb-20 overflow-hidden rounded-lg bg-[#1c1c1c] text-white">
-              <div className="absolute inset-0 opacity-40">
-                <Image src={promoImg} alt="" fill className="object-cover" sizes="100vw" />
+            <div className="relative mb-20 overflow-hidden rounded-lg">
+              {/* Promo image as a SEPARATE background component — text is HTML on top */}
+              <div className="absolute inset-0" aria-hidden="true">
+                <Image
+                  src={promoImg}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1c1c1c] via-[#1c1c1c]/85 to-[#1c1c1c]/40" />
-              <div className="relative z-10 flex flex-col gap-6 p-10 md:flex-row md:items-center md:justify-between md:p-14">
-                <div className="max-w-xl">
-                  <p className="eyebrow text-[#c5a880]">Featured Promo</p>
-                  <h3 className="mt-2 font-display text-2xl font-bold md:text-3xl">
+              <div className="relative z-10 flex min-h-[400px] flex-col justify-center gap-6 p-10 md:p-16">
+                <div className="max-w-[520px]">
+                  <p className="font-display text-base font-bold text-[#c5a880]">Featured Promo</p>
+                  <h3 className="mt-3 font-display text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight text-[#fafafa]">
                     Promo Clean &amp; Service Menyambut Ramadhan
                   </h3>
-                  <p className="mt-3 text-white/80">
+                  <p className="mt-4 text-base leading-relaxed text-[#d4d4d4]">
                     Nikmati diskon paket cuci AC dan perawatan berkala untuk kenyamanan
                     rumah ibadah dan keluarga Anda. Hubungi kami hari ini.
                   </p>
                 </div>
-                <a href={waLink(wa, promoWaMessage(settings.brandName))} target="_blank" rel="noopener" className="btn-gold shrink-0">
+                <a
+                  href={waLink(wa, promoWaMessage(settings.brandName))}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex w-fit items-center gap-2 rounded-full bg-[#fafafa] px-6 py-3 text-sm font-medium text-[#1c1c1c] transition-colors hover:bg-[#c5a880] hover:text-white"
+                >
                   Claim Promo Now
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </a>
               </div>
             </div>
