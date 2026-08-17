@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { getSettings, getPublishedPosts } from "@/lib/data";
+import { getSettings, getPublishedPostsPage } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 
 export const dynamic = "force-dynamic";
@@ -14,8 +14,35 @@ export const metadata = {
     "Informasi edukatif seputar teknologi pendingin ruangan terbaru, tips perawatan mandiri, dan update proyek Everest.",
 };
 
-export default async function BlogIndexPage() {
-  const [settings, posts] = await Promise.all([getSettings(), getPublishedPosts(100)]);
+const PAGE_SIZE = 5;
+
+export default async function BlogIndexPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const sp = await searchParams;
+  const raw = Number(sp.page);
+  const page = Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1;
+
+  const [settings, { items: posts, totalPages, total }] = await Promise.all([
+    getSettings(),
+    getPublishedPostsPage(page, PAGE_SIZE),
+  ]);
+
+  const current = Math.min(page, totalPages);
+
+  // Build pagination page numbers (1 … window … last)
+  const pages: number[] = [];
+  for (let p = 1; p <= totalPages; p++) {
+    if (p === 1 || p === totalPages || Math.abs(p - current) <= 1) pages.push(p);
+  }
+  const pageSet = new Set(pages);
+  const pageNumbers: (number | "...")[] = [];
+  for (let p = 1; p <= totalPages; p++) {
+    if (pageSet.has(p)) pageNumbers.push(p);
+    else if (p === 2 || p === totalPages - 1) pageNumbers.push("...");
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -69,6 +96,52 @@ export default async function BlogIndexPage() {
 
             {posts.length === 0 && (
               <p className="mt-14 text-center text-graphite">Belum ada artikel.</p>
+            )}
+
+            {/* Pagination — default 5 per page */}
+            {totalPages > 1 && (
+              <nav className="mt-14 flex flex-wrap items-center justify-center gap-2" aria-label="Paginasi">
+                {current > 1 && (
+                  <Link
+                    href={`/blog?page=${current - 1}`}
+                    className="rounded-lg border border-line-soft px-4 py-2 text-sm text-graphite transition-colors hover:border-navy hover:text-navy"
+                  >
+                    Previous
+                  </Link>
+                )}
+                {pageNumbers.map((p, idx) =>
+                  p === "..." ? (
+                    <span key={`e-${idx}`} className="px-2 text-sm text-mist">…</span>
+                  ) : (
+                    <Link
+                      key={p}
+                      href={`/blog?page=${p}`}
+                      aria-current={p === current ? "page" : undefined}
+                      className={
+                        "rounded-lg px-4 py-2 text-sm transition-colors " +
+                        (p === current
+                          ? "bg-navy text-white"
+                          : "border border-line-soft text-graphite hover:border-navy hover:text-navy")
+                      }
+                    >
+                      {p}
+                    </Link>
+                  ),
+                )}
+                {current < totalPages && (
+                  <Link
+                    href={`/blog?page=${current + 1}`}
+                    className="rounded-lg border border-line-soft px-4 py-2 text-sm text-graphite transition-colors hover:border-navy hover:text-navy"
+                  >
+                    Next
+                  </Link>
+                )}
+              </nav>
+            )}
+            {totalPages <= 1 && posts.length > 0 && (
+              <p className="mt-10 text-center text-sm text-graphite">
+                Menampilkan {posts.length} artikel
+              </p>
             )}
           </div>
         </section>

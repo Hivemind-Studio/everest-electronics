@@ -196,8 +196,8 @@ export default async function HomePage() {
               </p>
             </div>
 
-            {/* Awards row — V / H / V cards, top-aligned baseline */}
-            <div className="mt-14 grid grid-cols-1 items-start gap-6 md:grid-cols-[264px_1fr_264px] lg:grid-cols-[264px_429px_264px] lg:justify-center">
+            {/* Awards row — V / H / V cards, top-aligned baseline. Horizontally scrollable on mobile */}
+            <div className="mt-14 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-[264px_429px_264px] lg:justify-center lg:overflow-visible lg:pb-0 lg:gap-6">
               {awards.map((a, i) => {
                 const isMiddle = i === 1;
                 const img = buildAssetUrl(a.imageUrl || "2026-08/award1-3103bb8b.webp");
@@ -205,8 +205,10 @@ export default async function HomePage() {
                   <div
                     key={a.id}
                     className={
-                      "group relative overflow-hidden rounded-lg " +
-                      (isMiddle ? "aspect-[429/264] md:mx-0" : "aspect-[264/429] md:h-full")
+                      "group relative shrink-0 snap-start overflow-hidden rounded-lg " +
+                      (isMiddle
+                        ? "aspect-[429/264] w-[300px] sm:w-[380px] lg:w-auto lg:aspect-[429/264]"
+                        : "aspect-[264/429] w-[220px] sm:w-[264px] lg:w-auto lg:aspect-[264/429]")
                     }
                   >
                     <Image
@@ -343,39 +345,58 @@ export default async function HomePage() {
             <h2 className="section-heading mt-3">Find Everest Near You</h2>
 
             <div className="mt-14 grid gap-8 md:grid-cols-2">
-              {branches.map((b) => (
-                <div key={b.id} className="rounded-lg border border-[#d9d9d9] bg-white p-10">
-                  <h3 className="font-display text-xl font-bold text-ink">{b.name}</h3>
-                  <p className="mt-4 text-base leading-relaxed text-graphite">{b.address}</p>
-                  <div className="mt-8 border-t border-[#d9d9d9] pt-6">
-                    <p className="text-xs font-bold uppercase tracking-widest text-mist">{b.label}</p>
-                    <p className="mt-1 font-display text-lg font-semibold text-[#1e4394]">{b.phone}</p>
+              {branches.map((b, bi) => (
+                <div
+                  key={b.id}
+                  className={
+                    "rounded-lg p-10 " +
+                    (bi % 2 === 0 ? "bg-[#1c1c1c]" : "bg-[#2b2b2b]")
+                  }
+                >
+                  <h3 className="font-display text-xl font-bold text-[#fafafa]">{b.name}</h3>
+                  <p className="mt-4 text-base leading-relaxed text-[#b3b3b3]">{b.address}</p>
+                  <div className="mt-8">
+                    <p className="text-sm text-[#c5a880]">{b.label}</p>
+                    <p className="mt-1 font-display text-xl font-semibold text-[#fafafa]">{b.phone}</p>
                   </div>
                   {b.mapUrl && (
-                    <a href={b.mapUrl} target="_blank" rel="noopener" className="link-arrow mt-6 text-sm">
-                      Buka Peta &amp; Navigasi
+                    <a
+                      href={b.mapUrl}
+                      target="_blank"
+                      rel="noopener"
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#c5a880]"
+                    >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M12 21s-7-5.2-7-11a7 7 0 1114 0c0 5.8-7 11-7 11z" />
                         <circle cx="12" cy="10" r="2.5" />
                       </svg>
+                      Buka Peta &amp; Navigasi
                     </a>
                   )}
                 </div>
               ))}
             </div>
 
-            <div className="mt-14 flex flex-col items-start justify-between gap-8 rounded-lg bg-[#1c1c1c] p-10 md:flex-row md:items-center md:p-14">
+            <div className="mt-14 flex flex-col items-start justify-between gap-8 rounded-lg bg-[#1e4394] p-10 md:flex-row md:items-center md:p-14">
               <div className="max-w-xl">
-                <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
+                <h3 className="font-display text-2xl font-bold text-[#fafafa] md:text-3xl">
                   Butuh Konsultasi AC Skala Bisnis / Rumah Tangga?
                 </h3>
-                <p className="mt-3 text-white/80">
+                <p className="mt-3 text-[#d4d4d4]">
                   Tim engineering berpengalaman kami siap merancang sistem pendingin udara
                   terbaik yang efisien, hemat listrik, dan rapi secara estetika.
                 </p>
               </div>
-              <a href={waLink(wa, consultationWaMessage(settings.brandName))} target="_blank" rel="noopener" className="btn-gold shrink-0">
+              <a
+                href={waLink(wa, consultationWaMessage(settings.brandName))}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#fafafa] px-7 py-3.5 text-sm font-medium text-[#1c1c1c] transition-colors hover:bg-[#c5a880] hover:text-white"
+              >
                 Hubungi Tim Ahli Kami
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </a>
             </div>
           </div>
