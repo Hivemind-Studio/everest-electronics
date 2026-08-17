@@ -98,9 +98,9 @@ export default async function HomePage() {
 
         {/* ============ 2. ABOUT VISI MISI (bg #fafafa) ============ */}
         <section id="tentang" className="bg-[#fafafa] py-24">
-          <div className="container-everest grid gap-16 lg:grid-cols-2 lg:gap-0">
+          <div className="mx-auto w-full max-w-[1200px] px-6 md:px-10 lg:grid lg:grid-cols-[560px_80px_560px] lg:px-0 lg:justify-center">
             {/* Visi Column */}
-            <div className="lg:pt-0">
+            <div className="lg:col-start-1">
               <div>
                 <p className="eyebrow">Tentang Kami</p>
                 <h2 className="mt-3 font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold text-ink">
@@ -112,12 +112,12 @@ export default async function HomePage() {
                 purna jual sistem pendingin udara seluruh Indonesia.&rdquo;
               </p>
               <div className="relative mt-8 aspect-[560/340] overflow-hidden rounded-lg">
-                <Image src={hvacImg} alt="Sistem HVAC gedung" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
+                <Image src={hvacImg} alt="Sistem HVAC gedung" fill className="object-cover" sizes="(max-width:1024px) 100vw, 560px" />
               </div>
             </div>
 
             {/* Misi Column */}
-            <div className="lg:pt-[72px]">
+            <div className="lg:col-start-3 lg:pt-[72px]">
               <h2 className="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-bold text-ink">
                 Our Mission
               </h2>
