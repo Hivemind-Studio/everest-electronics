@@ -17,6 +17,7 @@ export default async function AdminSettingsPage() {
     { key: "facebookUrl", label: "Facebook URL", full: true },
     { key: "youtubeUrl", label: "YouTube URL", full: true },
     { key: "linkedinUrl", label: "LinkedIn URL", full: true },
+    { key: "tiktokUrl", label: "TikTok URL", full: true },
     { key: "estYear", label: "Tahun Berdiri" },
     { key: "heroEyebrow", label: "Hero (teks besar)" },
     { key: "heroTitle", label: "Hero Subtitle", full: true },

@@ -6,27 +6,27 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Layanan",
     links: [
-      { label: "Jual Unit Baru", href: "/#layanan" },
-      { label: "Service & Clean", href: "/#layanan" },
-      { label: "Tukar Tambah", href: "/#layanan" },
-      { label: "Sistem AC Central", href: "/#layanan" },
+      { label: "Jual Unit Baru", href: "/#retail" },
+      { label: "Service & Clean", href: "/#retail" },
+      { label: "Tukar Tambah", href: "/#retail" },
+      { label: "Sistem AC Central", href: "/#retail" },
     ],
   },
   {
     title: "Bisnis & VRF",
     links: [
-      { label: "VRV / VRF System", href: "/#layanan" },
-      { label: "Chiller System", href: "/#layanan" },
-      { label: "Ducting System", href: "/#layanan" },
-      { label: "Ventilation", href: "/#layanan" },
+      { label: "VRV / VRF System", href: "/#bisnis" },
+      { label: "Chiller System", href: "/#bisnis" },
+      { label: "Ducting System", href: "/#bisnis" },
+      { label: "Ventilation", href: "/#bisnis" },
     ],
   },
   {
     title: "Perusahaan",
     links: [
-      { label: "Tentang Kami", href: "/#tentang" },
-      { label: "Daftar Penghargaan", href: "/#penghargaan" },
-      { label: "Mitra Terpercaya", href: "/#penghargaan" },
+      { label: "Tentang Kami", href: "/tentang" },
+      { label: "Daftar Penghargaan", href: "/tentang#penghargaan" },
+      { label: "Mitra Terpercaya", href: "/#distributors" },
       { label: "Hubungi Kontak", href: "/#lokasi" },
     ],
   },
@@ -58,6 +58,7 @@ export function Footer({
                 { href: settings.facebookUrl, label: "Facebook" },
                 { href: settings.youtubeUrl, label: "YouTube" },
                 { href: settings.linkedinUrl, label: "LinkedIn" },
+                { href: settings.tiktokUrl, label: "Tiktok" },
               ].map((s) => (
                 <a
                   key={s.label}

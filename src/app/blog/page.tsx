@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
+import { waLink, promoWaMessage } from "@/lib/wa";
 
 export const dynamic = "force-dynamic";
 
@@ -15,13 +16,13 @@ export const metadata = {
   alternates: { canonical: "/blog" },
   openGraph: {
     type: "website",
-    url: "https://everest-electronic.zeabur.app/blog",
+    url: "https://everest-electronics.zeabur.app/blog",
     title: "Berita & Blog | Everest Electronics",
     description:
       "Informasi edukatif seputar teknologi pendingin ruangan terbaru, tips perawatan mandiri, dan update proyek Everest.",
     images: [
       {
-        url: "https://everest-electronic.zeabur.app/images/og-cover.jpg",
+        url: "https://everest-electronics.zeabur.app/images/og-cover.jpg",
         width: 1200,
         height: 630,
         alt: "Everest Electronics — Blog",
@@ -51,6 +52,11 @@ export default async function BlogIndexPage({
   // launches a skip beyond the last page (empty-state bug).
   const current = Math.max(1, Math.min(page, totalPages));
 
+  const promoImg = buildAssetUrl(
+    settings.promoImageUrl || "2026-08/promo-banner-51f95376.webp",
+  );
+  const wa = settings.whatsappNumber;
+
   // Build pagination page numbers (1 … window … last)
   const pages: number[] = [];
   for (let p = 1; p <= totalPages; p++) {
@@ -69,6 +75,31 @@ export default async function BlogIndexPage({
       <main className="flex-1">
         <section className="bg-paper pt-32 pb-20">
           <div className="container-everest">
+            {/* Promotion Banner — bg image + HTML heading per design */}
+            <div className="relative mb-20 overflow-hidden rounded-lg bg-[#1e4394]">
+              <div className="absolute inset-0" aria-hidden="true">
+                <Image src={promoImg} alt="" fill className="object-cover" sizes="100vw" />
+                <div className="absolute inset-0 bg-[#1e4394]/70" />
+              </div>
+              <div className="relative z-10 flex min-h-[380px] flex-col items-center justify-center gap-6 p-10 md:p-16 text-center">
+                <p className="eyebrow text-[#c5a880]">Featured Promo</p>
+                <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] font-bold leading-[1.05] text-[#fafafa]">
+                  Promotion Banner
+                </h2>
+                <a
+                  href={waLink(wa, promoWaMessage(settings.brandName))}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#fafafa] px-7 py-3.5 text-sm font-medium text-[#1c1c1c] transition-colors hover:bg-[#c5a880] hover:text-white"
+                >
+                  Claim Promo Now
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
             <p className="eyebrow">Insights &amp; Updates</p>
             <h1 className="section-heading mt-3">Berita &amp; Blog</h1>
             <p className="mt-4 max-w-2xl text-lg text-graphite">

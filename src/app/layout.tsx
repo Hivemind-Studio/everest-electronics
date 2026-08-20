@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 // Canonical production origin (matches the deployed Zeabur subdomain).
-const SITE_URL = "https://everest-electronic.zeabur.app";
+const SITE_URL = "https://everest-electronics.zeabur.app";
 const OG_IMAGE = `${SITE_URL}/images/og-cover.jpg`;
 
 export const metadata: Metadata = {

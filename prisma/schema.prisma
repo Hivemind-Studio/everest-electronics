@@ -20,6 +20,7 @@ model GlobalSettings {
   facebookUrl          String  @default("https://facebook.com")
   youtubeUrl           String  @default("https://youtube.com")
   linkedinUrl          String  @default("https://linkedin.com")
+  tiktokUrl            String  @default("https://tiktok.com")
   estYear              String  @default("1998")
   heroEyebrow          String  @default("EVEREST")
   heroTitle            String  @default("Electronics & Climate Systems")

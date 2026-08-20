@@ -16,9 +16,10 @@ Next.js 16 (App Router) + TypeScript + Tailwind v4, dengan CMS admin (Prisma + P
 
 | Route | Keterangan |
 |-------|-----------|
-| `/` | Landing page 8 seksi (Hero, Visi Misi, Services, Awards, Clients, Blog, Find Us, Footer) |
+| `/` | Landing page (Hero, Retail/Services, Official Distributors, For Business, Clients, Find Us, Footer) |
+| `/tentang` | Tentang Kami (Visi/Misi + Award) |
 | `/blog` | Index artikel |
-| `/blog/[slug]` | Detail artikel |
+| `/blog/[slug]` | Detail artikel (+ Find More) |
 | `/admin` | Dashboard admin (auth) |
 | `/admin/blog`, `/admin/services`, `/admin/awards`, `/admin/branches`, `/admin/settings` | CRUD CMS |
 

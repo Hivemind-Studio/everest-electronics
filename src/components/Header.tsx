@@ -4,14 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// Nav links per the Figma design (85-538 desktop)
+// Nav links per the new Figma design (Web page).
 const LINKS = [
-  { href: "/#tentang", label: "Tentang Kami" },
-  { href: "/#layanan", label: "Retail" },
-  { href: "/#layanan", label: "Bisnis" },
+  { href: "/tentang", label: "Tentang Kami" },
+  { href: "/#retail", label: "Retail" },
+  { href: "/#bisnis", label: "Bisnis" },
   { href: "/#lokasi", label: "Kontak" },
   { href: "/#lokasi", label: "Temukan Kami" },
-  { href: "/#blog", label: "Blogs" },
+  { href: "/blog", label: "Blogs" },
 ];
 
 export function Header({
