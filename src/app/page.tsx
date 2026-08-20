@@ -3,21 +3,39 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { getSettings, getServices, getBranches } from "@/lib/data";
+import { getSettings, getPublishedPosts, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
-import { waLink, serviceWaMessage, consultationWaMessage } from "@/lib/wa";
-
-const CLIENT_BRANDS = [
-  "Daikin", "Panasonic", "Gree", "Samsung", "Sharp", "LG",
-  "Midea", "Polytron", "Toshiba", "Aqua", "Mitsubishi", "Hisense",
-  "Changhong",
-];
+import { waLink, consultationWaMessage } from "@/lib/wa";
 
 const DISTRIBUTOR_LOGOS = [
-  { name: "samsung" }, { name: "toshiba" }, { name: "aqua" },
-  { name: "polytron" }, { name: "midea" }, { name: "mitsubishi" },
-  { name: "changhong" }, { name: "lg" }, { name: "hisense" },
-  { name: "panasonic" }, { name: "sharp" }, { name: "gree" }, { name: "daikin" },
+  "samsung", "img4", "aqua", "polytron", "midea", "mitsubishi",
+  "changhong", "lg", "hisense", "panasonic", "sharp", "gree", "daikin", "img5", "img6",
+];
+
+const PARTNERS = [
+  "Sinarmas Land", "Paramount", "BCA", "Lippo Group",
+  "Gajah Tunggal", "Imperial", "Goldland", "Grage Group",
+];
+
+const STATS = [
+  ["500", "Mitra"],
+  ["14", "Top Brand"],
+  ["50", "Penghargaan"],
+];
+
+const SERVICES = [
+  {
+    title: "Beli AC",
+    desc: "Unit AC pilihan dari brand terpercaya.",
+  },
+  {
+    title: "Cleaning & Service",
+    desc: "Perawatan menyeluruh oleh teknisi berpengalaman.",
+  },
+  {
+    title: "Tukar Tambah",
+    desc: "Ganti unit lama dengan solusi yang lebih tepat untuk kebutuhan.",
+  },
 ];
 
 const BUSINESS_OFFERS = [
@@ -50,13 +68,12 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const [settings, services, branches] = await Promise.all([
+  const [settings, posts, branches] = await Promise.all([
     getSettings(),
-    getServices(),
+    getPublishedPosts(4),
     getBranches(),
   ]);
 
-  // Clean hero background (photo only — title is real HTML, never baked in)
   const heroImg = buildAssetUrl(
     settings.heroImageUrl || "2026-08/hero-bg-clean-a2f25c20.webp",
   );
@@ -64,7 +81,6 @@ export default async function HomePage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* LocalBusiness / HVAC structured data for rich results */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -91,256 +107,243 @@ export default async function HomePage() {
 
       <main className="flex-1">
         {/* ============ 1. HERO ============ */}
-        <section className="relative flex min-h-screen items-center overflow-hidden bg-[#0f111a]">
-          <div className="absolute inset-0" aria-hidden="true">
-            <Image
-              src={heroImg}
-              alt=""
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
-            {/* 50% dark navy overlay per design (#0f111a @ 0.5) */}
-            <div className="absolute inset-0 bg-[#0f111a]/50" />
-            {/* left-edge subtle gradient for legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0f111a]/70 via-transparent to-transparent" />
-            {/* top dark band so the transparent navbar's white text stays readable */}
-            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0f111a]/80 to-transparent" />
-          </div>
-
-          <div className="container-everest relative z-10 py-32 text-center">
-            <h1 className="font-display text-[clamp(3.5rem,10vw,6rem)] font-bold leading-[0.95] tracking-[0.06em] text-[#fafafa]">
-              EVEREST
+        <section className="relative flex min-h-screen items-center overflow-hidden bg-[#fafafa] pt-40">
+          <div className="absolute -right-40 top-10 h-[700px] w-[800px] rounded-full bg-[#56d2ff]/20 blur-3xl" aria-hidden />
+          <div className="container-everest relative z-10 py-24">
+            <h1 className="font-display max-w-[860px] text-[clamp(3rem,8.5vw,4.75rem)] font-semibold leading-[1.02] tracking-[-0.01em] text-ink">
+              Your One Stop AC Solution
             </h1>
-            <p className="mx-auto mt-2 font-display text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[0.08em] text-[#fafafa]">
-              Electronics
-            </p>
-            <p className="mx-auto mt-6 max-w-[640px] text-lg leading-relaxed text-[#d4d4d4]">
-              {settings.heroTagline}
-            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <a
+                href="#layanan"
+                className="inline-flex items-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-navy-deep"
+              >
+                Lihat Layanan
+              </a>
+              <a
+                href="#bisnis"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/15 px-7 py-3.5 text-sm font-medium text-ink transition-colors hover:border-navy"
+              >
+                Kenali Kami
+              </a>
+            </div>
           </div>
-
-          {/* Hero footer info — bottom of hero */}
-          <div className="container-everest absolute bottom-10 left-0 right-0 z-10 flex items-center justify-between">
-            <p className="text-sm tracking-wide text-[#b3b3b3]">
+          <div className="container-everest absolute bottom-10 left-0 right-0 z-10">
+            <p className="font-display text-sm text-ink-soft">
               EST. {settings.estYear} — INDONESIA
             </p>
-            <a
-              href="#retail"
-              className="inline-flex items-center gap-2 text-sm tracking-[0.1em] font-medium text-[#c5a880]"
-            >
-              Explore Our System
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 5v14M5 12l7 7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
+            <p className="mt-1 max-w-md text-sm leading-relaxed text-ink-soft">
+              Partner utama untuk penjualan, perawatan, dan instalasi sistem
+              pendingin udara di Jabodetabek dan seluruh Indonesia.
+            </p>
           </div>
         </section>
 
-        {/* ============ 2. RETAIL / SERVICES (bg #fafafa) ============ */}
-        <section id="retail" className="bg-[#fafafa] py-24">
-          <div className="container-everest">
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] text-ink">
-              Services
+        {/* ============ 2. ABOUT + STATS ============ */}
+        <section className="bg-[#fafafa] py-24">
+          <div className="container-everest grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div>
+              <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.25rem)] font-medium leading-snug text-ink">
+                Melayani dengan hati,<br />bekerja dengan presisi.
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-ink-soft">
+                Sejak {settings.estYear}, kami hadir sebagai rekanan utama dalam penjualan
+                dan layanan purna jual sistem pendingin udara.
+              </p>
+              <div className="mt-10 grid grid-cols-3 gap-8">
+                {STATS.map(([n, l]) => (
+                  <div key={l} className="text-center">
+                    <p className="font-display text-3xl font-bold text-ink">{n} +</p>
+                    <p className="mt-1 text-sm text-mist">{l}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+              <Image src={buildAssetUrl("2026-08/hvac-fa6b68c7.webp")} alt="Sistem HVAC" fill className="object-cover" sizes="(max-width:768px) 100vw, 560px" />
+            </div>
+          </div>
+        </section>
+
+        {/* ============ 3. OFFICIAL DISTRIBUTORS (aqua) ============ */}
+        <section className="bg-[#e8fbf8] py-24">
+          <div className="container-everest grid gap-12 lg:grid-cols-2 lg:items-center">
+            <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-semibold leading-tight text-ink-soft">
+              Official&nbsp;Distributor&nbsp;Of Top Brands
             </h2>
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {services.map((s) => (
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
+              {DISTRIBUTOR_LOGOS.map((logo) => (
+                <Image
+                  key={logo}
+                  src={`/brand/${logo}.png`}
+                  alt={logo}
+                  width={118}
+                  height={44}
+                  className="max-h-9 w-auto object-contain opacity-80"
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============ 4. LAYANAN ============ */}
+        <section id="layanan" className="bg-[#fafafa] py-24">
+          <div className="container-everest">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-ink">
+              Layanan&nbsp;Kami
+            </h2>
+            <p className="mt-4 max-w-xl text-base text-ink-soft">
+              Layanan end-to-end untuk kebutuhan AC di rumah, apartemen, ruko,
+              dan ruang personal Anda.
+            </p>
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {SERVICES.map((s) => (
                 <a
-                  key={s.id}
-                  href={waLink(wa, serviceWaMessage(settings.brandName, s.title))}
+                  key={s.title}
+                  href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${s.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex flex-col justify-between rounded-lg border border-[#d9d9d9] bg-white p-8 transition-colors hover:border-[#1e4394]"
+                  className="group flex flex-col justify-between rounded-xl border border-line-soft bg-white p-8 transition-colors hover:border-navy"
                 >
-                  <div>
-                    <h3 className="font-display text-[1.5rem] font-bold leading-tight text-ink">
-                      {s.title}
-                    </h3>
-                    <p className="mt-3 text-lg leading-relaxed text-graphite">{s.tagline}</p>
+                  <h3 className="font-display text-2xl font-bold leading-tight text-ink">{s.title}</h3>
+                  <div className="mt-4">
+                    <p className="text-base leading-relaxed text-mist">{s.desc}</p>
+                    <div className="mt-6 flex items-center gap-2 text-sm font-medium text-ink">
+                      Hubungi Kami
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
                   </div>
-                  <span className="link-arrow mt-8 text-sm">
-                    Learn More
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
                 </a>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ============ 3. OFFICIAL DISTRIBUTORS ============ */}
-        <section id="distributors" className="bg-[#fafafa] py-24">
+        {/* ============ 5. UNTUK BISNIS (dark navy) ============ */}
+        <section id="bisnis" className="bg-[#182a3a] py-24">
           <div className="container-everest">
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] text-ink">
-              Official Distributors
+            <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-[#fafafa]">
+              Untuk&nbsp;Bisnis
             </h2>
-            <div className="mt-16 grid grid-cols-3 gap-x-10 gap-y-12 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-              {DISTRIBUTOR_LOGOS.map((b) => (
-                <div
-                  key={b.name}
-                  className="flex items-center justify-center opacity-80 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-                >
-                  <Image
-                    src={`/brand/${b.name}.png`}
-                    alt={b.name}
-                    width={140}
-                    height={60}
-                    className="max-h-12 w-auto object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ============ 4. FOR BUSINESS ============ */}
-        <section id="bisnis" className="bg-[#fafafa] py-24">
-          <div className="container-everest">
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] text-ink">
-              For Business
-            </h2>
+            <p className="mt-4 max-w-xl text-base text-[#b3b3b3]">
+              Solusi tata udara yang dirancang untuk performa, efisiensi, dan masa pakai jangka panjang.
+            </p>
             <div className="mt-14 grid gap-6 md:grid-cols-2">
               {BUSINESS_OFFERS.map((o) => (
                 <a
                   key={o.title}
-                  href={waLink(wa, serviceWaMessage(settings.brandName, o.title))}
+                  href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex flex-col justify-between rounded-lg border border-[#d9d9d9] bg-white p-9 transition-colors hover:border-[#1e4394]"
+                  className="group rounded-xl border border-white/10 bg-white/5 p-9 transition-colors hover:border-[#56d2ff]"
                 >
-                  <div>
-                    <h3 className="font-display text-[1.6rem] font-bold leading-tight text-ink">
-                      {o.title}
-                    </h3>
-                    <p className="mt-4 text-lg leading-relaxed text-graphite">{o.desc}</p>
-                  </div>
-                  <span className="link-arrow mt-8 text-sm">
-                    Learn More
+                  <h3 className="font-display text-2xl font-bold text-[#fafafa]">{o.title}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-[#b3b3b3]">{o.desc}</p>
+                  <div className="mt-6 flex items-center gap-2 text-sm font-medium text-[#fafafa]">
+                    Hubungi Kami
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </span>
+                  </div>
                 </a>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ============ 5. CLIENTS (500+ Mitra) ============ */}
-        <section className="bg-[#fafafa] py-24">
-          <div className="container-everest">
-            <p className="eyebrow">Dipercaya Oleh</p>
-            <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.05] text-ink">
-              Dipercaya oleh 500+ Mitra Ternama
-            </h2>
-            <div className="mt-14 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
-              {CLIENT_BRANDS.map((b) => (
-                <span key={b} className="font-display text-xl font-bold uppercase tracking-wide text-mist transition-colors hover:text-ink">
-                  {b}
+        {/* ============ 6. PARTNER PARADE (dark) ============ */}
+        <section className="bg-[#1c1c1c] py-24">
+          <div className="container-everest grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
+            <div>
+              <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-bold text-[#fafafa]">
+                Dipercaya oleh 500+ Mitra Ternama
+              </h2>
+              <p className="mt-4 max-w-md text-base text-[#94a3b8]">
+                Providing reliable institutional-grade comfort across Indonesia&apos;s
+                major developers and corporate infrastructures.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+              {PARTNERS.map((p) => (
+                <span key={p} className="font-display text-lg font-bold uppercase tracking-wide text-[#64748b]">
+                  {p}
                 </span>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ============ 6. FIND US ============ */}
-        <section id="lokasi" className="bg-[#fafafa] py-24">
+        {/* ============ 7. BLOG ============ */}
+        <section id="blog" className="bg-[#fafafa] py-24">
           <div className="container-everest">
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] text-ink">
-              Find Us
+            <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-ink">
+              Berita &amp;<br />Blog
             </h2>
-            <div className="mt-14 grid gap-8 md:grid-cols-2">
-              {branches.map((b, bi) => (
-                <div
-                  key={b.id}
-                  className={
-                    "rounded-lg p-10 " + (bi % 2 === 0 ? "bg-[#1c1c1c]" : "bg-[#2b2b2b]")
-                  }
-                >
-                  <h3 className="font-display text-2xl font-bold text-[#fafafa]">{b.name}</h3>
-                  <p className="mt-4 text-lg leading-relaxed text-[#b3b3b3]">{b.address}</p>
-                  <div className="mt-8">
-                    <p className="text-sm text-[#c5a880]">{b.label}</p>
-                    <p className="mt-1 font-display text-xl font-semibold text-[#fafafa]">{b.phone}</p>
-                  </div>
-                  {b.mapUrl && (
-                    <a
-                      href={b.mapUrl}
-                      target="_blank"
-                      rel="noopener"
-                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#c5a880]"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 21s-7-5.2-7-11a7 7 0 1114 0c0 5.8-7 11-7 11z" />
-                        <circle cx="12" cy="10" r="2.5" />
-                      </svg>
-                      Buka Peta &amp; Navigasi
-                    </a>
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {posts.map((p) => (
+                <Link key={p.id} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-xl border border-line-soft bg-white transition-colors hover:border-navy">
+                  {p.imageUrl && (
+                    <div className="relative aspect-[3/2] overflow-hidden">
+                      <Image src={buildAssetUrl(p.imageUrl)} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width:768px) 100vw, 25vw" />
+                    </div>
                   )}
-                </div>
+                  <div className="p-6">
+                    <h3 className="font-display text-lg font-bold leading-snug text-ink group-hover:text-navy">{p.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm text-mist">{p.excerpt}</p>
+                    <span className="link-arrow mt-4 text-sm">Read</span>
+                  </div>
+                </Link>
               ))}
             </div>
+          </div>
+        </section>
 
-            {/* Hubungi Kami contact block */}
-            <div className="mt-14">
-              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] text-ink">
-                Hubungi Kami
-              </h2>
-              <div className="mt-8 grid gap-8 md:grid-cols-2">
-                {/* Emails + phone */}
-                <ul className="space-y-4">
-                  {[
-                    settings.emailMarketing,
-                    settings.emailProject,
-                    settings.phoneDisplay,
-                    `+${settings.whatsappNumber}`,
-                  ].map((line) => (
-                    <li key={line} className="text-base text-ink">
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-                {/* Socials */}
-                <ul className="space-y-4">
-                  {[
-                    { label: "@Instagram", href: settings.instagramUrl },
-                    { label: "LinkedIn", href: settings.linkedinUrl },
-                    { label: "Tiktok", href: settings.tiktokUrl },
-                  ].map((s) => (
-                    <li key={s.label}>
-                      <a href={s.href} target="_blank" rel="noopener" className="text-base text-ink hover:text-navy">
-                        {s.label}
+        {/* ============ 8. TEMUKAN KAMI ============ */}
+        <section id="lokasi" className="bg-[#fafafa] py-24">
+          <div className="container-everest">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-ink">
+              Temukan&nbsp;Kami
+            </h2>
+            <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:justify-center">
+              <div className="space-y-6">
+                {branches.map((b, bi) => (
+                  <div key={b.id} className={"rounded-xl p-8 " + (bi % 2 === 0 ? "bg-[#1c1c1c]" : "bg-[#2b2b2b]")}>
+                    <h3 className="font-display text-2xl font-bold text-[#fafafa]">{b.name}</h3>
+                    <p className="mt-3 text-base leading-relaxed text-[#b3b3b3]">{b.address}</p>
+                    <p className="mt-3 text-sm text-[#c5a880]">{b.label}: {b.phone}</p>
+                    {b.mapUrl && (
+                      <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[#fafafa]">
+                        Buka di Peta
                       </a>
-                    </li>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-xl bg-[#fafafa] p-9">
+                <h3 className="font-display text-xl font-bold text-ink">Hubungi kami</h3>
+                <div className="mt-6 space-y-5">
+                  {[
+                    { k: "Cleaning & Service Hotline", v: settings.phoneDisplay },
+                    { k: "Corporate Inquiries", v: settings.emailMarketing },
+                    { k: "Official Web domain", v: "www.aceverestserpong.com" },
+                  ].map((c) => (
+                    <div key={c.k}>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate">{c.k}</p>
+                      <p className="mt-1 text-sm font-medium text-navydeep">{c.v}</p>
+                    </div>
                   ))}
-                </ul>
+                </div>
+                <a
+                  href={waLink(wa, consultationWaMessage(settings.brandName))}
+                  target="_blank"
+                  rel="noopener"
+                  className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-navy-deep"
+                >
+                  Hubungi Tim Anda
+                </a>
               </div>
-            </div>
-
-            <div className="mt-14 flex flex-col items-start justify-between gap-8 rounded-lg bg-[#1e4394] p-10 md:flex-row md:items-center md:p-14">
-              <div className="max-w-xl">
-                <h3 className="font-display text-2xl font-bold text-[#fafafa] md:text-3xl">
-                  Butuh Konsultasi AC Skala Bisnis / Rumah Tangga?
-                </h3>
-                <p className="mt-3 text-[#d4d4d4]">
-                  Tim engineering berpengalaman kami siap merancang sistem pendingin udara
-                  terbaik yang efisien, hemat listrik, dan rapi secara estetika.
-                </p>
-              </div>
-              <a
-                href={waLink(wa, consultationWaMessage(settings.brandName))}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#fafafa] px-7 py-3.5 text-sm font-medium text-[#1c1c1c] transition-colors hover:bg-[#c5a880] hover:text-white"
-              >
-                Hubungi Tim Ahli Kami
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
             </div>
           </div>
         </section>

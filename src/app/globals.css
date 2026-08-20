@@ -11,6 +11,13 @@
   --color-graphite: #757575;
   --color-line: #d4d4d4;
   --color-line-soft: #d9d9d9;
+  /* Final design palette (node 138-2366) */
+  --color-aqua: #e8fbf8;
+  --color-navybis: #182a3a;
+  --color-navydeep: #131625;
+  --color-slate: #94a3b8;
+  --color-slate-deep: #64748b;
+  --color-cyan: #56d2ff;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
@@ -60,5 +67,8 @@
   }
   .link-arrow {
     @apply inline-flex items-center gap-2 font-display font-semibold text-navy;
+  }
+  .rounded-card {
+    @apply overflow-hidden rounded-xl;
   }
 }

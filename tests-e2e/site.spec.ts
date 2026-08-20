@@ -4,62 +4,53 @@ const ADMIN_PASSWORD =
   process.env.E2E_ADMIN_PASSWORD || "zV5FiY9UGexN0Tvf34tI7Ac1mhX682au";
 
 /* =========================================================================
- * 1. PUBLIC PAGES — new Figma design sections on home + tentang
+ * 1. HOME — Final design sections
  * =======================================================================*/
-test.describe("Home page — Figma design sections", () => {
+test.describe("Home page — Final design sections", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
 
-  test("renders Hero section with HTML title + tagline + scroll CTA", async ({ page }) => {
-    const h1 = page.getByRole("heading", { level: 1, name: "EVEREST" });
+  test("renders Hero section with HTML title + CTAs + est line", async ({ page }) => {
+    const h1 = page.getByRole("heading", { level: 1, name: "Your One Stop AC Solution" });
     await expect(h1).toBeVisible();
-    await expect(page.getByText("Electronics", { exact: true })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Explore Our System/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Lihat Layanan/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Kenali Kami/ })).toBeVisible();
     await expect(page.getByText("EST. 1998 — INDONESIA")).toBeVisible();
   });
 
-  test("renders Retail (Services) section with 4 cards", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Services" })).toBeVisible();
-    for (const s of [
-      "Jual & Unit Baru",
-      "Clean & Service",
-      "Tukar Tambah",
-      "Corporate HVAC",
-    ]) {
+  test("renders Layanan Kami section with 3 service cards", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: /Layanan Kami/ })).toBeVisible();
+    for (const s of ["Beli AC", "Cleaning & Service", "Tukar Tambah"]) {
       await expect(page.getByRole("heading", { name: s }).first()).toBeVisible();
     }
-    await expect(page.getByRole("link", { name: /Learn More/ }).first()).toBeVisible();
   });
 
-  test("renders Official Distributors logo grid", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Official Distributors" })).toBeVisible();
-    for (const b of ["Daikin", "Panasonic", "Gree", "Samsung", "LG"])
-      await expect(page.getByText(b, { exact: true }).first()).toBeVisible();
+  test("renders Official Distributor Of Top Brands aqua band with logos", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: /Official Distri/ })).toBeVisible();
+    // distributor logos present in the aqua section
+    const band = page.locator("section.bg-\\[\\#e8fbf8\\]").first();
+    await expect(band.locator("img").first()).toBeVisible();
   });
 
-  test("renders For Business section with 4 offers", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "For Business" })).toBeVisible();
+  test("renders Untuk Bisnis section with 4 offers", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: /Untuk Bisnis/ })).toBeVisible();
     for (const o of ["VRV / VRF System", "Chiller AC System", "Ducting AC System", "Ventilation System"]) {
       await expect(page.getByRole("heading", { name: o })).toBeVisible();
     }
   });
 
-  test("renders Clients section with brand list", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: /500\+ Mitra/ })).toBeVisible();
-    await expect(page.getByText("Daikin", { exact: true })).toBeVisible();
-    await expect(page.getByText("Panasonic", { exact: true })).toBeVisible();
+  test("renders Dipercaya oleh 500+ Mitra Ternama partner band", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: /500\+ Mitra Ternama/ })).toBeVisible();
+    await expect(page.getByText("Sinarmas Land")).toBeVisible();
   });
 
-  test("renders Find Us section with both branch cards + Hubungi Kami", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Find Us" })).toBeVisible();
+  test("renders Temukan Kami section with branch cards + contact", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: /Temukan Kami/ })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Ciledug/ })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Gading Serpong/ })).toBeVisible();
-    await expect(page.getByText(/021-7329480/).first()).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Hubungi Kami" })).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: /Hubungi Tim Ahli Kami/ }),
-    ).toBeVisible();
+    // contact sidebar present
+    await expect(page.getByText("Corporate Inquiries")).toBeVisible();
   });
 
   test("renders Footer with columns + WhatsApp contact", async ({ page }) => {
@@ -72,27 +63,27 @@ test.describe("Home page — Figma design sections", () => {
 });
 
 /* =========================================================================
- * 2. ABOUT page — Visi/Misi + Awards (moved off the landing)
+ * 2. ABOUT — Visi/Misi + Penghargaan
  * =======================================================================*/
 test.describe("About page", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/tentang");
   });
 
-  test("renders Visi + Misi content", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Misi" })).toBeVisible();
+  test("renders Visi + Misi + founder quote", async ({ page }) => {
     await expect(page.getByRole("heading", { name: "Visi" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Misi" })).toBeVisible();
     await expect(page.getByText("Kualitas Layanan yang Konsisten")).toBeVisible();
   });
 
-  test("renders Awards section", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Award" })).toBeVisible();
+  test("renders Penghargaan Kami section", async ({ page }) => {
+    await expect(page.getByRole("heading", { name: /Penghargaan/ })).toBeVisible();
     await expect(page.getByText("Daikin Platinum Partner")).toBeVisible();
   });
 });
 
 /* =========================================================================
- * 3. WHATSAPP CTA links (primary conversion)
+ * 3. WHATSAPP CTA links
  * =======================================================================*/
 test.describe("WhatsApp CTAs", () => {
   test("floating WhatsApp button links to wa.me with message", async ({ page }) => {
@@ -104,16 +95,16 @@ test.describe("WhatsApp CTAs", () => {
     expect(href).toContain("text=");
   });
 
-  test("service cards deep-link to WhatsApp with service message", async ({ page }) => {
+  test("service card links to WhatsApp with message", async ({ page }) => {
     await page.goto("/");
-    const card = page.getByRole("link", { name: /Clean & Service.*Learn More/ });
+    const card = page.getByRole("link", { name: /Beli AC/ });
     const href = await card.getAttribute("href");
     expect(href).toContain("wa.me/6287732018235");
   });
 
-  test("consultation banner links to WhatsApp", async ({ page }) => {
+  test("contact / consultation CTA links to WhatsApp", async ({ page }) => {
     await page.goto("/");
-    const cta = page.getByRole("link", { name: /Hubungi Tim Ahli Kami/ });
+    const cta = page.getByRole("link", { name: /Hubungi Tim Anda/ });
     await expect(cta).toBeVisible();
     expect(await cta.getAttribute("href")).toContain("wa.me");
   });
@@ -130,13 +121,14 @@ test.describe("Blog", () => {
     await expect(page.getByText("Everest Resmi Menjadi Partner Platinum Daikin")).toBeVisible();
   });
 
-  test("blog detail page renders title + Find More", async ({ page }) => {
+  test("blog detail page renders title + Find More + Temukan Kami", async ({ page }) => {
     await page.goto("/blog/partner-platinum-daikin");
     await expect(
       page.getByRole("heading", { name: /Everest Resmi Menjadi Partner Platinum Daikin/ }),
     ).toBeVisible();
     await expect(page.getByText(/dengan bangga mengumumkan/)).toBeVisible();
     await expect(page.getByRole("heading", { name: "Find More" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Temukan Kami/ })).toBeVisible();
   });
 
   test("unknown slug returns 404 page", async ({ page }) => {
@@ -146,7 +138,7 @@ test.describe("Blog", () => {
 });
 
 /* =========================================================================
- * 5. NAVIGATION — routes + in-page anchors
+ * 5. NAVIGATION
  * =======================================================================*/
 test.describe("Navigation", () => {
   test("nav Tentang Kami routes to /tentang", async ({ page }) => {
@@ -161,14 +153,14 @@ test.describe("Navigation", () => {
     await page.waitForURL(/\/blog/);
   });
 
-  test("Retail anchor scrolls to Services section", async ({ page }) => {
-    await page.goto("/#retail");
-    await expect(page.getByRole("heading", { name: "Services" })).toBeVisible();
+  test("Layanan anchor scrolls to Layanan Kami section", async ({ page }) => {
+    await page.goto("/#layanan");
+    await expect(page.getByRole("heading", { name: /Layanan Kami/ })).toBeVisible();
   });
 });
 
 /* =========================================================================
- * 6. ADMIN — login + content pages
+ * 6. ADMIN
  * =======================================================================*/
 test.describe("Admin", () => {
   test("unauthenticated /admin redirects to login", async ({ page }) => {
@@ -194,41 +186,31 @@ test.describe("Admin", () => {
 });
 
 /* =========================================================================
- * 7. DESIGN-SYSTEM compliance (new Figma design)
+ * 7. DESIGN-SYSTEM compliance (Final design)
  * =======================================================================*/
 test.describe("Figma design system compliance", () => {
   test("hero title is a real HTML <h1> element", async ({ page }) => {
     await page.goto("/");
-    const h1 = page.getByRole("heading", { level: 1, name: "EVEREST" });
+    const h1 = page.getByRole("heading", { level: 1, name: "Your One Stop AC Solution" });
     await expect(h1).toBeVisible();
     const isHtml = await h1.evaluate((el) => el.tagName === "H1");
     expect(isHtml).toBe(true);
   });
 
-  test("hero background is a separate <img>/<Image> component", async ({ page }) => {
+  test("hero uses dark ink text on the light background", async ({ page }) => {
     await page.goto("/");
-    const heroSection = page.locator("section").first();
-    const bgImg = heroSection.locator("img").first();
-    await expect(bgImg).toBeVisible();
-    const src = await bgImg.getAttribute("src");
-    expect(src).toContain("hero-bg-clean");
-  });
-
-  test("hero title uses design light color #fafafa", async ({ page }) => {
-    await page.goto("/");
-    const title = page.getByRole("heading", { level: 1, name: "EVEREST" });
+    const title = page.getByRole("heading", { level: 1, name: "Your One Stop AC Solution" });
     const color = await title.evaluate((el) => getComputedStyle(el).color);
-    expect(color).toMatch(/rgb\(250, ?250, ?250\)/); // #fafafa
+    // Instrument Sans ink #1c1c1c => rgb(28, 28, 28)
+    expect(color).toMatch(/rgb\(28, ?28, ?28\)/);
   });
 
-  test("Official Distributors section shows brand logo images", async ({ page }) => {
+  test("distributor logos are brand images in the aqua band", async ({ page }) => {
     await page.goto("/");
-    const section = page.locator("#distributors");
-    const logos = section.locator("img");
+    const band = page.locator("section.bg-\\[\\#e8fbf8\\]").first();
+    const logos = band.locator("img");
     await expect(logos.first()).toBeVisible();
     const src = await logos.first().getAttribute("src");
-    // next/image optimizes the logo — the original path is URL-encoded in the query
-    expect(src).toContain("brand%2Fsamsung");
     expect(src).toContain("brand");
   });
 

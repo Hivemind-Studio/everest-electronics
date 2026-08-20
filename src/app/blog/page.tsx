@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
-import { waLink, promoWaMessage } from "@/lib/wa";
+import { waLink, promoWaMessage, consultationWaMessage } from "@/lib/wa";
 
 export const dynamic = "force-dynamic";
 
@@ -101,13 +101,15 @@ export default async function BlogIndexPage({
             </div>
 
             <p className="eyebrow">Insights &amp; Updates</p>
-            <h1 className="section-heading mt-3">Berita &amp; Blog</h1>
+            <h1 className="mt-3 font-display text-[clamp(2.5rem,5vw,4rem)] font-semibold leading-[1.05] text-[#000]">
+              Berita &amp; Blog
+            </h1>
             <p className="mt-4 max-w-2xl text-lg text-graphite">
               Menyediakan informasi edukatif seputar teknologi pendingin ruangan terbaru,
               tips perawatan mandiri, dan update proyek Everest.
             </p>
 
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {posts.map((p) => (
                 <Link key={p.id} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-lg border border-line-soft bg-white transition-all hover:border-navy hover:shadow-lg">
                   {p.imageUrl && (
@@ -193,6 +195,52 @@ export default async function BlogIndexPage({
                 Menampilkan {posts.length} artikel
               </p>
             )}
+
+            {/* ============ TEMUKAN KAMI ============ */}
+            <section id="lokasi" className="mt-20">
+              <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-ink">
+                Temukan&nbsp;Kami
+              </h2>
+              <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:justify-center">
+                <div className="space-y-6">
+                  {branches.map((b, bi) => (
+                    <div key={b.id} className={"rounded-xl p-8 " + (bi % 2 === 0 ? "bg-[#1c1c1c]" : "bg-[#2b2b2b]")}>
+                      <h3 className="font-display text-2xl font-bold text-[#fafafa]">{b.name}</h3>
+                      <p className="mt-3 text-base leading-relaxed text-[#b3b3b3]">{b.address}</p>
+                      <p className="mt-3 text-sm text-[#c5a880]">{b.label}: {b.phone}</p>
+                      {b.mapUrl && (
+                        <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[#fafafa]">
+                          Buka di Peta
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="rounded-xl bg-[#fafafa] p-9">
+                  <h3 className="font-display text-xl font-bold text-ink">Hubungi kami</h3>
+                  <div className="mt-6 space-y-5">
+                    {[
+                      { k: "Cleaning & Service Hotline", v: settings.phoneDisplay },
+                      { k: "Corporate Inquiries", v: settings.emailMarketing },
+                      { k: "Official Web domain", v: "www.aceverestserpong.com" },
+                    ].map((c) => (
+                      <div key={c.k}>
+                        <p className="text-xs font-semibold uppercase tracking-wide text-slate">{c.k}</p>
+                        <p className="mt-1 text-sm font-medium text-navydeep">{c.v}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <a
+                    href={waLink(wa, consultationWaMessage(settings.brandName))}
+                    target="_blank"
+                    rel="noopener"
+                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-navy-deep"
+                  >
+                    Hubungi Tim Anda
+                  </a>
+                </div>
+              </div>
+            </section>
           </div>
         </section>
       </main>
