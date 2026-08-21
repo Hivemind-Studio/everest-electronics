@@ -76,17 +76,17 @@ export function AboutHeroParallax() {
       {/* corner accents (parallax) */}
       <div
         ref={accALeftRef}
-        className="absolute left-[-40px] top-[120px] hidden h-[200px] w-[300px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
+        className="absolute left-[-40px] top-[100px] hidden h-[280px] w-[420px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
         aria-hidden="true"
       >
-        <Image src={brandUrl("aboutHeroAccentA")} alt="" fill className="object-cover" sizes="300px" />
+        <Image src={brandUrl("aboutHeroAccentA")} alt="" fill className="object-cover" sizes="420px" />
       </div>
       <div
         ref={accBRightRef}
-        className="absolute top-[120px] right-[-40px] hidden h-[200px] w-[300px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
+        className="absolute top-[100px] right-[-40px] hidden h-[280px] w-[420px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
         aria-hidden="true"
       >
-        <Image src={brandUrl("aboutHeroAccentB")} alt="" fill className="object-cover" sizes="300px" />
+        <Image src={brandUrl("aboutHeroAccentB")} alt="" fill className="object-cover" sizes="420px" />
       </div>
       {/* center logo (parallax) */}
       <div ref={logoRef} className="relative z-10 flex flex-col items-center px-6 text-center will-change-transform">
