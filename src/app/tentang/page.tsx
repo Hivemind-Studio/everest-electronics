@@ -96,55 +96,40 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* ============ 1. VISI / MISI ============ */}
-        <section className="bg-[#fafafa] pt-32 pb-24">
+        {/* ============ 1. VISI / MISI (162:5108) ============ */}
+        <section className="bg-[#fafafa] py-24">
           <div className="container-everest">
-            {/* founder / owner quote (left) */}
-            <div className="grid gap-12 lg:grid-cols-[1fr_2fr] lg:items-center">
-              <figure className="flex flex-col justify-between rounded-xl bg-white/70 p-9">
-                <svg width="36" height="28" viewBox="0 0 36 28" fill="none" stroke="currentColor" className="text-navy" aria-hidden>
-                  <path d="M6 4C4 4 4 8 8 8M14 2C12 2 12 6 16 6M30 2C28 2 28 6 32 6M6 22C4 24 4 26 8 26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] font-bold leading-snug text-[#1c1c1c]">
-                  Quote dari Founder or Owner
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-graphite">
-                  “Melayani dengan hati, bekerja dengan presisi. Sejak awal berdiri, kami
-                  membangun hubungan berdasarkan kepercayaan, kualitas, dan komitmen
-                  terhadap setiap pelanggan di Indonesia.”
-                </p>
-                <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.18em] text-navy">
-                  — Founder &amp; Owner, Everest Electronics
-                </p>
-              </figure>
+            <div className="grid gap-16 lg:grid-cols-[195px_1fr] lg:items-start lg:justify-between lg:pr-8">
+              {/* founder / owner quote (left) */}
+              <h2 className="font-display text-[32px] font-bold leading-[1.22] text-[#1c1c1c]">
+                “Quote<br />Dari Founder or Owner”
+              </h2>
 
-              {/* Visi + Misi 3-column block */}
-              <div className="grid gap-10 lg:grid-cols-3">
-                {/* Visi (single column) */}
-                <div>
-                  <h2 className="font-display text-[clamp(1.4rem,2.5vw,2rem)] font-bold text-[#2b2b2b]">
-                    Visi
-                  </h2>
-                  <p className="mt-5 text-base leading-relaxed text-graphite">
+              {/* Visi + Misi (right, 841px) */}
+              <div>
+                {/* Visi */}
+                <div className="max-w-[264px]">
+                  <h3 className="font-display text-[32px] font-bold text-[#2b2b2b]">Visi</h3>
+                  <p className="mt-5 text-xl leading-relaxed text-[#2b2b2b]">
                     Visi kami adalah menjadi rekanan utama dalam penjualan dan layanan
-                    purna jual sistem pendingin udara seluruh Indonesia, dikenal atas
-                    keandalan dan keunggulan.
+                    purna jual sistem pendingin udara seluruh Indonesia
                   </p>
                 </div>
-                {/* Misi (2-column missions + bodies) */}
-                <div className="col-span-2 space-y-8">
-                  <h3 className="font-display text-[clamp(1.2rem,2vw,1.75rem)] font-bold text-ink-soft">
-                    Misi
-                  </h3>
-                  {MISSIONS.map((m, i) => (
-                    <div key={m.title} className="rounded-xl border border-line-soft bg-white p-6">
-                      <div className="flex items-baseline gap-4">
-                        <span className="font-display text-lg font-bold text-navy">0{i + 1}</span>
-                        <h4 className="font-display text-lg font-bold text-ink">{m.title}</h4>
+
+                {/* divider */}
+                <hr className="mt-8 border-t border-[#e5e5e5]" />
+
+                {/* Misi */}
+                <div className="mt-8">
+                  <h3 className="font-display text-[32px] font-bold text-[#2b2b2b]">Misi</h3>
+                  <div className="mt-6 grid gap-10 md:grid-cols-3">
+                    {MISSIONS.map((m) => (
+                      <div key={m.title} className="max-w-[264px]">
+                        <h4 className="text-xl leading-relaxed text-[#2b2b2b]">{m.title}</h4>
+                        <p className="mt-3 text-base leading-relaxed text-[#2b2b2b]">{m.desc}</p>
                       </div>
-                      <p className="mt-3 text-base leading-relaxed text-graphite">{m.desc}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
