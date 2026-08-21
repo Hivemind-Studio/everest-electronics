@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { brandUrl } from "@/lib/brandAssets";
 
 // Nav links per the Final Figma design (138-2366).
 const LINKS = [
@@ -22,72 +22,38 @@ export function Header({
   brandName: string;
   projectsUrl?: string;
 }) {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  const onHome = pathname === "/";
-  useEffect(() => {
-    if (!onHome) {
-      setScrolled(true);
-      return;
-    }
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [onHome]);
-
-  const solid = !onHome || scrolled || open;
 
   return (
-    <header
-      className={
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300 " +
-        (solid ? "border-b border-black/5 bg-[#fafaf9] shadow-sm" : "bg-transparent")
-      }
-    >
-      <div className="container-everest flex h-[96px] items-center justify-between px-0">
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/brand/everest-logo.png"
-            alt="Everest Electronics"
-            width={72}
-            height={72}
-            className="w-16 h-16 object-contain"
-          />
-          <span
-            className={
-              "font-display text-xl font-bold tracking-tight transition-colors " +
-              (solid ? "text-ink" : "text-[#fafafa]")
-            }
-          >
-            {brandName}
-          </span>
-        </Link>
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-[#fafaf9] shadow-sm">
+        <div className="container-everest flex h-[96px] items-center justify-between overflow-hidden">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src={brandUrl("logo")}
+              alt="Everest Electronics"
+              width={72}
+              height={72}
+              className="h-[72px] w-[72px] object-contain"
+            />
+            <span className="font-display text-xl font-bold tracking-tight text-ink">
+              {brandName}
+            </span>
+          </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Utama">
-          {LINKS.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className={
-                "text-sm font-medium transition-colors " +
-                (solid ? "text-ink/80 hover:text-ink" : "text-[#fafafa]/90 hover:text-white")
-              }
-            >
-              {l.label}
-            </Link>
-          ))}
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Utama">
+            {LINKS.map((l) => (
+              <Link
+                key={l.label}
+                href={l.href}
+                className="text-sm font-medium text-[#2b2b2b] transition-colors hover:text-ink"
+              >
+                {l.label}
+              </Link>
+            ))}
           <a
             href="/#lokasi"
-            className={
-              "inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold transition-colors " +
-              (solid
-                ? "bg-[#1c1c1c] text-[#fafafa] hover:bg-[#1e4394]"
-                : "bg-[#fafafa]/15 text-[#fafafa] hover:bg-[#fafafa] hover:text-[#1c1c1c]")
-            }
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#1c1c1c] px-5 py-2 text-sm font-semibold text-[#fafafa] transition-colors hover:bg-[#1e4394]"
           >
             Hubungi kami
           </a>
@@ -96,7 +62,7 @@ export function Header({
         {/* Mobile menu button */}
         <button
           onClick={() => setOpen(!open)}
-          className={"lg:hidden transition-colors " + (solid ? "text-ink" : "text-[#fafafa]")}
+          className="lg:hidden text-ink transition-colors"
           aria-label={open ? "Tutup menu" : "Buka menu"}
           aria-expanded={open}
         >

@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { getSettings, getAwards, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
+import { brandUrl } from "@/lib/brandAssets";
 
 export const dynamic = "force-dynamic";
 
@@ -35,12 +36,12 @@ const MISSIONS = [
   {
     title: "Inovasi dalam Layanan",
     desc:
-      "Mengadopsi teknologi terbaru dan metode inovatif dalam setiap aspek layanan untuk aumentar efektivitas i efisiensia.",
+      "Mengadopsi teknologi terbaru dan metode inovatif dalam setiap aspek layanan untuk meningkatkan efektivitas dan efisiensi.",
   },
   {
     title: "Peningkatan Keterampilan dan Pengetahuan",
     desc:
-      "Melakukan pelatihan dhe pengembangan terus-menerus para tim kami para mantener keterampilan dhe conocimiento terbaru en la industria.",
+      "Melakukan pelatihan dan pengembangan terus-menerus bagi tim kami untuk memastikan bahwa mereka memiliki keterampilan dan pengetahuan terbaru dalam industri.",
   },
 ];
 
@@ -77,9 +78,9 @@ export default async function AboutPage() {
                   Quote dari Founder or Owner
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-graphite">
-                  “Layanan dengan hati, bekerja con presisión. Desde nuestra fundación, hemos
-                  construido relacones basadas en confianza, calidad y compromiso con cada
-                  pelanggan en Indonesia.”
+                  “Melayani dengan hati, bekerja dengan presisi. Sejak awal berdiri, kami
+                  membangun hubungan berdasarkan kepercayaan, kualitas, dan komitmen
+                  terhadap setiap pelanggan di Indonesia.”
                 </p>
                 <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.18em] text-navy">
                   — Founder &amp; Owner, Everest Electronics
@@ -94,9 +95,9 @@ export default async function AboutPage() {
                     Visi
                   </h2>
                   <p className="mt-5 text-base leading-relaxed text-graphite">
-                    Visi kami es ser el recanado principal en la venta y servicio post-venta de
-                    sistemas de aire acondicionado en todo Indonesia, conocido por confiabilidad
-                    y excelencia.
+                    Visi kami adalah menjadi rekanan utama dalam penjualan dan layanan
+                    purna jual sistem pendingin udara seluruh Indonesia, dikenal atas
+                    keandalan dan keunggulan.
                   </p>
                 </div>
                 {/* Misi (2-column missions + bodies) */}
@@ -130,8 +131,8 @@ export default async function AboutPage() {
               Penghargaan&nbsp;Kami
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-graphite">
-              Menyediakan layanan con estándares dhe calidad i niveles solemnes para garantizar
-              la fidelidad de nuestros sacientes in the long term.
+              Menyediakan layanan dengan standar dan kualitas tinggi yang konsisten
+              untuk memastikan kepuasan pelanggan yang berkelanjutan.
             </p>
 
             <div className="mt-14 grid gap-8 md:grid-cols-2">
@@ -185,11 +186,11 @@ export default async function AboutPage() {
               {DISTRIBUTOR_LOGOS.map((logo) => (
                 <Image
                   key={logo}
-                  src={`/brand/${logo}.png`}
+                  src={brandUrl(logo)}
                   alt={logo}
                   width={118}
                   height={44}
-                  className="max-h-9 w-auto object-contain opacity-80"
+                  className="max-h-9 w-auto object-contain opacity-80 grayscale"
                 />
               ))}
             </div>
@@ -219,27 +220,27 @@ export default async function AboutPage() {
         </section>
 
         {/* ============ 5. TEMUKAN KAMI ============ */}
-        <section id="lokasi" className="bg-[#fafafa] py-24">
+        <section id="lokasi" className="min-h-[1024px] bg-[#fafafa] pt-[104px]">
           <div className="container-everest">
-            <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-ink">
+            <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
               Temukan&nbsp;Kami
             </h2>
-            <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:justify-center">
+            <div className="mt-14 grid gap-12 lg:grid-cols-2">
               <div className="space-y-6">
                 {branches.map((b, bi) => (
                   <div
                     key={b.id}
-                    className={"rounded-xl p-8 " + (bi % 2 === 0 ? "bg-[#1c1c1c]" : "bg-[#2b2b2b]")}
+                    className="rounded-xl border border-line-soft bg-white p-8"
                   >
-                    <h3 className="font-display text-2xl font-bold text-[#fafafa]">{b.name}</h3>
-                    <p className="mt-3 text-base leading-relaxed text-[#b3b3b3]">{b.address}</p>
-                    <p className="mt-3 text-sm text-[#c5a880]">{b.label}: {b.phone}</p>
+                    <h3 className="font-display text-[32px] font-bold leading-tight text-[#1c1c1c]">{b.name}</h3>
+                    <p className="mt-3 text-xl leading-relaxed text-[#b3b3b3]">{b.address}</p>
+                    <p className="mt-2 text-sm text-[#94a3b8]">{b.label}: {b.phone}</p>
                     {b.mapUrl && (
                       <a
                         href={b.mapUrl}
                         target="_blank"
                         rel="noopener"
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[#fafafa]"
+                        className="mt-4 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]"
                       >
                         Buka di Peta
                       </a>

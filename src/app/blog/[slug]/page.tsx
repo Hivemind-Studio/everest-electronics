@@ -78,7 +78,7 @@ export default async function BlogPostPage({
                         year: "numeric",
                       })}
                     </p>
-                    <h1 className="section-heading mt-3">{post.title}</h1>
+                    <h1 className="mt-3 font-display text-[clamp(2.75rem,5vw,4.5rem)] font-bold leading-[1.05] text-[#000]">{post.title}</h1>
 
                     {post.imageUrl && (
                       <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-lg">
@@ -127,11 +127,11 @@ export default async function BlogPostPage({
                                 </div>
                               )}
                               <div className="p-7">
-                                <h3 className="mt-2 font-display text-lg font-bold leading-snug text-ink group-hover:text-navy">
+                                <h3 className="mt-2 font-display text-[20px] font-bold leading-snug text-[#1c1c1c] group-hover:text-navy">
                                   {mp.title}
                                 </h3>
-                                <p className="mt-2 line-clamp-2 text-sm text-graphite">{mp.excerpt}</p>
-                                <span className="link-arrow mt-5 text-sm">
+                                <p className="mt-2 line-clamp-2 text-base text-[#b3b3b3]">{mp.excerpt}</p>
+                                <span className="link-arrow mt-5 text-base font-normal text-[#1c1c1c]">
                                   Read
                                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
@@ -148,18 +148,18 @@ export default async function BlogPostPage({
                 {/* ============ TEMUKAN KAMI ============ */}
                 <section id="lokasi" className="bg-[#fafafa] py-24">
                   <div className="container-everest">
-                    <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] text-ink">
+                    <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
                       Temukan&nbsp;Kami
                     </h2>
                     <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:justify-center">
                       <div className="space-y-6">
-                        {branches.map((b, bi) => (
-                          <div key={b.id} className={"rounded-xl p-8 " + (bi % 2 === 0 ? "bg-[#1c1c1c]" : "bg-[#2b2b2b]")}>
-                            <h3 className="font-display text-2xl font-bold text-[#fafafa]">{b.name}</h3>
-                            <p className="mt-3 text-base leading-relaxed text-[#b3b3b3]">{b.address}</p>
-                            <p className="mt-3 text-sm text-[#c5a880]">{b.label}: {b.phone}</p>
+                        {branches.map((b) => (
+                          <div key={b.id} className="rounded-xl border border-line-soft bg-white p-8">
+                            <h3 className="font-display text-[32px] font-bold leading-tight text-[#1c1c1c]">{b.name}</h3>
+                            <p className="mt-3 text-xl leading-relaxed text-[#b3b3b3]">{b.address}</p>
+                            <p className="mt-2 text-sm text-[#94a3b8]">{b.label}: {b.phone}</p>
                             {b.mapUrl && (
-                              <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[#fafafa]">
+                              <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]">
                                 Buka di Peta
                               </a>
                             )}

@@ -1,5 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { waLink } from "@/lib/wa";
+import { brandUrl } from "@/lib/brandAssets";
 import type { SiteSettings, BranchItem } from "@/lib/data";
 
 const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
@@ -47,7 +49,16 @@ export function Footer({
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <h3 className="font-display text-xl font-bold">{settings.brandName}</h3>
+            <div className="flex items-center gap-3">
+              <Image
+                src={brandUrl("logo")}
+                alt="Everest Electronics"
+                width={64}
+                height={64}
+                className="h-16 w-16 object-contain"
+              />
+              <h3 className="font-display text-xl font-bold">{settings.brandName}</h3>
+            </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
               Rekan utama dalam penjualan dan layanan purna jual sistem pendingin udara
               terlengkap dan terpercaya di seluruh penjuru Indonesia semenjak {settings.estYear}.

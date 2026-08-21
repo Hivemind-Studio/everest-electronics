@@ -205,13 +205,15 @@ test.describe("Figma design system compliance", () => {
     expect(color).toMatch(/rgb\(28, ?28, ?28\)/);
   });
 
-  test("distributor logos are brand images in the aqua band", async ({ page }) => {
+  test("distributor logos are brand images in the aqua band (from CDN)", async ({ page }) => {
     await page.goto("/");
     const band = page.locator("section.bg-\\[\\#e8fbf8\\]").first();
     const logos = band.locator("img");
     await expect(logos.first()).toBeVisible();
     const src = await logos.first().getAttribute("src");
-    expect(src).toContain("brand");
+    // served from the CDN (everest-electronics prefix) — Figma asset, not local
+    expect(src).toContain("cdn.denovamind.com");
+    expect(src).toContain("everest-electronics");
   });
 
   test("Instrument Sans + Inter fonts loaded", async ({ page }) => {
