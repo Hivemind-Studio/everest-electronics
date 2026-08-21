@@ -92,17 +92,19 @@ export default async function HomePage() {
       <main className="flex-1">
         {/* ============ 1. HERO (0-1024) ============ */}
         <section className="relative flex min-h-[1024px] items-center overflow-hidden bg-[#fafafa]">
-          <div
-            className="pointer-events-none absolute inset-0"
+          {/* Figma vector wave background (exact asset from node 138-2621) */}
+          <img
+            src="/hero/vector-wave.svg"
+            alt=""
             aria-hidden="true"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 55% at 88% 82%, rgba(86,210,255,0.5), rgba(86,210,255,0.16) 55%, transparent 76%)",
-            }}
+            className="pointer-events-none absolute right-[-280px] top-[-40px] h-[806px] w-[1750px] select-none object-contain"
           />
           <div className="container-everest relative z-10 py-28">
             <h1 className="font-display max-w-[864px] text-[clamp(3rem,8.3vw,7.5rem)] font-semibold leading-[1.04] tracking-[-0.01em] text-[#1c1c1c]">
-              Your One Stop AC Solution
+              Your{" "}
+              <span className="text-[#E71C29]">One</span>{" "}
+              Stop{" "}
+              <span className="text-[#1E4394]">AC&nbsp;Solution</span>
             </h1>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a
@@ -137,7 +139,9 @@ export default async function HomePage() {
         <section className="min-h-[512px] bg-[#fafafa] pt-[93px]">
           <div className="container-everest grid gap-10 lg:grid-cols-[352px_649px] lg:justify-between lg:items-start">
             <h2 className="font-display text-[32px] font-normal leading-[1.22] text-[#1c1c1c]">
-              Melayani dengan hati,<br />bekerja dengan presisi.
+              Melayani dengan{" "}
+              <span className="text-[#E71C29] font-semibold">hati</span>,<br />bekerja dengan{" "}
+              <span className="text-[#1E4394] font-semibold">presisi</span>.
             </h2>
             <div>
               <p className="font-display text-[clamp(1.75rem,2.9vw,2.6rem)] font-semibold leading-[1.2] text-[#2b2b2b]">
@@ -171,7 +175,7 @@ export default async function HomePage() {
                   alt={logo}
                   width={118}
                   height={44}
-                  className="max-h-9 w-auto object-contain opacity-80 grayscale"
+                  className="max-h-9 w-auto object-contain opacity-90"
                 />
               ))}
             </div>
