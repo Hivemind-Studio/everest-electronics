@@ -109,9 +109,10 @@ test.describe("WhatsApp CTAs", () => {
     await expect(mapLink).toBeVisible();
     const href = await mapLink.getAttribute("href");
     expect(href).toContain("google.com/maps");
-    // contact panel + map present
+    // contact panel present
     await expect(page.getByText("Cleaning & Service Hotline")).toBeVisible();
-    await expect(page.getByText("Everest Ciledug HQ")).toBeVisible();
+    // real Google Maps embed present
+    await expect(page.locator("iframe[src*='google.com/maps']").first()).toBeVisible();
   });
 });
 

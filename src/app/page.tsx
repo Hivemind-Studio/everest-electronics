@@ -381,18 +381,19 @@ export default async function HomePage() {
                     </div>
                   </div>
                 </div>
-                {/* Map */}
+                {/* Map — real Google Maps embed of PT Everest Electronic */}
                 <div className="relative mt-8 aspect-[540/375] overflow-hidden rounded-lg">
-                  <Image
-                    src={brandUrl("temukanMap")}
-                    alt="Peta lokasi Everest"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width:768px) 100vw, 540px"
+                  <iframe
+                    title="Peta lokasi PT Everest Electronic"
+                    src="https://www.google.com/maps?q=PT.+Everest+Electronic&output=embed"
+                    width="540"
+                    height="375"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-full w-full"
                   />
-                  <span className="absolute left-1/2 top-[54%] -translate-x-1/2 rounded bg-[#131625] px-3 py-1 text-[12px] font-semibold text-white">
-                    Everest Ciledug HQ
-                  </span>
                 </div>
               </div>
             </div>
