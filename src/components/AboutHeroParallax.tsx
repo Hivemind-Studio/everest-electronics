@@ -83,7 +83,7 @@ export function AboutHeroParallax() {
       </div>
       <div
         ref={accBRightRef}
-        className="absolute top-[100px] right-[-40px] hidden h-[280px] w-[420px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
+        className="absolute bottom-[140px] right-[-40px] hidden h-[280px] w-[420px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
         aria-hidden="true"
       >
         <Image src={brandUrl("aboutHeroAccentB")} alt="" fill className="object-cover" sizes="420px" />
