@@ -230,7 +230,7 @@ export default async function HomePage() {
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#fafafa]">
                 Untuk&nbsp;Bisnis
               </h2>
-              <p className="max-w-[232px] text-right text-base leading-snug text-[#fafafa] md:mt-4">
+              <p className="max-w-[232px] text-left text-base leading-snug text-[#fafafa] md:mt-4">
                 Solusi tata udara yang dirancang untuk performa, efisiensi, dan masa pakai jangka panjang.
               </p>
             </div>
@@ -242,7 +242,7 @@ export default async function HomePage() {
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex h-[286px] flex-col justify-between rounded-xl bg-white/5 px-6 pt-6 pb-8 transition-colors hover:border hover:border-[#56d2ff]"
+                  className="group flex h-[286px] flex-col justify-between py-6"
                 >
                   <div>
                     <h3 className="font-display text-[32px] font-bold leading-tight text-[#fafafa]">
