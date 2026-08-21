@@ -242,7 +242,7 @@ export default async function HomePage() {
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex h-[286px] flex-col justify-between py-6"
+                  className="group flex h-[286px] flex-col justify-between border-b-2 border-white/35 py-6"
                 >
                   <div>
                     <h3 className="font-display text-[32px] font-bold leading-tight text-[#fafafa]">
@@ -268,7 +268,7 @@ export default async function HomePage() {
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex h-[286px] flex-col justify-between py-6"
+                  className="group flex h-[286px] flex-col justify-between border-b-2 border-white/35 py-6"
                 >
                   <div>
                     <h3 className="font-display text-[32px] font-bold leading-tight text-[#fafafa]">
