@@ -8,6 +8,11 @@ import { buildAssetUrl } from "@/lib/storage/url";
  */
 export const BRAND_ASSETS: Record<string, string> = {
   logo: "2026-08/everest-logo-31bd5636.webp",
+  heroWave: "2026-08/hero-bg-wave-b66e332f.webp",
+  aboutHeroBg: "2026-08/about-hero-bg-ce2a95f4.webp",
+  aboutHeroLogo: "2026-08/about-hero-logo-73cdec1b.webp",
+  aboutHeroAccentA: "2026-08/about-hero-accent-a-693e3a1c.webp",
+  aboutHeroAccentB: "2026-08/about-hero-accent-b-6f1a37c5.webp",
   samsung: "2026-08/samsung-9e6f77f1.webp",
   img4: "2026-08/img4-2d45af41.webp",
   aqua: "2026-08/aqua-f927b99a.webp",

@@ -65,6 +65,37 @@ export default async function AboutPage() {
     <div className="flex min-h-screen flex-col">
       <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
       <main className="flex-1">
+        {/* ============ 0. ABOUT HERO (About Us, 161-3907) ============ */}
+        <section className="relative flex min-h-[1024px] items-center justify-center overflow-hidden bg-[#fafafa]">
+          {/* background photo */}
+          <div className="absolute inset-0" aria-hidden="true">
+            <Image
+              src={brandUrl("aboutHeroBg")}
+              alt=""
+              fill
+              className="object-cover opacity-20"
+              sizes="100vw"
+            />
+          </div>
+          {/* corner accents */}
+          <div className="absolute left-[-40px] top-[120px] hidden h-[200px] w-[300px] overflow-hidden rounded-xl md:block opacity-80" aria-hidden="true">
+            <Image src={brandUrl("aboutHeroAccentA")} alt="" fill className="object-cover" sizes="300px" />
+          </div>
+          <div className="absolute bottom-[140px] right-[-40px] hidden h-[200px] w-[300px] overflow-hidden rounded-xl md:block opacity-80" aria-hidden="true">
+            <Image src={brandUrl("aboutHeroAccentB")} alt="" fill className="object-cover" sizes="300px" />
+          </div>
+          {/* center logo */}
+          <div className="relative z-10 flex flex-col items-center px-6 text-center">
+            <Image
+              src={brandUrl("aboutHeroLogo")}
+              alt="Everest Electronics"
+              width={362}
+              height={362}
+              className="h-[220px] w-[220px] object-contain md:h-[362px] md:w-[362px]"
+            />
+          </div>
+        </section>
+
         {/* ============ 1. VISI / MISI ============ */}
         <section className="bg-[#fafafa] pt-32 pb-24">
           <div className="container-everest">

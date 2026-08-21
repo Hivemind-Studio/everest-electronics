@@ -92,12 +92,15 @@ export default async function HomePage() {
       <main className="flex-1">
         {/* ============ 1. HERO (0-1024) ============ */}
         <section className="relative flex min-h-[1024px] items-center overflow-hidden bg-[#fafafa]">
-          {/* Figma vector wave background (exact asset from node 138-2621) */}
-          <img
-            src="/hero/vector-wave.svg"
+          {/* Exact Figma hero background image (user-provided, from node 138-2621) */}
+          <Image
+            src={brandUrl("heroWave")}
             alt=""
+            fill
+            priority
             aria-hidden="true"
-            className="pointer-events-none absolute right-[-280px] top-[-40px] h-[806px] w-[1750px] select-none object-contain"
+            className="pointer-events-none object-cover"
+            sizes="100vw"
           />
           <div className="container-everest relative z-10 py-28">
             <h1 className="font-display max-w-[864px] text-[clamp(3rem,8.3vw,7.5rem)] font-semibold leading-[1.04] tracking-[-0.01em] text-[#1c1c1c]">
