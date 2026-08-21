@@ -226,23 +226,23 @@ export default async function HomePage() {
         {/* ============ 5. UNTUK BISNIS (138:2239, 3072-4096) dark navy, divider, 2x2 horizontal cards ============ */}
         <section id="bisnis" className="min-h-[1024px] bg-[#182a3a] pt-[100px]">
           <div className="container-everest">
-            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:h-[188px]">
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#fafafa]">
                 Untuk&nbsp;Bisnis
               </h2>
-              <p className="max-w-[232px] text-right text-base leading-snug text-[#fafafa]">
+              <p className="max-w-[232px] text-right text-base leading-snug text-[#fafafa] md:mt-4">
                 Solusi tata udara yang dirancang untuk performa, efisiensi, dan masa pakai jangka panjang.
               </p>
             </div>
-            <hr className="mt-5 border-t border-white/10" />
-            <div className="mt-8 grid gap-x-[35px] gap-y-9 lg:grid-cols-2">
+            <hr className="border-t border-white/10" />
+            <div className="mt-8 grid gap-x-[35px] gap-y-8 lg:grid-cols-2">
               {BUSINESS_OFFERS.map((o) => (
                 <a
                   key={o.title}
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex flex-col justify-between rounded-xl bg-white/5 px-6 py-8 transition-colors hover:border hover:border-[#56d2ff]"
+                  className="group flex h-[286px] flex-col justify-between rounded-xl bg-white/5 px-6 pt-6 pb-8 transition-colors hover:border hover:border-[#56d2ff]"
                 >
                   <div>
                     <h3 className="font-display text-[32px] font-bold leading-tight text-[#fafafa]">
@@ -250,7 +250,7 @@ export default async function HomePage() {
                     </h3>
                     <p className="mt-3 text-xl leading-relaxed text-[#b3b3b3]">{o.desc}</p>
                   </div>
-                  <div className="mt-6 flex items-center gap-2 text-xl text-[#fafafa]">
+                  <div className="flex items-center gap-2 text-xl font-normal text-[#fafafa]">
                     Hubungi Kami
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
