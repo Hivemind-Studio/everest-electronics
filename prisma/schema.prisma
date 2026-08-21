@@ -27,7 +27,8 @@ model GlobalSettings {
   heroTagline          String  @default("Pioneering premium air conditioning and professional electronic integration across Indonesia with master craftsmanship.")
   copyright            String  @default("Copyright © 2026 Everest Electronics. All rights reserved.")
   heroImageUrl         String? // key of the hero background image uploaded via CDN
-  promoImageUrl        String? // key of the featured promo banner image
+  promoImageUrl        String? // key of the featured promo banner image (legacy/single)
+  promoImages          String[] @default([]) // list of promo carousel banner image keys
   projectsUrl          String  @default("") // external portfolio/projects URL (nav Project CTA)
   updatedAt            DateTime @updatedAt
 }

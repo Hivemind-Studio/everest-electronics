@@ -12,6 +12,10 @@ export async function updateSettings(formData: FormData) {
   const prev = await prisma.globalSettings.findUnique({ where: { id: 1 } });
   const newHero = opt("heroImageUrl");
   const newPromo = opt("promoImageUrl");
+  const newPromos = String(formData.get("promoImages") || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
   await prisma.globalSettings.upsert({
     where: { id: 1 },
     update: {
@@ -33,6 +37,7 @@ export async function updateSettings(formData: FormData) {
       copyright: g("copyright"),
       heroImageUrl: opt("heroImageUrl"),
       promoImageUrl: opt("promoImageUrl"),
+      promoImages: newPromos,
       projectsUrl: g("projectsUrl"),
     },
     create: {
@@ -55,6 +60,7 @@ export async function updateSettings(formData: FormData) {
       copyright: g("copyright"),
       heroImageUrl: opt("heroImageUrl"),
       promoImageUrl: opt("promoImageUrl"),
+      promoImages: newPromos,
       projectsUrl: g("projectsUrl"),
     },
   });

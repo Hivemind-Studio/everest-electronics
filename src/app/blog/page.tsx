@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 import { waLink, promoWaMessage, consultationWaMessage } from "@/lib/wa";
@@ -75,30 +76,43 @@ export default async function BlogIndexPage({
       <main className="flex-1">
         <section className="bg-paper pt-32 pb-20">
           <div className="container-everest">
-            {/* Promotion Banner — bg image + HTML heading per design */}
-            <div className="relative mb-20 overflow-hidden rounded-lg bg-[#1e4394]">
-              <div className="absolute inset-0" aria-hidden="true">
-                <Image src={promoImg} alt="" fill className="object-cover" sizes="100vw" />
-                <div className="absolute inset-0 bg-[#1e4394]/70" />
-              </div>
-              <div className="relative z-10 flex min-h-[380px] flex-col items-center justify-center gap-6 p-10 md:p-16 text-center">
-                <p className="eyebrow text-[#c5a880]">Featured Promo</p>
-                <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] text-[#fafafa]">
-                  Promotion Banner
-                </h2>
-                <a
-                  href={waLink(wa, promoWaMessage(settings.brandName))}
-                  target="_blank"
-                  rel="noopener"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#fafafa] px-7 py-3.5 text-sm font-medium text-[#1c1c1c] transition-colors hover:bg-[#c5a880] hover:text-white"
-                >
-                  Claim Promo Now
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+            {/* Promotion Banner — carousel (per Figma 161:3487) */}
+            {(() => {
+              const slides: PromoSlide[] = [];
+              // carousel images provided by admin (promoImages list) — each becomes a slide
+              const promoList = (settings.promoImages || []).filter(Boolean);
+              if (promoList.length > 0) {
+                for (const key of promoList) {
+                  slides.push({
+                    image: buildAssetUrl(key),
+                    title: "Promotion Banner",
+                    ctaLabel: "Claim Promo Now",
+                    ctaHref: waLink(wa, promoWaMessage(settings.brandName)),
+                  });
+                }
+              }
+              // fallback: single promo image + post images
+              if (slides.length === 0) {
+                slides.push({
+                  image: promoImg,
+                  eyebrow: "Featured Promo",
+                  title: "Promotion Banner",
+                  ctaLabel: "Claim Promo Now",
+                  ctaHref: waLink(wa, promoWaMessage(settings.brandName)),
+                });
+                for (const p of posts) {
+                  if (p.imageUrl) {
+                    slides.push({
+                      image: buildAssetUrl(p.imageUrl),
+                      title: p.title,
+                      ctaLabel: "Baca Artikel",
+                      ctaHref: `/blog/${p.slug}`,
+                    });
+                  }
+                }
+              }
+              return <PromoCarousel slides={slides} />;
+            })()}
 
             <p className="eyebrow">Insights &amp; Updates</p>
             <h1 className="mt-3 font-display text-[clamp(2.5rem,5vw,4rem)] font-semibold leading-[1.05] text-[#000]">

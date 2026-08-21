@@ -1,6 +1,7 @@
 import { getSettings } from "@/lib/data";
 import { updateSettings } from "./actions";
 import { ImageUploader } from "@/components/admin/ImageUploader";
+import { MultiImageUploader } from "@/components/admin/MultiImageUploader";
 
 export const metadata = { title: "Pengaturan | Everest Electronics" };
 
@@ -53,7 +54,8 @@ export default async function AdminSettingsPage() {
           <h3 className="mb-4 font-display text-lg font-bold text-ink">Gambar Banner</h3>
           <div className="space-y-6">
             <ImageUploader name="heroImageUrl" label="Gambar Hero (background)" defaultValue={s.heroImageUrl} />
-            <ImageUploader name="promoImageUrl" label="Gambar Promo (Featured Banner)" defaultValue={s.promoImageUrl} />
+            <ImageUploader name="promoImageUrl" label="Gambar Promo (Featured Banner, single)" defaultValue={s.promoImageUrl} />
+            <MultiImageUploader name="promoImages" label="Gambar Carousel Promo (banyak)" defaultValue={s.promoImages} />
           </div>
         </div>
 
