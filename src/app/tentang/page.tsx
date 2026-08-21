@@ -67,13 +67,13 @@ export default async function AboutPage() {
       <main className="flex-1">
         {/* ============ 0. ABOUT HERO (About Us, 161-3907) ============ */}
         <section className="relative flex min-h-[1024px] items-center justify-center overflow-hidden bg-[#fafafa]">
-          {/* background photo */}
+          {/* background photo (full vibrancy per Figma opacity=1) */}
           <div className="absolute inset-0" aria-hidden="true">
             <Image
               src={brandUrl("aboutHeroBg")}
               alt=""
               fill
-              className="object-cover opacity-20"
+              className="object-cover"
               sizes="100vw"
             />
           </div>
@@ -233,7 +233,10 @@ export default async function AboutPage() {
           <div className="container-everest grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
             <div>
               <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-bold text-[#fafafa]">
-                Dipercaya oleh 500+ Mitra Ternama
+                Dipercaya oleh{" "}
+                <span className="text-[#1E4394]">500</span>
+                <span className="text-[#E71C29]">+</span>{" "}
+                Mitra Ternama
               </h2>
               <p className="mt-4 max-w-md text-base text-[#94a3b8]">
                 Provide reliable institutional-grade security across Indonesia&apos;s

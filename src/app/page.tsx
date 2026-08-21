@@ -267,7 +267,10 @@ export default async function HomePage() {
           <div className="container-everest w-full grid gap-6 lg:grid-cols-1">
             <div className="mx-auto max-w-[816px] text-center">
               <h2 className="font-display text-[32px] font-bold text-[#fafafa]">
-                Dipercaya oleh 500+ Mitra Ternama
+                Dipercaya oleh{" "}
+                <span className="text-[#1E4394]">500</span>
+                <span className="text-[#E71C29]">+</span>{" "}
+                Mitra Ternama
               </h2>
               <p className="mt-2 text-base leading-relaxed text-[#94a3b8]">
                 Providing reliable institutional-grade comfort across Indonesia&apos;s major developers and corporate infrastructures.
