@@ -164,10 +164,10 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 3. OFFICIAL DISTRIBUTORS (aqua, 1536-2048) ============ */}
-        <section className="min-h-[512px] bg-[#e8fbf8] pt-[63px]">
-          <div className="container-everest grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:items-center">
-            <h2 className="font-display text-[clamp(1.6rem,2.9vw,2.6rem)] font-semibold leading-tight text-[#2b2b2b]">
+        {/* ============ 3. OFFICIAL DISTRIBUTORS (aqua, same as /tentang 161-3935) ============ */}
+        <section className="bg-[#e8fbf8] py-24">
+          <div className="container-everest grid gap-12 lg:grid-cols-2 lg:items-center">
+            <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-semibold leading-tight text-ink-soft">
               Official&nbsp;Distributor&nbsp;Of Top Brands
             </h2>
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
