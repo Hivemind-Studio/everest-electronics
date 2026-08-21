@@ -102,11 +102,16 @@ test.describe("WhatsApp CTAs", () => {
     expect(href).toContain("wa.me/6287732018235");
   });
 
-  test("contact / consultation CTA links to WhatsApp", async ({ page }) => {
+  test("Temukan section shows Buka di Peta + contact + map", async ({ page }) => {
     await page.goto("/");
-    const cta = page.getByRole("link", { name: /Hubungi Tim Anda/ });
-    await expect(cta).toBeVisible();
-    expect(await cta.getAttribute("href")).toContain("wa.me");
+    // Buka di Peta links to the branch map location
+    const mapLink = page.getByRole("link", { name: /Buka di Peta/ }).first();
+    await expect(mapLink).toBeVisible();
+    const href = await mapLink.getAttribute("href");
+    expect(href).toContain("google.com/maps");
+    // contact panel + map present
+    await expect(page.getByText("Cleaning & Service Hotline")).toBeVisible();
+    await expect(page.getByText("Everest Ciledug HQ")).toBeVisible();
   });
 });
 

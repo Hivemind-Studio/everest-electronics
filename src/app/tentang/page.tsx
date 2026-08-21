@@ -213,22 +213,21 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* ============ 4. PARTNER PARADE (dark) ============ */}
-        <section className="bg-[#1c1c1c] py-24">
-          <div className="container-everest grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
-            <div>
-              <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-bold text-[#fafafa]">
+        {/* ============ 4. PARTNER PARADE (same layout as landing 138:2623/162:5085) ============ */}
+        <section className="flex min-h-[512px] items-center bg-[#1c1c1c] py-0">
+          <div className="container-everest w-full grid gap-6 lg:grid-cols-1">
+            <div className="mx-auto max-w-[816px] text-center">
+              <h2 className="font-display text-[32px] font-bold text-[#fafafa]">
                 Dipercaya oleh{" "}
                 <span className="text-[#1E4394]">500</span>
                 <span className="text-[#E71C29]">+</span>{" "}
                 Mitra Ternama
               </h2>
-              <p className="mt-4 max-w-md text-base text-[#94a3b8]">
-                Provide reliable institutional-grade security across Indonesia&apos;s
-                main developers and corporate infrastructures.
+              <p className="mt-2 text-base leading-relaxed text-[#94a3b8]">
+                Providing reliable institutional-grade comfort across Indonesia&apos;s major developers and corporate infrastructures.
               </p>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
               {PARTNERS.map((p) => (
                 <span key={p} className="font-display text-lg font-bold uppercase tracking-wide text-[#64748b]">
                   {p}
