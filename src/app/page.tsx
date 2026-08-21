@@ -236,7 +236,33 @@ export default async function HomePage() {
             </div>
             <hr className="border-t border-white/10" />
             <div className="mt-8 grid gap-x-[35px] gap-y-8 lg:grid-cols-2">
-              {BUSINESS_OFFERS.map((o) => (
+              {BUSINESS_OFFERS.slice(0, 2).map((o) => (
+                <a
+                  key={o.title}
+                  href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
+                  target="_blank"
+                  rel="noopener"
+                  className="group flex h-[286px] flex-col justify-between py-6"
+                >
+                  <div>
+                    <h3 className="font-display text-[32px] font-bold leading-tight text-[#fafafa]">
+                      {o.title}
+                    </h3>
+                    <p className="mt-3 text-xl leading-relaxed text-[#b3b3b3]">{o.desc}</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-xl font-normal text-[#fafafa]">
+                    Hubungi Kami
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </a>
+              ))}
+            </div>
+            {/* horizontal divider line between rows */}
+            <hr className="border-t border-white/10" />
+            <div className="mt-8 grid gap-x-[35px] gap-y-8 lg:grid-cols-2">
+              {BUSINESS_OFFERS.slice(2, 4).map((o) => (
                 <a
                   key={o.title}
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
