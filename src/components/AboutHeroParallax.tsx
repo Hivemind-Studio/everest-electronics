@@ -22,31 +22,28 @@ export function AboutHeroParallax() {
     const update = () => {
       const sec = sectionRef.current;
       if (!sec) return;
-      // how far the user has scrolled relative to the section (0 = at top of section, 1 = section scrolled past viewport)
       const rect = sec.getBoundingClientRect();
       const viewport = window.innerHeight;
-      // progress: -1 when section top is at viewport bottom, 0 when section top at viewport top, +1 beyond
-      const progress = rect.top / viewport; // positive when section below viewport
-      // normalize: -0.4 (section below) to 0.6 (section above) roughly
-      const p = Math.max(-0.6, Math.min(1.2, progress));
+      // progress from 1 (section fully below) through 0 (section top at viewport top) to -1 (scrolled past)
+      const progress = rect.top / viewport;
+      const p = Math.max(-1.2, Math.min(1.4, progress));
 
-      // Logo moves DOWN slightly as section scrolls up (progress goes negative)
+      // Logo moves DOWN strongly as the section scrolls up
       if (logoRef.current) {
-        logoRef.current.style.transform = `translateY(${p * 40}px)`;
+        logoRef.current.style.transform = `translateY(${p * 120}px)`;
       }
-      // Background scales up slightly (parallax depth)
+      // Background moves UP faster than logo (strong parallax depth)
       if (bgRef.current) {
-        bgRef.current.style.transform = `translateY(${p * -60}px) scale(1.15)`;
+        bgRef.current.style.transform = `translateY(${p * -180}px) scale(1.25)`;
       }
-      // Corner accents move inward as you scroll
+      // Corner accents translate inward strongly + vertical drift
       if (accALeftRef.current) {
-        accALeftRef.current.style.transform = `translateX(${p * 60}px)`;
+        accALeftRef.current.style.transform = `translate(${p * 140}px, ${p * 40}px)`;
       }
       if (accBRightRef.current) {
-        accBRightRef.current.style.transform = `translateX(${p * -60}px)`;
+        accBRightRef.current.style.transform = `translate(${p * -140}px, ${p * -50}px)`;
       }
     };
-    // animate on scroll + rAF
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(update);
@@ -86,7 +83,7 @@ export function AboutHeroParallax() {
       </div>
       <div
         ref={accBRightRef}
-        className="absolute bottom-[140px] right-[-40px] hidden h-[200px] w-[300px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
+        className="absolute top-[120px] right-[-40px] hidden h-[200px] w-[300px] overflow-hidden rounded-xl opacity-80 will-change-transform md:block"
         aria-hidden="true"
       >
         <Image src={brandUrl("aboutHeroAccentB")} alt="" fill className="object-cover" sizes="300px" />
