@@ -27,7 +27,7 @@ export function Header({
   return (
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-[#fafaf9] shadow-sm">
         <div className="container-everest flex h-[96px] items-center justify-between overflow-hidden">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" aria-label={`${brandName} — Beranda`} className="flex items-center">
             <Image
               src={brandUrl("logo")}
               alt="Everest Electronics"
@@ -35,9 +35,6 @@ export function Header({
               height={72}
               className="h-[72px] w-[72px] object-contain"
             />
-            <span className="font-display text-xl font-bold tracking-tight text-ink">
-              {brandName}
-            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -64,12 +61,12 @@ export function Header({
               </svg>
             </a>
           )}
-          <a
+          <Link
             href="/#lokasi"
             className="inline-flex items-center gap-1.5 rounded-full bg-[#1c1c1c] px-5 py-2 text-sm font-semibold text-[#fafafa] transition-colors hover:bg-[#1e4394]"
           >
-            Hubungi kami
-          </a>
+            Project
+          </Link>
         </nav>
 
         {/* Mobile menu button */}
@@ -117,7 +114,7 @@ export function Header({
             )}
             <li>
               <Link href="/#lokasi" onClick={() => setOpen(false)} className="btn-navy px-5 py-3 text-sm">
-                Hubungi kami
+                Project
               </Link>
             </li>
           </ul>

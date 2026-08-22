@@ -41,7 +41,7 @@ export default async function BlogIndexPage({
   const raw = Number(sp.page);
   const page = Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1;
 
-  const [settings, { items: posts, totalPages, total }, branches] = await Promise.all([
+  const [settings, { items: posts, totalPages }, branches] = await Promise.all([
     getSettings(),
     getPublishedPostsPage(page, PAGE_SIZE),
     getBranches(),

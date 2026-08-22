@@ -3,7 +3,7 @@ import Link from "next/link";
 import { TemukanKami } from "@/components/TemukanKami";
 import { getSettings, getPublishedPosts, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
-import { waLink, consultationWaMessage } from "@/lib/wa";
+import { waLink } from "@/lib/wa";
 import { brandUrl } from "@/lib/brandAssets";
 
 const DISTRIBUTOR_LOGOS = [
@@ -86,7 +86,7 @@ export default async function HomePage() {
         }}
       />
         {/* ============ 1. HERO (0-1024) ============ */}
-        <section className="relative flex min-h-[1024px] items-center overflow-hidden bg-[#fafafa]">
+        <section className="relative flex h-[100svh] max-h-[1024px] min-h-[640px] items-center overflow-hidden bg-[#fafafa]">
           {/* Exact Figma hero background image (user-provided, from node 138-2621) */}
           <Image
             src={brandUrl("heroWave")}
@@ -120,7 +120,7 @@ export default async function HomePage() {
             </div>
           </div>
           {/* subtitle bottom-right */}
-          <div className="container-everest absolute bottom-8 left-0 right-0 z-10 flex justify-end">
+          <div className="container-everest absolute bottom-10 left-0 right-0 z-10 hidden justify-end md:flex">
             <div className="max-w-[360px] text-right text-[#2b2b2b]">
               <p className="text-base leading-[1.22]">
                 EST. {settings.estYear} — INDONESIA
@@ -159,13 +159,13 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ============ 3. OFFICIAL DISTRIBUTORS (aqua, same as /tentang 161-3935) ============ */}
+        {/* ============ 3. OFFICIAL DISTRIBUTORS (Figma 138:2250 — aqua bg, heading left, strict 3x5 grid right) ============ */}
         <section className="bg-[#e8fbf8] py-24">
-          <div className="container-everest grid gap-12 lg:grid-cols-2 lg:items-center">
-            <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-semibold leading-tight text-ink-soft">
-              Official&nbsp;Distributor&nbsp;Of Top Brands
+          <div className="container-everest grid gap-12 lg:grid-cols-[359px_1fr] lg:items-start">
+            <h2 className="font-display text-[42px] font-semibold leading-[1.22] text-[#2b2b2b]">
+              Official Distributor Of&nbsp;Top&nbsp;Brands
             </h2>
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
+            <div className="grid grid-cols-3 gap-x-[60px] gap-y-9 justify-items-center lg:ml-6">
               {DISTRIBUTOR_LOGOS.map((logo) => (
                 <Image
                   key={logo}
@@ -173,7 +173,7 @@ export default async function HomePage() {
                   alt={logo}
                   width={118}
                   height={44}
-                  className="max-h-9 w-auto object-contain opacity-90"
+                  className="w-auto max-w-[118px] object-contain opacity-90"
                 />
               ))}
             </div>
@@ -185,7 +185,7 @@ export default async function HomePage() {
           <div className="container-everest">
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
-                Layanan&nbsp;Kami
+                Layanan<br />Kami
               </h2>
               <p className="max-w-[232px] text-right text-base text-[#2b2b2b]">
                 Layanan end-to-end untuk kebutuhan AC di rumah, apartemen, ruko, dan ruang personal Anda.
@@ -198,14 +198,14 @@ export default async function HomePage() {
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${s.title}*`)}
                   target="_blank"
                   rel="noopener"
-                  className="group flex flex-col justify-between rounded-xl border border-line-soft bg-white p-8 transition-colors hover:border-navy"
+                  className="group flex min-h-[429px] flex-col justify-between rounded-xl border border-line-soft bg-white p-8 transition-colors hover:border-navy"
                 >
                   <h3 className="font-display text-[32px] font-bold leading-tight text-[#1c1c1c]">
                     {s.title}
                   </h3>
                   <div className="mt-6">
                     <p className="text-xl leading-relaxed text-[#b3b3b3]">{s.desc}</p>
-                    <div className="mt-6 flex items-center gap-2 text-xl text-[#1c1c1c]">
+                    <div className="mt-2 flex items-center gap-2 text-xl text-[#1c1c1c]">
                       Hubungi Kami
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
@@ -223,7 +223,7 @@ export default async function HomePage() {
           <div className="container-everest">
             <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:h-[188px]">
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#fafafa]">
-                Untuk&nbsp;Bisnis
+                Untuk<br />Bisnis
               </h2>
               <p className="max-w-[232px] text-left text-base leading-snug text-[#fafafa] md:mt-4">
                 Solusi tata udara yang dirancang untuk performa, efisiensi, dan masa pakai jangka panjang.
@@ -312,7 +312,7 @@ export default async function HomePage() {
           <div className="container-everest">
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
-                Berita&nbsp;&amp;&nbsp;Blog
+                Berita<br />dan<br />Blog
               </h2>
               <p className="max-w-[232px] text-right text-base text-[#2b2b2b]">
                 Layanan end-to-end untuk kebutuhan AC di rumah, apartemen, ruko, dan ruang personal Anda.

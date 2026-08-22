@@ -1,4 +1,4 @@
-import { getSettings, type SiteSettings, type BranchItem } from "@/lib/data";
+import { getSettings, type BranchItem } from "@/lib/data";
 
 /* Shared "Temukan Kami" section (Figma 138:2171 / 161:4009) — single source of
    truth used by home, tentang, and blog pages. Extracted verbatim from the
@@ -10,7 +10,7 @@ export async function TemukanKami({ branches }: { branches: BranchItem[] }) {
   <section id="lokasi" className="min-h-[1024px] bg-[#fafafa] pt-[104px]">
     <div className="container-everest">
       <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-bold leading-[1.1] text-[#000]">
-        Temukan&nbsp;Kami
+        Temukan<br />Kami
       </h2>
       <hr className="mt-5 border-t border-[#e5e5e5]" />
       <div className="mt-12 grid gap-12 lg:grid-cols-[540px_540px] lg:justify-between">

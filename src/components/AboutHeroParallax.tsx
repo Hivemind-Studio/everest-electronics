@@ -61,7 +61,7 @@ export function AboutHeroParallax() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[1024px] items-center justify-center overflow-hidden bg-[#fafafa]"
+      className="relative flex h-[100svh] max-h-[1200px] items-center justify-center overflow-hidden bg-[#fafafa]"
     >
       {/* background photo (parallax layer) */}
       <div ref={bgRef} className="absolute inset-0 will-change-transform" aria-hidden="true">

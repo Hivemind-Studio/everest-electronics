@@ -44,12 +44,66 @@ const MISSIONS = [
   },
 ];
 
-/** V/H/V masonry aspect per award index. */
-const MASONRY_ASPECTS = [
-  "aspect-[3/4]", // V — vertical (tall)
-  "aspect-[16/10]", // H — horizontal (wide)
-  "aspect-[3/4]", // V — vertical (tall)
-];
+/* ------------------------- award card components -------------------------- */
+/* Per Figma 162:4970: V = 286x429 typographic card (title 32/700 #1C1C1C,
+   desc 20/400 #B3B3B3, "Learn More ↗" bottom-left); H = 511x286 photo card
+   offset down 72px with year CTA. Paddings 16. */
+
+type Award = Awaited<ReturnType<typeof import("@/lib/data").getAwards>>[number];
+
+function AwardVCard({ award: a }: { award: Award }) {
+  return (
+    <div className="group flex aspect-[286/429] flex-col justify-between bg-[#fafafa] p-4">
+      <div>
+        <h3 className="font-display text-[clamp(1.5rem,2.2vw,2rem)] font-bold leading-tight text-[#1c1c1c]">
+          {a.title}
+        </h3>
+        <p className="mt-1 text-base leading-snug text-[#b3b3b3]">{a.detail}</p>
+      </div>
+      <div className="flex items-center gap-1 text-base text-[#1c1c1c]">
+        Learn More
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function AwardHCard({ award: a }: { award: Award }) {
+  return (
+    <div className="group relative aspect-[511/286] overflow-hidden bg-[#fafafa] md:mt-[72px]">
+      {a.imageUrl && (
+        <>
+          <Image
+            src={buildAssetUrl(a.imageUrl)}
+            alt={a.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width:768px) 100vw, 40vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        </>
+      )}
+      <div className="absolute inset-0 flex flex-col justify-between p-4">
+        <div>
+          <h3 className="font-display text-[clamp(1.5rem,2.2vw,2rem)] font-bold leading-tight text-white">
+            {a.title}
+          </h3>
+          {!a.imageUrl && (
+            <p className="mt-1 text-base leading-snug text-[#b3b3b3]">{a.detail}</p>
+          )}
+        </div>
+        <div className="flex items-center gap-1 self-end text-base font-medium text-white">
+          {a.year}
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+            <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* --------------------------------- page ---------------------------------- */
 
@@ -108,55 +162,35 @@ export default async function AboutPage() {
         {/* ============ 2. PENGHARGAAN KAMI ============ */}
         <section id="penghargaan" className="bg-[#fafafa] py-24">
           <div className="container-everest">
-            <p className="eyebrow">Our Pride</p>
-            <h2
-              aria-label="Penghargaan Kami"
-              className="font-display text-[clamp(2.5rem,6vw,4rem)] font-semibold leading-[1.05] text-[#000]"
-            >
-              Penghargaan&nbsp;Kami
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-graphite">
-              Menyediakan layanan dengan standar dan kualitas tinggi yang konsisten
-              untuk memastikan kepuasan pelanggan yang berkelanjutan.
-            </p>
+            <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+              <h2 className="max-w-[405px] font-display text-[clamp(2.5rem,4.45vw,4rem)] font-semibold leading-[1.22] text-black">
+                Penghargaan<br />Kami
+              </h2>
+              <p className="max-w-[240px] text-base leading-[1.25] text-[#2b2b2b] md:text-left">
+                Melayani dengan hati,
+                <br />
+                bekerja dengan presisi.
+              </p>
+            </div>
+            <hr className="mt-8 border-t border-[#d4d4d4]" />
 
-            <div className="mt-14 grid gap-8 md:grid-cols-2">
-              {awards.map((a, i) =>
-                a.imageUrl ? (
-                  <div
-                    key={a.id}
-                    className={`group overflow-hidden rounded-xl bg-[#1c1c1c] ${MASONRY_ASPECTS[i % MASONRY_ASPECTS.length]}`}
-                  >
-                    <div className="relative h-full w-full overflow-hidden">
-                      <Image
-                        src={buildAssetUrl(a.imageUrl)}
-                        alt={a.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width:768px) 100vw, 50vw"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c]/90 via-[#1c1c1c]/30 to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-7">
-                        <div className="flex items-center justify-between gap-3">
-                          <h3 className="font-display text-2xl font-bold text-[#fafafa]">{a.title}</h3>
-                          <span className="shrink-0 text-sm font-semibold text-[#c5a880]">{a.year}</span>
-                        </div>
-                      </div>
-                    </div>
+            {/* Rows per Figma 162:4970 — [V, H(photo), V], H offset down 72px */}
+            <div className="mt-12 space-y-[71px]">
+              {[0, 1, 2].map((row) => {
+                const rowAwards = awards.slice(row * 3, row * 3 + 3);
+                if (rowAwards.length === 0) return null;
+                const [v1, hCard, v2] = rowAwards;
+                return (
+                  <div key={row} className="grid items-start gap-6 md:grid-cols-[286fr_511fr_286fr]">
+                    {/* V card (left) */}
+                    {v1 && <AwardVCard award={v1} />}
+                    {/* H card (middle — carries the photo, offset down 72px) */}
+                    {hCard ? <AwardHCard award={hCard} /> : <div aria-hidden className="hidden md:block" />}
+                    {/* V card (right) */}
+                    {v2 ? <AwardVCard award={v2} /> : <div aria-hidden className="hidden md:block" />}
                   </div>
-                ) : (
-                  <div
-                    key={a.id}
-                    className={`group overflow-hidden rounded-xl ${MASONRY_ASPECTS[i % MASONRY_ASPECTS.length]} bg-white flex flex-col`}
-                  >
-                    <div className="flex items-center justify-between gap-3 px-7 pt-7">
-                      <h3 className="font-display text-2xl font-bold text-ink">{a.title}</h3>
-                      <span className="shrink-0 text-sm font-semibold text-navy">{a.year}</span>
-                    </div>
-                    <p className="mt-3 flex-1 px-7 pb-7 text-base leading-relaxed text-graphite">{a.detail}</p>
-                  </div>
-                ),
-              )}
+                );
+              })}
             </div>
           </div>
         </section>
