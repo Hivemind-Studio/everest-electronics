@@ -8,7 +8,7 @@ import { brandUrl } from "@/lib/brandAssets";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Tentang Kami | Everest Electronics",
+  title: "Tentang Kami",
   description:
     "Visi kami adalah menjadi rekanan utama dalam penjualan dan layanan purna jual sistem pendingin udara seluruh Indonesia.",
   alternates: { canonical: "/tentang" },
@@ -62,6 +62,7 @@ export default async function AboutPage() {
   return (
     <>
         {/* ============ 0. ABOUT HERO (About Us, 161-3907) — parallax ============ */}
+        <h1 className="sr-only">Tentang Kami — Everest Electronics</h1>
         <AboutHeroParallax />
 
         {/* ============ 1. VISI / MISI (162:5108) ============ */}

@@ -9,14 +9,14 @@ import { waLink, promoWaMessage } from "@/lib/wa";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Berita & Blog | Everest Electronics",
+  title: "Berita & Blog",
   description:
     "Informasi edukatif seputar teknologi pendingin ruangan terbaru, tips perawatan mandiri, dan update proyek Everest.",
   alternates: { canonical: "/blog" },
   openGraph: {
     type: "website",
     url: "https://everest-electronics.zeabur.app/blog",
-    title: "Berita & Blog | Everest Electronics",
+    title: "Berita & Blog",
     description:
       "Informasi edukatif seputar teknologi pendingin ruangan terbaru, tips perawatan mandiri, dan update proyek Everest.",
     images: [

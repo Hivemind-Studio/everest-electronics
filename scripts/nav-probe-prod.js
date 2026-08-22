@@ -12,6 +12,9 @@ const BASE = process.env.PROBE_BASE_URL || "https://everest-electronics.zeabur.a
   const nav = async (from, href, marker) => {
     await page.goto(`${BASE}${from}`, { waitUntil: "domcontentloaded", timeout: 45000 });
     await page.waitForSelector("header nav", { timeout: 30000 });
+    // let React finish hydrating so the click goes through the app router
+    // (clicking earlier falls back to a full browser navigation - probe artifact)
+    await page.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});
     await page.evaluate(() => document.querySelector("header")?.setAttribute("data-probe", "marked"));
     const t0 = Date.now();
     await page.click(`nav[aria-label="Utama"] a[href="${href}"]`, { timeout: 30000 });

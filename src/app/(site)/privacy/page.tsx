@@ -4,7 +4,7 @@ import { getSettings } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Kebijakan Privasi | Everest Electronics",
+  title: "Kebijakan Privasi",
   description: "Kebijakan privasi penggunaan data pada situs Everest Electronics.",
   alternates: { canonical: "/privacy" },
 };

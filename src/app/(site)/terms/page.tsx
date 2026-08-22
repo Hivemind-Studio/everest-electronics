@@ -4,7 +4,7 @@ import { getSettings } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Syarat & Ketentuan | Everest Electronics",
+  title: "Syarat & Ketentuan",
   description: "Syarat dan Ketentuan penggunaan situs Everest Electronics.",
   alternates: { canonical: "/terms" },
 };

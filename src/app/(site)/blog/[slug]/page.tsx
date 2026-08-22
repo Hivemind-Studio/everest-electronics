@@ -17,7 +17,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return { title: "Artikel Tidak Ditemukan | Everest Electronics" };
-  const title = `${post.title} | Everest Electronics`;
+  const title = post.title;
   const description = post.excerpt;
   const ogImage = post.imageUrl
     ? buildAssetUrl(post.imageUrl)
@@ -59,8 +59,29 @@ export default async function BlogPostPage({
 
   const paragraphs = post.content.split(/\n+/).filter(Boolean);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    image: [post.imageUrl ? buildAssetUrl(post.imageUrl) : `${SITE_URL}/images/og-cover.jpg`],
+    datePublished: post.createdAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
+    author: { "@type": "Organization", name: settings.brandName },
+    publisher: {
+      "@type": "Organization",
+      name: settings.brandName,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/og-cover.jpg` },
+    },
+    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
         <article className="bg-paper pt-32 pb-20">
                   <div className="container-everest max-w-3xl">
                     <Link href="/blog" className="link-arrow text-sm">
