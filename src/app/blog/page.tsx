@@ -3,10 +3,11 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { TemukanKami } from "@/components/TemukanKami";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
-import { waLink, promoWaMessage, consultationWaMessage } from "@/lib/wa";
+import { waLink, promoWaMessage } from "@/lib/wa";
 
 export const dynamic = "force-dynamic";
 
@@ -210,53 +211,9 @@ export default async function BlogIndexPage({
               </p>
             )}
 
-            {/* ============ TEMUKAN KAMI ============ */}
-            <section id="lokasi" className="mt-20">
-              <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
-                Temukan&nbsp;Kami
-              </h2>
-              <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:justify-center">
-                <div className="space-y-6">
-                  {branches.map((b) => (
-                    <div key={b.id} className="rounded-xl border border-line-soft bg-white p-8">
-                      <h3 className="font-display text-[32px] font-bold leading-tight text-[#1c1c1c]">{b.name}</h3>
-                      <p className="mt-3 text-xl leading-relaxed text-[#b3b3b3]">{b.address}</p>
-                      <p className="mt-2 text-sm text-[#94a3b8]">{b.label}: {b.phone}</p>
-                      {b.mapUrl && (
-                        <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]">
-                          Buka di Peta
-                        </a>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="rounded-xl bg-[#fafafa] p-9">
-                  <h3 className="font-display text-xl font-bold text-ink">Hubungi kami</h3>
-                  <div className="mt-6 space-y-5">
-                    {[
-                      { k: "Cleaning & Service Hotline", v: settings.phoneDisplay },
-                      { k: "Corporate Inquiries", v: settings.emailMarketing },
-                      { k: "Official Web domain", v: "www.aceverestserpong.com" },
-                    ].map((c) => (
-                      <div key={c.k}>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-slate">{c.k}</p>
-                        <p className="mt-1 text-sm font-medium text-navydeep">{c.v}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <a
-                    href={waLink(wa, consultationWaMessage(settings.brandName))}
-                    target="_blank"
-                    rel="noopener"
-                    className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-navy-deep"
-                  >
-                    Hubungi Tim Anda
-                  </a>
-                </div>
-              </div>
-            </section>
           </div>
         </section>
+        <TemukanKami settings={settings} branches={branches} />
       </main>
       <Footer settings={settings} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
