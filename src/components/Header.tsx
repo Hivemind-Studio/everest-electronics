@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { brandUrl } from "@/lib/brandAssets";
+import { waLink, projectWaMessage } from "@/lib/wa";
 
 // Nav links per the Final Figma design (138-2366).
 const LINKS = [
@@ -18,9 +19,11 @@ const LINKS = [
 export function Header({
   brandName,
   projectsUrl,
+  whatsappNumber,
 }: {
   brandName: string;
   projectsUrl?: string;
+  whatsappNumber?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -61,12 +64,18 @@ export function Header({
               </svg>
             </a>
           )}
-          <Link
-            href="/#lokasi"
+          <a
+            href={
+              whatsappNumber
+                ? waLink(whatsappNumber, projectWaMessage(brandName))
+                : "/#lokasi"
+            }
+            target={whatsappNumber ? "_blank" : undefined}
+            rel={whatsappNumber ? "noopener" : undefined}
             className="inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy-deep"
           >
             Project
-          </Link>
+          </a>
         </nav>
 
         {/* Mobile menu button */}
@@ -113,9 +122,19 @@ export function Header({
               </li>
             )}
             <li>
-              <Link href="/#lokasi" onClick={() => setOpen(false)} className="btn-navy px-5 py-3 text-sm">
+              <a
+                href={
+                  whatsappNumber
+                    ? waLink(whatsappNumber, projectWaMessage(brandName))
+                    : "/#lokasi"
+                }
+                target={whatsappNumber ? "_blank" : undefined}
+                rel={whatsappNumber ? "noopener" : undefined}
+                onClick={() => setOpen(false)}
+                className="btn-navy px-5 py-3 text-sm"
+              >
                 Project
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>

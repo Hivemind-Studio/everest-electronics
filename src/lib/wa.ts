@@ -33,3 +33,8 @@ export function consultationWaMessage(brandName: string): string {
 export function promoWaMessage(brandName: string): string {
   return `Halo ${brandName}, saya ingin klaim promo Clean & Service. Mohon detailnya.`;
 }
+
+/** Navbar "Project" button message — project/portfolio inquiry. */
+export function projectWaMessage(brandName: string): string {
+  return `Halo ${brandName}, saya ingin menanyakan tentang proyek pemasangan sistem pendingin udara (AC). Bisa dibantu?`;
+}

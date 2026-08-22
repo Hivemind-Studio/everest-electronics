@@ -17,7 +17,11 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollToTop />
-      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
+      <Header
+        brandName={settings.brandName}
+        projectsUrl={settings.projectsUrl}
+        whatsappNumber={settings.whatsappNumber}
+      />
       <main className="flex-1">{children}</main>
       <Footer settings={settings} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
