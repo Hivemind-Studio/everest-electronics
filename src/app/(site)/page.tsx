@@ -312,7 +312,7 @@ export default async function HomePage() {
           <div className="container-everest">
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
-                Berita<br />dan<br />Blog
+                Berita dan<br />Blog
               </h2>
               <p className="max-w-[232px] text-right text-base text-[#2b2b2b]">
                 Layanan end-to-end untuk kebutuhan AC di rumah, apartemen, ruko, dan ruang personal Anda.
