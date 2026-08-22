@@ -1,16 +1,11 @@
-import type { SiteSettings, BranchItem } from "@/lib/data";
+import { getSettings, type SiteSettings, type BranchItem } from "@/lib/data";
 
 /* Shared "Temukan Kami" section (Figma 138:2171 / 161:4009) — single source of
    truth used by home, tentang, and blog pages. Extracted verbatim from the
    Figma-matched home implementation so every page stays pixel-identical. */
 
-export function TemukanKami({
-  settings,
-  branches,
-}: {
-  settings: SiteSettings;
-  branches: BranchItem[];
-}) {
+export async function TemukanKami({ branches }: { branches: BranchItem[] }) {
+  const settings = await getSettings();
   return (
   <section id="lokasi" className="min-h-[1024px] bg-[#fafafa] pt-[104px]">
     <div className="container-everest">

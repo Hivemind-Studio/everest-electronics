@@ -1,7 +1,4 @@
 import Link from "next/link";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { getSettings } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
@@ -15,9 +12,7 @@ export const metadata = {
 export default async function TermsPage() {
   const settings = await getSettings();
   return (
-    <div className="flex min-h-screen flex-col bg-paper">
-      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
-      <main className="flex-1">
+    <>
         <section className="pt-32 pb-20">
           <div className="container-everest max-w-3xl">
             <h1 className="section-heading">Syarat &amp; Ketentuan</h1>
@@ -41,9 +36,6 @@ export default async function TermsPage() {
             </div>
           </div>
         </section>
-      </main>
-      <Footer settings={settings} />
-      <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
-    </div>
+    </>
   );
 }

@@ -1,8 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { TemukanKami } from "@/components/TemukanKami";
 import { getSettings, getPublishedPosts, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
@@ -65,7 +62,7 @@ export default async function HomePage() {
   const wa = settings.whatsappNumber;
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -88,9 +85,6 @@ export default async function HomePage() {
           }),
         }}
       />
-      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
-
-      <main className="flex-1">
         {/* ============ 1. HERO (0-1024) ============ */}
         <section className="relative flex min-h-[1024px] items-center overflow-hidden bg-[#fafafa]">
           {/* Exact Figma hero background image (user-provided, from node 138-2621) */}
@@ -343,12 +337,8 @@ export default async function HomePage() {
           </div>
         </section>
 
-{/* ============ 8. TEMUKAN KAMI (138:2171, 5632-6656) - shared component ============ */}
-        <TemukanKami settings={settings} branches={branches} />
-      </main>
-
-      <Footer settings={settings} />
-      <FloatingWhatsApp number={wa} brandName={settings.brandName} />
-    </div>
+        {/* ============ 8. TEMUKAN KAMI (138:2171, 5632-6656) - shared component ============ */}
+        <TemukanKami branches={branches} />
+    </>
   );
 }

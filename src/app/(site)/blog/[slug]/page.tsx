@@ -1,9 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { getSettings, getPostBySlug, getBranches, getPublishedPosts } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 import { waLink, consultationWaMessage } from "@/lib/wa";
@@ -63,9 +60,7 @@ export default async function BlogPostPage({
   const paragraphs = post.content.split(/\n+/).filter(Boolean);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
-      <main className="flex-1">
+    <>
         <article className="bg-paper pt-32 pb-20">
                   <div className="container-everest max-w-3xl">
                     <Link href="/blog" className="link-arrow text-sm">
@@ -192,9 +187,6 @@ export default async function BlogPostPage({
                     </div>
                   </div>
                 </section>
-      </main>
-      <Footer settings={settings} />
-      <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
-    </div>
+    </>
   );
 }

@@ -1,10 +1,7 @@
 import Image from "next/image";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { TemukanKami } from "@/components/TemukanKami";
 import { AboutHeroParallax } from "@/components/AboutHeroParallax";
-import { getSettings, getAwards, getBranches } from "@/lib/data";
+import { getAwards, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 import { brandUrl } from "@/lib/brandAssets";
 
@@ -57,16 +54,13 @@ const MASONRY_ASPECTS = [
 /* --------------------------------- page ---------------------------------- */
 
 export default async function AboutPage() {
-  const [settings, awards, branches] = await Promise.all([
-    getSettings(),
+  const [awards, branches] = await Promise.all([
     getAwards(),
     getBranches(),
   ]);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
-      <main className="flex-1">
+    <>
         {/* ============ 0. ABOUT HERO (About Us, 161-3907) — parallax ============ */}
         <AboutHeroParallax />
 
@@ -211,12 +205,8 @@ export default async function AboutPage() {
           </div>
         </section>
 
-{/* ============ 5. TEMUKAN KAMI (161:4009) - shared component ============ */}
-        <TemukanKami settings={settings} branches={branches} />
-      </main>
-
-      <Footer settings={settings} />
-      <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
-    </div>
+        {/* ============ 5. TEMUKAN KAMI (161:4009) - shared component ============ */}
+        <TemukanKami branches={branches} />
+    </>
   );
 }

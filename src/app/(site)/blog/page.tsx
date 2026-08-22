@@ -1,8 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { TemukanKami } from "@/components/TemukanKami";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
 import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
@@ -72,9 +69,7 @@ export default async function BlogIndexPage({
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
-      <main className="flex-1">
+    <>
         <section className="bg-paper pt-32 pb-20">
           <div className="container-everest">
             {/* Promotion Banner — carousel (per Figma 161:3487) */}
@@ -213,10 +208,7 @@ export default async function BlogIndexPage({
 
           </div>
         </section>
-        <TemukanKami settings={settings} branches={branches} />
-      </main>
-      <Footer settings={settings} />
-      <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
-    </div>
+        <TemukanKami branches={branches} />
+    </>
   );
 }
