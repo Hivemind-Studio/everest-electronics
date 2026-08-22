@@ -197,11 +197,11 @@ export default async function AboutPage() {
 
         {/* ============ 3. OFFICIAL DISTRIBUTORS (aqua) ============ */}
         <section className="bg-[#e8fbf8] py-24">
-          <div className="container-everest grid gap-12 lg:grid-cols-2 lg:items-center">
-            <h2 className="font-display text-[clamp(1.5rem,3.5vw,2.6rem)] font-semibold leading-tight text-ink-soft">
-              Official&nbsp;Distributor&nbsp;Of Top Brands
+          <div className="container-everest grid gap-12 lg:grid-cols-[359px_1fr] lg:items-start">
+            <h2 className="font-display text-[42px] font-semibold leading-[1.22] text-[#2b2b2b]">
+              Official Distributor Of&nbsp;Top&nbsp;Brands
             </h2>
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
+            <div className="grid grid-cols-4 gap-x-12 gap-y-10 justify-items-center">
               {DISTRIBUTOR_LOGOS.map((logo) => (
                 <Image
                   key={logo}

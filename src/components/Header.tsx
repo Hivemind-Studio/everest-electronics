@@ -63,7 +63,7 @@ export function Header({
           )}
           <Link
             href="/#lokasi"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#1c1c1c] px-5 py-2 text-sm font-semibold text-[#fafafa] transition-colors hover:bg-[#1e4394]"
+            className="inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy-deep"
           >
             Project
           </Link>

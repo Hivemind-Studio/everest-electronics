@@ -165,7 +165,7 @@ export default async function HomePage() {
             <h2 className="font-display text-[42px] font-semibold leading-[1.22] text-[#2b2b2b]">
               Official Distributor Of&nbsp;Top&nbsp;Brands
             </h2>
-            <div className="grid grid-cols-3 gap-x-[60px] gap-y-9 justify-items-center lg:ml-6">
+            <div className="grid grid-cols-4 gap-x-12 gap-y-10 justify-items-center lg:ml-6">
               {DISTRIBUTOR_LOGOS.map((logo) => (
                 <Image
                   key={logo}
