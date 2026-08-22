@@ -7,6 +7,8 @@ export const metadata = {
   title: "Kebijakan Privasi",
   description: "Kebijakan privasi penggunaan data pada situs Everest Electronics.",
   alternates: { canonical: "/privacy" },
+  // S-F04: og:url must match the canonical (root layout defaults to "/")
+  openGraph: { url: "/privacy" },
 };
 
 export default async function PrivacyPage() {

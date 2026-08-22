@@ -24,7 +24,7 @@ export async function TemukanKami({ branches }: { branches: BranchItem[] }) {
               <p className="mt-4 text-xl leading-relaxed text-[#b3b3b3]">{b.address}</p>
               <p className="mt-2 text-sm text-[#94a3b8]">{b.label}: {b.phone}</p>
               {b.mapUrl && (
-                <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]">
+                <a href={b.mapUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]">
                   {/* location pin icon */}
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                     <path d="M9.85723 8.44425C10.0937 8.20825 10.212 7.9225 10.212 7.587C10.212 7.251 10.0937 6.965 9.85723 6.729C9.62123 6.493 9.33548 6.375 8.99998 6.375C8.66448 6.375 8.37873 6.493 8.14273 6.729C7.90673 6.965 7.78873 7.251 7.78873 7.587C7.78873 7.922 7.90673 8.20775 8.14273 8.44425C8.37873 8.68025 8.66448 8.79825 8.99998 8.79825C9.33548 8.79825 9.62123 8.68025 9.85723 8.44425ZM8.99998 15.7642C7.23748 14.2057 5.90998 12.7522 5.01748 11.4037C4.12448 10.0553 3.67798 8.828 3.67798 7.722C3.67798 6.1355 4.19448 4.827 5.22748 3.7965C6.26098 2.7655 7.51848 2.25 8.99998 2.25C10.4815 2.25 11.739 2.7655 12.7725 3.7965C13.8055 4.827 14.322 6.1355 14.322 7.722C14.322 8.828 13.8757 10.0553 12.9832 11.4037C12.0902 12.7522 10.7625 14.2057 8.99998 15.7642Z" fill="#1C1C1C" />

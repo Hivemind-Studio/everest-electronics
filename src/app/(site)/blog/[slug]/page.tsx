@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import { getSettings, getPostBySlug, getBranches, getPublishedPosts } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 import { waLink, consultationWaMessage } from "@/lib/wa";
+import { SITE_URL, truncateTitle, deriveDescription } from "@/lib/seo";
+import { resolveOgImage } from "@/lib/imageMeta";
 
 export const dynamic = "force-dynamic";
-
-const SITE_URL = "https://everest-electronics.zeabur.app";
 
 export async function generateMetadata({
   params,
@@ -17,28 +17,42 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return { title: "Artikel Tidak Ditemukan | Everest Electronics" };
-  const title = post.title;
-  const description = post.excerpt;
-  const ogImage = post.imageUrl
-    ? buildAssetUrl(post.imageUrl)
-    : `${SITE_URL}/images/og-cover.jpg`;
+  // C-F07: meta title capped at ~55 chars at a word boundary; the layout
+  // template still appends "| Everest Electronics". Visible H1 unchanged.
+  const title = truncateTitle(post.title, 55);
+  // C-F01: meta description from the first ~155 chars of the article body
+  // (excerpt fallback) — applied to metadata only, never to visible copy.
+  const description = deriveDescription(post.content, post.excerpt);
+  // S-F02 guardrail: sub-600px covers fall back to the branded OG image.
+  const og = await resolveOgImage(post.imageUrl);
+  const ogImageMeta = {
+    url: og.url,
+    ...(og.width && og.height ? { width: og.width, height: og.height } : {}),
+    alt: post.title,
+  };
   return {
     title,
     description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
+      // S-F04: carry sitewide fields explicitly instead of dropping them.
+      siteName: "Everest Electronics",
+      locale: "id_ID",
       url: `${SITE_URL}/blog/${post.slug}`,
       title,
       description,
-      images: [{ url: ogImage, alt: post.title }],
+      images: [ogImageMeta],
       publishedTime: post.createdAt.toISOString(),
+      // S-F07a: expose the real last-updated timestamp.
+      modifiedTime: post.updatedAt.toISOString(),
     },
     twitter: {
+      // S-F04: /blog posts previously fell back to the generic sitewide card.
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
+      images: [og.url],
     },
   };
 }
@@ -59,21 +73,41 @@ export default async function BlogPostPage({
 
   const paragraphs = post.content.split(/\n+/).filter(Boolean);
 
+  // S-F02 guardrail applies to the Article image too (shared cached probe).
+  const cardImage = await resolveOgImage(post.imageUrl);
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    image: [post.imageUrl ? buildAssetUrl(post.imageUrl) : `${SITE_URL}/images/og-cover.jpg`],
+    // S-F06: real icon asset with dimensions instead of a full banner.
+    image: [cardImage.url],
     datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
     author: { "@type": "Organization", name: settings.brandName },
     publisher: {
       "@type": "Organization",
       name: settings.brandName,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/images/og-cover.jpg` },
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/apple-icon.png`,
+        width: 180,
+        height: 180,
+      },
     },
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+  };
+
+  // S-F03: Beranda > Berita & Blog > post title
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Berita & Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title },
+    ],
   };
 
   return (
@@ -82,17 +116,21 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
         <article className="bg-paper pt-32 pb-20">
                   <div className="container-everest max-w-3xl">
                     <Link href="/blog" className="link-arrow text-sm">
                       ← Kembali ke Blog
                     </Link>
                     <p className="mt-8 text-xs font-bold uppercase tracking-widest text-mist">
-                      {new Date(post.createdAt).toLocaleDateString("id-ID", {
+                      <time dateTime={post.createdAt.toISOString()}>{new Date(post.createdAt).toLocaleDateString("id-ID", {
                         day: "numeric",
                         month: "long",
                         year: "numeric",
-                      })}
+                      })}</time>
                     </p>
                     <h1 className="mt-3 font-display text-[clamp(2.75rem,5vw,4.5rem)] font-bold leading-[1.05] text-[#000]">{post.title}</h1>
 
@@ -175,7 +213,7 @@ export default async function BlogPostPage({
                             <p className="mt-3 text-xl leading-relaxed text-[#b3b3b3]">{b.address}</p>
                             <p className="mt-2 text-sm text-[#94a3b8]">{b.label}: {b.phone}</p>
                             {b.mapUrl && (
-                              <a href={b.mapUrl} target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]">
+                              <a href={b.mapUrl} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-xl font-normal text-[#1c1c1c]">
                                 Buka di Peta
                               </a>
                             )}
@@ -199,7 +237,7 @@ export default async function BlogPostPage({
                         <a
                           href={waLink(settings.whatsappNumber, consultationWaMessage(settings.brandName))}
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-navy-deep"
                         >
                           Hubungi Tim Anda

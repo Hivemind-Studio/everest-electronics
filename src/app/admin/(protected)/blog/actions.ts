@@ -48,15 +48,9 @@ export async function updatePost(formData: FormData) {
   const imageUrl = String(formData.get("imageUrl") || "").trim() || null;
 
   const prev = await prisma.blogPost.findUnique({ where: { id } });
-  let slug = slugify(title);
-  // if changing title onto an existing slug, make it unique (excluding self)
-  if (slug) {
-    const clash = await prisma.blogPost.findFirst({ where: { slug, id: { not: id } } });
-    if (clash) slug = await uniqueSlug(title);
-    else if (!prev || prev.slug !== slug) {
-      // keep the existing slug stable unless it equals the new slug
-    }
-  }
+  // URL stability: keep the published slug; editing a title never rewrites
+  // the URL of a live post. uniqueSlug only runs at create time.
+  const slug = prev?.slug ?? (await uniqueSlug(title));
 
   await prisma.blogPost.update({
     where: { id },

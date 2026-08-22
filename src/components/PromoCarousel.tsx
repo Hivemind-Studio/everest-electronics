@@ -61,7 +61,7 @@ export function PromoCarousel({ slides }: { slides: PromoSlide[] }) {
           <a
             href={slide.ctaHref}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-[#1c1c1c] px-7 py-3.5 text-sm font-medium text-[#fafafa] transition-colors hover:bg-[#1e4394]"
           >
             {slide.ctaLabel}

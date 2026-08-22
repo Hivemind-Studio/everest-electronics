@@ -5,10 +5,25 @@ import { getSettings, getPublishedPosts, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 import { waLink } from "@/lib/wa";
 import { brandUrl } from "@/lib/brandAssets";
+import { SITE_URL, filterSameAs, toE164ish } from "@/lib/seo";
 
-const DISTRIBUTOR_LOGOS = [
-  "samsung", "img4", "aqua", "polytron", "midea", "mitsubishi",
-  "changhong", "lg", "hisense", "panasonic", "sharp", "gree", "daikin", "img5", "img6",
+// C-F03: meaningful alt text per distributor logo (key -> human label).
+const DISTRIBUTOR_LOGOS: { key: string; label: string }[] = [
+  { key: "samsung", label: "Samsung" },
+  { key: "img4", label: "Reiwa" }, // CDN img4 = REIWA "Living Style" logo (vision-verified)
+  { key: "aqua", label: "Aqua" },
+  { key: "polytron", label: "Polytron" },
+  { key: "midea", label: "Midea" },
+  { key: "mitsubishi", label: "Mitsubishi" },
+  { key: "changhong", label: "Changhong" },
+  { key: "lg", label: "LG" },
+  { key: "hisense", label: "Hisense" },
+  { key: "panasonic", label: "Panasonic" },
+  { key: "sharp", label: "Sharp" },
+  { key: "gree", label: "Gree" },
+  { key: "daikin", label: "Daikin" },
+  { key: "img5", label: "Frimec International" }, // vision-verified
+  { key: "img6", label: "TICA Air Conditioning" }, // vision-verified
 ];
 
 const PARTNERS = [
@@ -61,6 +76,26 @@ export default async function HomePage() {
   ]);
   const wa = settings.whatsappNumber;
 
+  // S-F01/S-F05/S-F08: enrich LocalBusiness from data already on the page.
+  // No invented openingHours/geo; placeholder socials filtered (S-F08).
+  const contactPoints = branches
+    .map((b) => ({ label: b.label, telephone: toE164ish(b.phone) }))
+    .filter((cp): cp is { label: string; telephone: string } => cp.telephone !== null)
+    .map((cp) => ({
+      "@type": "ContactPoint",
+      telephone: cp.telephone,
+      contactType: "customer service",
+      name: `${settings.brandName} — ${cp.label}`,
+      availableLanguage: ["id"],
+    }));
+  const sameAs = filterSameAs([
+    settings.instagramUrl,
+    settings.facebookUrl,
+    settings.youtubeUrl,
+    settings.linkedinUrl,
+    settings.tiktokUrl,
+  ]);
+
   return (
     <>
       <script
@@ -71,17 +106,13 @@ export default async function HomePage() {
             "@type": "LocalBusiness",
             name: settings.brandName,
             telephone: settings.phoneDisplay,
-            founded: settings.estYear,
-            url: "https://everest-electronics.zeabur.app",
+            // S-F05: `founded` is not a schema.org property.
+            foundingDate: settings.estYear,
+            url: SITE_URL,
             areaServed: "Indonesia",
-            contactPoint: [
-              {
-                "@type": "ContactPoint",
-                telephone: `+${settings.whatsappNumber}`,
-                contactType: "sales",
-                availableLanguage: ["id", "en"],
-              },
-            ],
+            image: `${SITE_URL}/images/og-cover.jpg`,
+            ...(contactPoints.length > 0 ? { contactPoint: contactPoints } : {}),
+            ...(sameAs.length > 0 ? { sameAs } : {}),
           }),
         }}
       />
@@ -160,7 +191,7 @@ export default async function HomePage() {
         </section>
 
         {/* ============ 3. OFFICIAL DISTRIBUTORS (Figma 138:2250 — aqua bg, heading left, strict 3x5 grid right) ============ */}
-        <section className="bg-[#e8fbf8] py-24">
+        <section id="distributors" className="bg-[#e8fbf8] py-24">
           <div className="container-everest grid gap-12 lg:grid-cols-[359px_1fr] lg:items-start">
             <h2 className="font-display text-[42px] font-semibold leading-[1.22] text-[#2b2b2b]">
               Official Distributor Of&nbsp;Top&nbsp;Brands
@@ -168,9 +199,9 @@ export default async function HomePage() {
             <div className="grid grid-cols-4 gap-x-12 gap-y-10 justify-items-center lg:ml-6">
               {DISTRIBUTOR_LOGOS.map((logo) => (
                 <Image
-                  key={logo}
-                  src={brandUrl(logo)}
-                  alt={logo}
+                  key={logo.key}
+                  src={brandUrl(logo.key)}
+                  alt={logo.label}
                   width={118}
                   height={44}
                   className="h-auto w-auto max-w-[118px] object-contain opacity-90"
@@ -181,7 +212,7 @@ export default async function HomePage() {
         </section>
 
         {/* ============ 4. LAYANAN (2048-3072) ============ */}
-        <section id="layanan" className="min-h-[1024px] bg-[#fafafa] pt-[188px]">
+        <section id="retail" className="min-h-[1024px] bg-[#fafafa] pt-[188px]">
           <div className="container-everest">
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <h2 className="font-display text-[clamp(2.5rem,4.4vw,4rem)] font-semibold leading-[1.1] text-[#000]">
@@ -197,7 +228,7 @@ export default async function HomePage() {
                   key={s.title}
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${s.title}*`)}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   className="group flex min-h-[429px] flex-col justify-between rounded-xl border border-line-soft bg-white p-8 transition-colors hover:border-navy"
                 >
                   <h3 className="font-display text-[32px] font-bold leading-tight text-[#1c1c1c]">
@@ -236,7 +267,7 @@ export default async function HomePage() {
                   key={o.title}
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   className="group flex h-[286px] flex-col justify-between border-b-2 border-white/35 py-6"
                 >
                   <div>
@@ -262,7 +293,7 @@ export default async function HomePage() {
                   key={o.title}
                   href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   className="group flex h-[286px] flex-col justify-between border-b-2 border-white/35 py-6"
                 >
                   <div>

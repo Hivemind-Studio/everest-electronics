@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -43,6 +43,11 @@ export const metadata: Metadata = {
       "Penjualan dan layanan purna jual sistem pendingin udara terlengkap dan terpercaya di seluruh Indonesia sejak 1998.",
     images: [OG_IMAGE],
   },
+};
+
+// T-F06/B-F07b: browser UI color on mobile — brand navy, invisible to layout.
+export const viewport: Viewport = {
+  themeColor: "#182a3a",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

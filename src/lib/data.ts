@@ -25,6 +25,11 @@ export async function getPublishedPosts(limit?: number): Promise<BlogItem[]> {
   });
 }
 
+/** Count published posts (for pagination bounds before querying a page). */
+export async function prismaCountPublished(): Promise<number> {
+  return prisma.blogPost.count({ where: { published: true } });
+}
+
 export async function getPublishedPostsPage(
   page: number,
   pageSize = 5,

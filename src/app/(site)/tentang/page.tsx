@@ -12,13 +12,29 @@ export const metadata = {
   description:
     "Visi kami adalah menjadi rekanan utama dalam penjualan dan layanan purna jual sistem pendingin udara seluruh Indonesia.",
   alternates: { canonical: "/tentang" },
+  // S-F04: og:url must match the canonical (root layout defaults to "/")
+  openGraph: { url: "/tentang" },
 };
 
 /* ------------------------------- constants ------------------------------- */
 
-const DISTRIBUTOR_LOGOS = [
-  "samsung", "img4", "aqua", "polytron", "midea", "mitsubishi",
-  "changhong", "lg", "hisense", "panasonic", "sharp", "gree", "daikin", "img5", "img6",
+// C-F03: meaningful alt text per distributor logo (key -> human label).
+const DISTRIBUTOR_LOGOS: { key: string; label: string }[] = [
+  { key: "samsung", label: "Samsung" },
+  { key: "img4", label: "Reiwa" },
+  { key: "aqua", label: "Aqua" },
+  { key: "polytron", label: "Polytron" },
+  { key: "midea", label: "Midea" },
+  { key: "mitsubishi", label: "Mitsubishi" },
+  { key: "changhong", label: "Changhong" },
+  { key: "lg", label: "LG" },
+  { key: "hisense", label: "Hisense" },
+  { key: "panasonic", label: "Panasonic" },
+  { key: "sharp", label: "Sharp" },
+  { key: "gree", label: "Gree" },
+  { key: "daikin", label: "Daikin" },
+  { key: "img5", label: "Frimec International" },
+  { key: "img6", label: "TICA Air Conditioning" },
 ];
 
 const PARTNERS = [
@@ -204,9 +220,9 @@ export default async function AboutPage() {
             <div className="grid grid-cols-4 gap-x-12 gap-y-10 justify-items-center">
               {DISTRIBUTOR_LOGOS.map((logo) => (
                 <Image
-                  key={logo}
-                  src={brandUrl(logo)}
-                  alt={logo}
+                  key={logo.key}
+                  src={brandUrl(logo.key)}
+                  alt={logo.label}
                   width={118}
                   height={44}
                   className="h-auto w-auto max-w-[118px] object-contain opacity-90"

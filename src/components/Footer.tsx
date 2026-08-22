@@ -109,7 +109,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
                   className="text-paper transition-opacity hover:opacity-70"
                 >
@@ -122,9 +122,11 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           <div className="grid grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-3 lg:gap-x-20">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h4 className="font-display text-lg font-bold leading-[22px] text-paper">
+                {/* C-F08: p (not h4) — avoids heading-level skips in the outline;
+                    identical classes keep the visual rendering unchanged. */}
+                <p className="font-display text-lg font-bold leading-[22px] text-paper">
                   {col.title}
-                </h4>
+                </p>
                 <ul className="mt-5 space-y-5">
                   {col.links.map((l) => (
                     <li key={l.label}>

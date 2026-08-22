@@ -55,7 +55,7 @@ export function Header({
             <a
               href={projectsUrl}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 rounded-full border border-[#1c1c1c] px-5 py-2 text-sm font-semibold text-ink transition-colors hover:bg-[#1c1c1c] hover:text-[#fafafa]"
             >
               Project
@@ -113,7 +113,7 @@ export function Header({
                 <a
                   href={projectsUrl}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
                   className="btn-navy px-5 py-3 text-sm"
                 >

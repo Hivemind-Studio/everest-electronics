@@ -7,6 +7,8 @@ export const metadata = {
   title: "Syarat & Ketentuan",
   description: "Syarat dan Ketentuan penggunaan situs Everest Electronics.",
   alternates: { canonical: "/terms" },
+  // S-F04: og:url must match the canonical (root layout defaults to "/")
+  openGraph: { url: "/terms" },
 };
 
 export default async function TermsPage() {

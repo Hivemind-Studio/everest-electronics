@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { TemukanKami } from "@/components/TemukanKami";
 import { PromoCarousel, type PromoSlide } from "@/components/PromoCarousel";
-import { getSettings, getPublishedPostsPage, getBranches } from "@/lib/data";
+import { getSettings, getPublishedPostsPage, prismaCountPublished, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
 import { waLink, promoWaMessage } from "@/lib/wa";
 
@@ -41,15 +42,18 @@ export default async function BlogIndexPage({
   const raw = Number(sp.page);
   const page = Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1;
 
-  const [settings, { items: posts, totalPages }, branches] = await Promise.all([
+  // Out-of-range/invalid ?page=N is a hard 404 (never an empty indexable
+  // grid); valid pages render their own set. Single count query up front.
+  const total = await prismaCountPublished();
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const current = Math.max(1, Math.min(page, totalPages));
+  if (page !== current) notFound();
+
+  const [settings, { items: posts }, branches] = await Promise.all([
     getSettings(),
-    getPublishedPostsPage(page, PAGE_SIZE),
+    getPublishedPostsPage(current, PAGE_SIZE),
     getBranches(),
   ]);
-
-  // Clamp to a valid page BEFORE querying so out-of-range ?page=N never
-  // launches a skip beyond the last page (empty-state bug).
-  const current = Math.max(1, Math.min(page, totalPages));
 
   const promoImg = buildAssetUrl(
     settings.promoImageUrl || "2026-08/promo-banner-51f95376.webp",
