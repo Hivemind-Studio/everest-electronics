@@ -9,7 +9,9 @@ export default async function AdminSettingsPage() {
   const s = await getSettings();
   const fields: { key: keyof typeof s; label: string; type?: string; full?: boolean }[] = [
     { key: "brandName", label: "Nama Brand" },
-    { key: "whatsappNumber", label: "No. WhatsApp (628xx format)" },
+    { key: "whatsappNumber", label: "No. WhatsApp Project - Dhea (628xx format)" },
+    { key: "marketingRetail", label: "No. WhatsApp Retail/Service - Dian (628xx format)" },
+    { key: "marketingBusiness", label: "No. WhatsApp Bisnis/Promo - Putri (628xx format)" },
     { key: "whatsappDisplay", label: "WhatsApp (tampilan)" },
     { key: "phoneDisplay", label: "Telepon (tampilan)" },
     { key: "emailMarketing", label: "Email Marketing", full: true },

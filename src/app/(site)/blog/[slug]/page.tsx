@@ -235,7 +235,7 @@ export default async function BlogPostPage({
                           ))}
                         </div>
                         <a
-                          href={waLink(settings.whatsappNumber, consultationWaMessage(settings.brandName))}
+                          href={waLink(settings.marketingRetail, consultationWaMessage(settings.brandName))}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-navy-deep"

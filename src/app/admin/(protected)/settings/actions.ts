@@ -21,6 +21,8 @@ export async function updateSettings(formData: FormData) {
     update: {
       brandName: g("brandName"),
       whatsappNumber: g("whatsappNumber"),
+      marketingRetail: g("marketingRetail"),
+      marketingBusiness: g("marketingBusiness"),
       whatsappDisplay: g("whatsappDisplay"),
       phoneDisplay: g("phoneDisplay"),
       emailMarketing: g("emailMarketing"),
@@ -44,6 +46,8 @@ export async function updateSettings(formData: FormData) {
       id: 1,
       brandName: g("brandName"),
       whatsappNumber: g("whatsappNumber"),
+      marketingRetail: g("marketingRetail"),
+      marketingBusiness: g("marketingBusiness"),
       whatsappDisplay: g("whatsappDisplay"),
       phoneDisplay: g("phoneDisplay"),
       emailMarketing: g("emailMarketing"),

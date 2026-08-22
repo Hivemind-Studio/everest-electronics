@@ -3,7 +3,7 @@ import Link from "next/link";
 import { TemukanKami } from "@/components/TemukanKami";
 import { getSettings, getPublishedPosts, getBranches } from "@/lib/data";
 import { buildAssetUrl } from "@/lib/storage/url";
-import { waLink } from "@/lib/wa";
+import { waLink, serviceWaMessage } from "@/lib/wa";
 import { brandUrl } from "@/lib/brandAssets";
 import { SITE_URL, filterSameAs, toE164ish } from "@/lib/seo";
 
@@ -226,7 +226,7 @@ export default async function HomePage() {
               {SERVICES.map((s) => (
                 <a
                   key={s.title}
-                  href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${s.title}*`)}
+                  href={waLink(settings.marketingRetail, serviceWaMessage(settings.brandName, s.title))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex min-h-[429px] flex-col justify-between rounded-xl border border-line-soft bg-white p-8 transition-colors hover:border-navy"
@@ -265,7 +265,7 @@ export default async function HomePage() {
               {BUSINESS_OFFERS.slice(0, 2).map((o) => (
                 <a
                   key={o.title}
-                  href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
+                  href={waLink(settings.marketingBusiness, serviceWaMessage(settings.brandName, o.title))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex h-[286px] flex-col justify-between border-b-2 border-white/35 py-6"
@@ -291,7 +291,7 @@ export default async function HomePage() {
               {BUSINESS_OFFERS.slice(2, 4).map((o) => (
                 <a
                   key={o.title}
-                  href={waLink(wa, `Halo ${settings.brandName}, saya tertarik dengan layanan *${o.title}*`)}
+                  href={waLink(settings.marketingBusiness, serviceWaMessage(settings.brandName, o.title))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex h-[286px] flex-col justify-between border-b-2 border-white/35 py-6"

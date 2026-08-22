@@ -88,6 +88,13 @@ orchestrator finished the remaining 8 items directly:
 - theme-color #182a3a; terms og:url matches canonical
 - tsc clean; 24/24 vitest (15 existing + 9 new seo tests); lint 0 errors
 
+### Orchestrator verification catch
+Engineer self-reported T-F02/T-F03 (sitemap) as applied but sitemap.ts was
+unchanged — caught in live verification (sitemap still had 6 URLs, always-now
+lastmod). Fixed in cf8baba and re-verified live: 9 URLs incl. tentang/terms/
+privacy, lastmod = 2026-08-17T18:51:36Z (real newest post). Lesson holds:
+never trust self-reports; verify every fix against live output.
+
 ## Owner decisions still open (visible/content changes)
 1. C-F04 placeholder headings ("Quote Dari Founder or Owner", "Promotion
    Banner", "Find More") — approve replacement copy

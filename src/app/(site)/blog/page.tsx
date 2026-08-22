@@ -87,7 +87,7 @@ export default async function BlogIndexPage({
                     image: buildAssetUrl(key),
                     title: "Promotion Banner",
                     ctaLabel: "Claim Promo Now",
-                    ctaHref: waLink(wa, promoWaMessage(settings.brandName)),
+                    ctaHref: waLink(settings.marketingBusiness, promoWaMessage(settings.brandName)),
                   });
                 }
               }
@@ -98,7 +98,7 @@ export default async function BlogIndexPage({
                   eyebrow: "Featured Promo",
                   title: "Promotion Banner",
                   ctaLabel: "Claim Promo Now",
-                  ctaHref: waLink(wa, promoWaMessage(settings.brandName)),
+                  ctaHref: waLink(settings.marketingBusiness, promoWaMessage(settings.brandName)),
                 });
                 for (const p of posts) {
                   if (p.imageUrl) {

@@ -12,6 +12,11 @@ model GlobalSettings {
   id                   Int     @id @default(1)
   brandName            String  @default("Everest Electronics")
   whatsappNumber       String  @default("6287732018235") // country code format
+  // Per-role WhatsApp numbers (country code format). Project button uses
+  // whatsappNumber (Dhea); retail/service CTAs -> marketingRetail (Dian);
+  // business/VRF cards + promo claims -> marketingBusiness (Putri).
+  marketingRetail      String  @default("6289524875245")
+  marketingBusiness    String  @default("6287891588062")
   whatsappDisplay      String  @default("+62 877-3201-8235")
   phoneDisplay         String  @default("021-7329480 / 7344130")
   emailMarketing       String  @default("marketingciledug@everestelectronic.com")

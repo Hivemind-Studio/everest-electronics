@@ -62,7 +62,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       />
       <main className="flex-1">{children}</main>
       <Footer settings={settings} />
-      <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
+      <FloatingWhatsApp number={settings.marketingRetail} brandName={settings.brandName} />
     </div>
   );
 }
