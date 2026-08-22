@@ -59,6 +59,9 @@ test.describe("Home page — Final design sections", () => {
     await expect(page.getByRole("contentinfo").getByText("Bisnis & VRF")).toBeVisible();
     await expect(page.getByRole("contentinfo").getByText("Perusahaan")).toBeVisible();
     await expect(page.getByText(/Copyright © 2026/)).toBeVisible();
+    // legal links restored to the bottom bar
+    await expect(page.getByRole("contentinfo").getByRole("link", { name: "Syarat & Ketentuan" })).toHaveAttribute("href", /\/terms$/);
+    await expect(page.getByRole("contentinfo").getByRole("link", { name: "Kebijakan Privasi" })).toHaveAttribute("href", /\/privacy$/);
   });
 });
 

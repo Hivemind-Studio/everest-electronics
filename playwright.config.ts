@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const BASE_URL = process.env.E2E_BASE_URL || "https://everest-electronic.zeabur.app";
+const BASE_URL = process.env.E2E_BASE_URL || "https://everest-electronics.zeabur.app";
 
 export default defineConfig({
   testDir: "./tests-e2e",

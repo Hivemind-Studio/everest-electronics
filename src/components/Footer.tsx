@@ -143,8 +143,22 @@ export function Footer({ settings }: { settings: SiteSettings }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-20 border-t border-ink-soft pt-8">
+        <div className="mt-20 flex flex-col gap-4 border-t border-ink-soft pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm leading-[17px] text-graphite">{settings.copyright}</p>
+          <div className="flex gap-6">
+            <Link
+              href="/terms"
+              className="text-sm leading-[17px] text-graphite transition-colors hover:text-paper"
+            >
+              Syarat &amp; Ketentuan
+            </Link>
+            <Link
+              href="/privacy"
+              className="text-sm leading-[17px] text-graphite transition-colors hover:text-paper"
+            >
+              Kebijakan Privasi
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -51,6 +51,19 @@ export function Header({
                 {l.label}
               </Link>
             ))}
+          {projectsUrl && (
+            <a
+              href={projectsUrl}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#1c1c1c] px-5 py-2 text-sm font-semibold text-ink transition-colors hover:bg-[#1c1c1c] hover:text-[#fafafa]"
+            >
+              Project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M7 17L17 7M7 7h10v10" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          )}
           <a
             href="/#lokasi"
             className="inline-flex items-center gap-1.5 rounded-full bg-[#1c1c1c] px-5 py-2 text-sm font-semibold text-[#fafafa] transition-colors hover:bg-[#1e4394]"
@@ -89,6 +102,19 @@ export function Header({
                 </Link>
               </li>
             ))}
+            {projectsUrl && (
+              <li>
+                <a
+                  href={projectsUrl}
+                  target="_blank"
+                  rel="noopener"
+                  onClick={() => setOpen(false)}
+                  className="btn-navy px-5 py-3 text-sm"
+                >
+                  Project
+                </a>
+              </li>
+            )}
             <li>
               <Link href="/#lokasi" onClick={() => setOpen(false)} className="btn-navy px-5 py-3 text-sm">
                 Hubungi kami
