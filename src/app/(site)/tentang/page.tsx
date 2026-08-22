@@ -209,7 +209,7 @@ export default async function AboutPage() {
                   alt={logo}
                   width={118}
                   height={44}
-                  className="max-h-9 w-auto object-contain opacity-90"
+                  className="h-auto w-auto max-w-[118px] object-contain opacity-90"
                 />
               ))}
             </div>

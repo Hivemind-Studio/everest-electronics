@@ -173,7 +173,7 @@ export default async function HomePage() {
                   alt={logo}
                   width={118}
                   height={44}
-                  className="w-auto max-w-[118px] object-contain opacity-90"
+                  className="h-auto w-auto max-w-[118px] object-contain opacity-90"
                 />
               ))}
             </div>
