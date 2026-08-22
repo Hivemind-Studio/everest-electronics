@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { waLink } from "@/lib/wa";
 import { brandUrl } from "@/lib/brandAssets";
-import type { SiteSettings, BranchItem } from "@/lib/data";
+import type { SiteSettings } from "@/lib/data";
+import type { ReactNode } from "react";
 
 const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -34,98 +34,117 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   },
 ];
 
-export function Footer({
-  settings,
-  branches,
-}: {
-  settings: SiteSettings;
-  branches: BranchItem[];
-}) {
-  const whatsappBranch = branches.find((b) => b.label.includes("WHATSAPP")) || branches[0];
+/* Outline social icons matching the Figma material-symbols-light set
+   (24px box, ~2px stroke, #FAFAFA). TikTok intentionally absent — the
+   design (node 138-2201) defines exactly four icons. */
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6" aria-hidden>
+      <rect x="2" y="2" width="20" height="20" rx="5.5" />
+      <circle cx="12" cy="12" r="4.4" />
+      <circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6" aria-hidden>
+      <path d="M16.67 3h-2.42A3.75 3.75 0 0 0 10.5 6.75V9.5H7.33v3.5h3.17V21h3.5v-8h2.84l.5-3.5h-3.34V7.08c0-.6.48-1.08 1.08-1.08h1.59V3Z" />
+    </svg>
+  );
+}
+
+function YoutubeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6" aria-hidden>
+      <rect x="1.5" y="4.94" width="21" height="14.13" rx="4" />
+      <path d="M10 9.2l4.8 2.8L10 14.8V9.2Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function LinkedinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6" aria-hidden>
+      <circle cx="4.4" cy="4.9" r="1.7" fill="currentColor" stroke="none" />
+      <path d="M2.9 9.3h3V21h-3z" />
+      <path d="M9.4 21V9.3h3v1.7c.63-1.06 1.86-2 3.68-2 2.95 0 4.52 1.87 4.52 5.23V21h-3.1v-6.1c0-1.72-.62-2.74-2.05-2.74-1.53 0-2.75 1.02-2.75 3.05V21H9.4Z" />
+    </svg>
+  );
+}
+
+export function Footer({ settings }: { settings: SiteSettings }) {
+  const socials: { label: string; href: string; icon: ReactNode }[] = [
+    { label: "Instagram", href: settings.instagramUrl, icon: <InstagramIcon /> },
+    { label: "Facebook", href: settings.facebookUrl, icon: <FacebookIcon /> },
+    { label: "YouTube", href: settings.youtubeUrl, icon: <YoutubeIcon /> },
+    { label: "LinkedIn", href: settings.linkedinUrl, icon: <LinkedinIcon /> },
+  ];
 
   return (
-    <footer className="bg-navy-deep text-white">
-      <div className="container-everest py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          {/* Brand */}
+    <footer className="bg-ink text-white">
+      <div className="container-everest pt-24 pb-20 md:pt-36 md:pb-32 lg:pt-[220px] lg:pb-[208px]">
+        {/* Logo — luminosity blend reproduces the Figma monochrome treatment */}
+        <Image
+          src={brandUrl("logo")}
+          alt={settings.brandName}
+          width={240}
+          height={240}
+          sizes="(max-width: 768px) 160px, 240px"
+          className="h-40 w-40 object-contain mix-blend-luminosity md:h-60 md:w-60"
+        />
+
+        {/* Blurb + link columns */}
+        <div className="mt-6 grid gap-x-12 gap-y-12 lg:mt-6 lg:grid-cols-[416px_1fr]">
           <div>
-            <div className="flex items-center gap-3">
-              <Image
-                src={brandUrl("logo")}
-                alt="Everest Electronics"
-                width={64}
-                height={64}
-                className="h-16 w-16 object-contain"
-              />
-              <h3 className="font-display text-xl font-bold">{settings.brandName}</h3>
-            </div>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
+            <p className="max-w-[416px] text-base leading-[1.6] text-mist">
               Rekan utama dalam penjualan dan layanan purna jual sistem pendingin udara
-              terlengkap dan terpercaya di seluruh penjuru Indonesia semenjak {settings.estYear}.
+              terlengkap dan terpercaya di seluruh penjuru Indonesia semenjak{" "}
+              {settings.estYear}.
             </p>
-            <div className="mt-6 flex gap-4">
-              {[
-                { href: settings.instagramUrl, label: "Instagram" },
-                { href: settings.facebookUrl, label: "Facebook" },
-                { href: settings.youtubeUrl, label: "YouTube" },
-                { href: settings.linkedinUrl, label: "LinkedIn" },
-                { href: settings.tiktokUrl, label: "Tiktok" },
-              ].map((s) => (
+            <div className="mt-6 flex items-center gap-4">
+              {socials.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noopener"
                   aria-label={s.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-gold hover:text-gold"
+                  className="text-paper transition-opacity hover:opacity-70"
                 >
-                  {s.label[0]}
+                  {s.icon}
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Link columns */}
-          {COLUMNS.map((col) => (
-            <div key={col.title}>
-              <h4 className="font-display text-sm font-bold uppercase tracking-widest text-white">
-                {col.title}
-              </h4>
-              <ul className="mt-4 space-y-3">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="text-sm text-white/60 transition-colors hover:text-gold">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-3 lg:gap-x-20">
+            {COLUMNS.map((col) => (
+              <div key={col.title}>
+                <h4 className="font-display text-lg font-bold leading-[22px] text-paper">
+                  {col.title}
+                </h4>
+                <ul className="mt-5 space-y-5">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      <Link
+                        href={l.href}
+                        className="text-[15px] leading-[18px] text-mist transition-colors hover:text-paper"
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {whatsappBranch && (
-          <div className="mt-12 border-t border-white/10 pt-8">
-            <a
-              href={waLink(settings.whatsappNumber, `Halo ${settings.brandName}, saya ingin bertanya.`)}
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-gold"
-            >
-              <span>{whatsappBranch.label}:</span>
-              <span className="text-white">{settings.whatsappDisplay}</span>
-            </a>
-          </div>
-        )}
-      </div>
-
-      <div className="border-t border-white/10">
-        <div className="container-everest flex flex-col gap-3 py-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-          <p>{settings.copyright}</p>
-          <div className="flex gap-6">
-            <Link href="/terms" className="hover:text-gold">Terms of Service</Link>
-            <Link href="/privacy" className="hover:text-gold">Privacy Policy</Link>
-          </div>
+        {/* Bottom bar */}
+        <div className="mt-20 border-t border-ink-soft pt-8">
+          <p className="text-sm leading-[17px] text-graphite">{settings.copyright}</p>
         </div>
       </div>
     </footer>

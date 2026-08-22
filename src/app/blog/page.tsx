@@ -258,7 +258,7 @@ export default async function BlogIndexPage({
           </div>
         </section>
       </main>
-      <Footer settings={settings} branches={branches} />
+      <Footer settings={settings} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
     </div>
   );

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { getSettings, getBranches } from "@/lib/data";
+import { getSettings } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default async function TermsPage() {
-  const [settings, branches] = await Promise.all([getSettings(), getBranches()]);
+  const settings = await getSettings();
   return (
     <div className="flex min-h-screen flex-col bg-paper">
       <Header brandName={settings.brandName} projectsUrl={settings.projectsUrl} />
@@ -42,7 +42,7 @@ export default async function TermsPage() {
           </div>
         </section>
       </main>
-      <Footer settings={settings} branches={branches} />
+      <Footer settings={settings} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
     </div>
   );

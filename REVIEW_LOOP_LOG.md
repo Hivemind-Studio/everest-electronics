@@ -1,4 +1,19 @@
-# Review Loop Log — Everest Electronics (Iteration 1)
+# Review Loop Log — Everest Electronics
+
+## Iteration 1 — WAS FINDINGS (now largely APPLIED)
+All F-01..F-13 accepted and fixed, verified live on deploy `6a8361cc`:
+robots 200, sitemap 200, JSON-LD/canonical/OG on home, terms/privacy 200, hero reads
+settings, blog footer WHATSAPP strip present, auth guards on all admin actions,
+upload validates content+size, npm ci, projectsUrl configurable, R2 orphan cascade.
+
+### Challenge (1)
+- E2-F05 / E3-F06 — duplicate nav anchors (Retail/Bisnis → #layanan, Kontak/Temukan → #lokasi):
+  **OVERRULED (challenge upheld)**. The 6-label set is inherited from Figma 85-538. Retail and
+  Bisnis both deep-link the single Services section (containing the same 4 service cards); there
+  are no distinct Retail-only / Bisnis-only sub-sections to anchor to. Same for Kontak vs Temukan
+  Kami → single #/location block. Splitting anchors would create dead targets. No functional harm.
+
+## Iteration 2 — pending (dispatch reviewers with this log)
 
 ## Findings (deduplicated across 3 senior engineers)
 

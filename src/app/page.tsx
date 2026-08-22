@@ -427,7 +427,7 @@ export default async function HomePage() {
         </section>
       </main>
 
-      <Footer settings={settings} branches={branches} />
+      <Footer settings={settings} />
       <FloatingWhatsApp number={wa} brandName={settings.brandName} />
     </div>
   );

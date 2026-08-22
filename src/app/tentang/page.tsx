@@ -295,7 +295,7 @@ export default async function AboutPage() {
         </section>
       </main>
 
-      <Footer settings={settings} branches={branches} />
+      <Footer settings={settings} />
       <FloatingWhatsApp number={settings.whatsappNumber} brandName={settings.brandName} />
     </div>
   );
